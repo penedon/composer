@@ -21,7 +21,7 @@ test('artist journey preserves the composition vision', async ({ page }) => {
   await page.getByRole('radio', { name: /^Love:/ }).click()
   await page.getByRole('button', { name: 'Use family' }).click()
   await page.getByRole('button', { name: 'Change Melancholy' }).click()
-  await page.getByRole('radio', { name: /^Sadness:/ }).click()
+  await page.getByRole('button', { name: /^Sadness:/ }).click()
   await page.getByRole('radio', { name: /Grief/ }).click()
   await page.getByRole('button', { name: 'Use emotion' }).click()
   await page.getByRole('group', { name: 'Grief' }).getByRole('slider').first().fill('61')

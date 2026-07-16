@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { emotionFamilies, emotionTaxonomy, emotionsForFamily, primaryEmotionFamily } from '@domain/emotion/emotionTaxonomy'
+import { emotionFamilies, emotionPresentation, emotionTaxonomy, emotionsForFamily, primaryEmotionFamily } from '@domain/emotion/emotionTaxonomy'
 
 describe('emotion taxonomy presentation', () => {
   it('makes every emotion reachable from each contributing family', () => {
@@ -16,6 +16,13 @@ describe('emotion taxonomy presentation', () => {
     expect(sadness.find((option) => option.emotion.id === 'melancholy')?.kind).toBe('core')
     expect(sadness.find((option) => option.emotion.id === 'longing')?.kind).toBe('blend')
     expect(sadness.find((option) => option.emotion.id === 'alienation')?.kind).toBe('blend')
+  })
+
+  it('defines stable visual semantics for every canonical emotion', () => {
+    expect(Object.keys(emotionPresentation).sort()).toEqual(emotionTaxonomy.map((emotion) => emotion.id).sort())
+    expect(emotionPresentation.melancholy.kind).toBe('shade')
+    expect(emotionPresentation.longing.kind).toBe('blend')
+    expect(emotionPresentation.anticipation.kind).toBe('blend')
   })
 
   it('uses the preferred family only to break equal-weight ties', () => {

@@ -1,0 +1,315 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050" role="img" aria-labelledby="title desc">
+  <title id="title">Composer semantic emotion wheel picker</title>
+  <desc id="desc">A desktop picker draft that keeps eight major emotion families, their minor shades, and weighted blended emotions together in one radial map. Longing is selected as a blend of love, sadness, and desire.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity=".32"/>
+    </filter>
+    <filter id="node-shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#000000" flood-opacity=".28"/>
+    </filter>
+    <linearGradient id="longing-gradient" x1="0" x2="1">
+      <stop offset="0" stop-color="#d46f80"/>
+      <stop offset=".56" stop-color="#6687bd"/>
+      <stop offset="1" stop-color="#c68b50"/>
+    </linearGradient>
+    <linearGradient id="paper-gradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#faf6ed"/>
+      <stop offset="1" stop-color="#eee6d9"/>
+    </linearGradient>
+    <style>
+      .ui { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .display { font-family: Georgia, "Times New Roman", serif; }
+      .board-title { fill: #f4f1e9; font-size: 30px; font-weight: 650; }
+      .board-copy { fill: #aeb2a8; font-size: 14px; }
+      .eyebrow { fill: #8f9489; font-size: 11px; font-weight: 800; letter-spacing: .11em; }
+      .eyebrow-warm { fill: #d8a45e; font-size: 11px; font-weight: 800; letter-spacing: .11em; }
+      .heading { fill: #f4f1e9; font-size: 22px; font-weight: 650; }
+      .subheading { fill: #f4f1e9; font-size: 16px; font-weight: 700; }
+      .body { fill: #d6d7d0; font-size: 13px; }
+      .body-strong { fill: #f4f1e9; font-size: 13px; font-weight: 700; }
+      .muted { fill: #94998f; font-size: 11px; }
+      .label { fill: #b8bbb1; font-size: 10px; font-weight: 800; letter-spacing: .07em; }
+      .family { fill: #f8f5ee; font-size: 10px; font-weight: 850; letter-spacing: .04em; }
+      .family-dark { fill: #282a24; font-size: 10px; font-weight: 850; letter-spacing: .04em; }
+      .shade { fill: #f4f1e9; font-size: 11px; font-weight: 700; }
+      .shade-muted { fill: #aeb2a8; font-size: 10px; font-weight: 650; }
+      .blend { fill: #f4f1e9; font-size: 10px; font-weight: 750; }
+      .paper-title { fill: #282a24; font-size: 21px; font-weight: 700; }
+      .paper-body { fill: #55594f; font-size: 12px; }
+      .paper-label { fill: #74786e; font-size: 10px; font-weight: 800; letter-spacing: .07em; }
+      .button { font-size: 12px; font-weight: 750; }
+      .number { fill: #211a10; font-size: 11px; font-weight: 850; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1050" fill="#171916"/>
+  <g class="ui">
+    <text x="52" y="48" class="eyebrow-warm">COMPOSER · INTERACTION REVISION · 28</text>
+    <text x="52" y="86" class="board-title">One wheel for families, shades, and blends</text>
+    <text x="52" y="114" class="board-copy">A semantic constellation keeps every emotion on the map and makes mixed emotional intent visible before selection.</text>
+
+    <g transform="translate(1242 38)">
+      <rect width="306" height="76" rx="16" fill="#20221e" stroke="#34372f"/>
+      <circle cx="25" cy="26" r="6" fill="#d8a45e"/>
+      <text x="42" y="30" class="body-strong">DRAFT · FEATURED EMOTION</text>
+      <text x="25" y="55" class="muted">Desktop modal · SVG-native · list fallback</text>
+    </g>
+
+    <g transform="translate(52 142)" filter="url(#shadow)">
+      <rect width="1496" height="850" rx="22" fill="#242620" stroke="#4a4f44"/>
+
+      <!-- Modal header -->
+      <g transform="translate(0 0)">
+        <rect width="1496" height="112" rx="22" fill="#292b26"/>
+        <path d="M0 90 Q0 112 22 112 H1474 Q1496 112 1496 90 V112 H0 Z" fill="#292b26"/>
+        <text x="28" y="32" class="eyebrow-warm">REPLACE FEATURED EMOTION 1</text>
+        <text x="28" y="66" class="heading">Choose the feeling behind this song</text>
+        <text x="28" y="91" class="body">Explore a family, choose a precise shade, or follow the bridges to a blended emotion.</text>
+
+        <g transform="translate(1165 22)">
+          <rect width="226" height="50" rx="13" fill="#20221e" stroke="#3b3e36"/>
+          <rect x="8" y="7" width="98" height="36" rx="9" fill="#363a31"/>
+          <circle cx="26" cy="25" r="7" fill="none" stroke="#d8a45e" stroke-width="2"/>
+          <circle cx="26" cy="25" r="2" fill="#d8a45e"/>
+          <text x="42" y="29" class="body-strong">Wheel</text>
+          <path d="M126 18 h16 M126 25 h16 M126 32 h16" stroke="#8f9489" stroke-width="2" stroke-linecap="round"/>
+          <text x="151" y="29" class="muted">List</text>
+        </g>
+        <circle cx="1450" cy="47" r="18" fill="#20221e" stroke="#3b3e36"/>
+        <path d="M1444 41 l12 12 M1456 41 l-12 12" stroke="#aeb2a8" stroke-width="2" stroke-linecap="round"/>
+      </g>
+
+      <!-- Wheel region -->
+      <g transform="translate(24 132)">
+        <rect width="930" height="628" rx="18" fill="#1e201c" stroke="#34372f"/>
+        <text x="20" y="30" class="label">EMOTION MAP</text>
+        <text x="910" y="30" text-anchor="end" class="muted">Arrows move · Enter selects · Tab opens details</text>
+
+        <!-- Semantic guide rings -->
+        <circle cx="440" cy="322" r="266" fill="none" stroke="#34372f" stroke-width="1" stroke-dasharray="3 8"/>
+        <circle cx="440" cy="322" r="204" fill="none" stroke="#34372f" stroke-width="1"/>
+        <circle cx="440" cy="322" r="137" fill="#242620" stroke="#41453b" stroke-width="2"/>
+
+        <text x="440" y="52" text-anchor="middle" class="label">MINOR SHADES</text>
+        <text x="440" y="114" text-anchor="middle" class="label">MAJOR FAMILIES</text>
+
+        <!-- Blend connector network; selected connections are solid -->
+        <g fill="none" stroke-linecap="round">
+          <path d="M326 206 Q380 220 440 246" stroke="#c68b50" stroke-width="3" opacity=".9"/>
+          <path d="M556 206 Q500 218 440 246" stroke="#d46f80" stroke-width="3" opacity=".9"/>
+          <path d="M604 322 Q525 294 440 246" stroke="#6687bd" stroke-width="3" opacity=".9"/>
+
+          <path d="M287 504 Q362 500 440 490" stroke="#ca6252" stroke-width="1.5" stroke-dasharray="4 6" opacity=".5"/>
+          <path d="M287 504 Q304 470 324 442" stroke="#79936a" stroke-width="1.5" stroke-dasharray="4 6" opacity=".5"/>
+
+          <path d="M216 367 Q270 410 324 442" stroke="#79936a" stroke-width="1.5" stroke-dasharray="4 6" opacity=".45"/>
+          <path d="M216 367 Q404 392 604 322" stroke="#6687bd" stroke-width="1.5" stroke-dasharray="4 6" opacity=".45"/>
+
+          <path d="M159 162 Q246 176 326 206" stroke="#c68b50" stroke-width="1.5" stroke-dasharray="4 6" opacity=".45"/>
+          <path d="M159 162 Q390 188 604 322" stroke="#6687bd" stroke-width="1.5" stroke-dasharray="4 6" opacity=".4"/>
+
+          <path d="M228 211 Q275 208 326 206" stroke="#c68b50" stroke-width="1.5" stroke-dasharray="4 6" opacity=".45"/>
+          <path d="M228 211 Q330 164 440 158" stroke="#e2b84f" stroke-width="1.5" stroke-dasharray="4 6" opacity=".45"/>
+          <path d="M228 211 Q442 310 556 442" stroke="#8274ae" stroke-width="1.5" stroke-dasharray="4 6" opacity=".32"/>
+        </g>
+
+        <!-- Major family ring -->
+        <g>
+          <circle cx="440" cy="322" r="171" pathLength="100" fill="none" stroke="#e2b84f" stroke-width="58" stroke-dasharray="11.2 88.8" transform="rotate(-112.5 440 322)" opacity=".92"/>
+          <circle cx="440" cy="322" r="171" pathLength="100" fill="none" stroke="#d46f80" stroke-width="58" stroke-dasharray="11.2 88.8" transform="rotate(-67.5 440 322)"/>
+          <circle cx="440" cy="322" r="171" pathLength="100" fill="none" stroke="#6687bd" stroke-width="58" stroke-dasharray="11.2 88.8" transform="rotate(-22.5 440 322)"/>
+          <circle cx="440" cy="322" r="171" pathLength="100" fill="none" stroke="#8274ae" stroke-width="58" stroke-dasharray="11.2 88.8" transform="rotate(22.5 440 322)" opacity=".9"/>
+          <circle cx="440" cy="322" r="171" pathLength="100" fill="none" stroke="#ca6252" stroke-width="58" stroke-dasharray="11.2 88.8" transform="rotate(67.5 440 322)" opacity=".9"/>
+          <circle cx="440" cy="322" r="171" pathLength="100" fill="none" stroke="#79936a" stroke-width="58" stroke-dasharray="11.2 88.8" transform="rotate(112.5 440 322)" opacity=".9"/>
+          <circle cx="440" cy="322" r="171" pathLength="100" fill="none" stroke="#55a3a3" stroke-width="58" stroke-dasharray="11.2 88.8" transform="rotate(157.5 440 322)" opacity=".9"/>
+          <circle cx="440" cy="322" r="171" pathLength="100" fill="none" stroke="#c68b50" stroke-width="58" stroke-dasharray="11.2 88.8" transform="rotate(202.5 440 322)"/>
+
+          <text x="440" y="158" text-anchor="middle" class="family-dark">JOY</text>
+          <text x="556" y="206" text-anchor="middle" class="family">LOVE</text>
+          <text x="604" y="326" text-anchor="middle" class="family">SADNESS</text>
+          <text x="556" y="442" text-anchor="middle" class="family">FEAR</text>
+          <text x="440" y="490" text-anchor="middle" class="family">ANGER</text>
+          <text x="324" y="442" text-anchor="middle" class="family">REJECTION</text>
+          <text x="276" y="326" text-anchor="middle" class="family">WONDER</text>
+          <text x="324" y="206" text-anchor="middle" class="family">DESIRE</text>
+        </g>
+
+        <!-- Minor/core shade petals -->
+        <g filter="url(#node-shadow)">
+          <g transform="translate(349 64)">
+            <rect width="86" height="34" rx="17" fill="#29332d" stroke="#75a88c"/>
+            <circle cx="14" cy="17" r="5" fill="#75a88c"/><text x="26" y="21" class="shade">Serenity</text>
+          </g>
+          <g transform="translate(447 64)">
+            <rect width="82" height="34" rx="17" fill="#353125" stroke="#d6b95f"/>
+            <circle cx="14" cy="17" r="5" fill="#d6b95f"/><text x="26" y="21" class="shade">Delight</text>
+          </g>
+
+          <g transform="translate(577 113)">
+            <rect width="90" height="34" rx="17" fill="#34272e" stroke="#c66d91"/>
+            <circle cx="14" cy="17" r="5" fill="#c66d91"/><text x="26" y="21" class="shade">Devotion</text>
+          </g>
+          <g transform="translate(673 145)">
+            <rect width="102" height="34" rx="17" fill="#38282e" stroke="#d88f9e"/>
+            <circle cx="14" cy="17" r="5" fill="#d88f9e"/><text x="26" y="21" class="shade">Tenderness</text>
+          </g>
+
+          <g transform="translate(700 244)">
+            <rect width="94" height="34" rx="17" fill="#252c37" stroke="#6687bd"/>
+            <circle cx="14" cy="17" r="5" fill="#6687bd"/><text x="26" y="21" class="shade">Melancholy</text>
+          </g>
+          <g transform="translate(718 288)">
+            <rect width="72" height="34" rx="17" fill="#242a35" stroke="#536d99"/>
+            <circle cx="14" cy="17" r="5" fill="#536d99"/><text x="26" y="21" class="shade">Grief</text>
+          </g>
+          <g transform="translate(700 332)">
+            <rect width="82" height="34" rx="17" fill="#302b28" stroke="#c68b50"/>
+            <circle cx="14" cy="17" r="5" fill="#c68b50"/><text x="26" y="21" class="shade">Despair</text>
+          </g>
+
+          <g transform="translate(657 468)">
+            <rect width="116" height="34" rx="17" fill="#2b2937" stroke="#8a82b8"/>
+            <circle cx="14" cy="17" r="5" fill="#8a82b8"/><text x="26" y="21" class="shade">Apprehension</text>
+          </g>
+          <g transform="translate(584 512)">
+            <rect width="76" height="34" rx="17" fill="#282432" stroke="#66548e"/>
+            <circle cx="14" cy="17" r="5" fill="#66548e"/><text x="26" y="21" class="shade">Terror</text>
+          </g>
+
+          <g transform="translate(395 544)">
+            <rect width="92" height="34" rx="17" fill="#382723" stroke="#c17155"/>
+            <circle cx="14" cy="17" r="5" fill="#c17155"/><text x="26" y="21" class="shade">Irritation</text>
+          </g>
+          <g transform="translate(492 536)">
+            <rect width="68" height="34" rx="17" fill="#382321" stroke="#b34b43"/>
+            <circle cx="14" cy="17" r="5" fill="#b34b43"/><text x="26" y="21" class="shade">Rage</text>
+          </g>
+
+          <g transform="translate(82 244)">
+            <rect width="104" height="34" rx="17" fill="#223235" stroke="#5da5aa"/>
+            <circle cx="14" cy="17" r="5" fill="#5da5aa"/><text x="26" y="21" class="shade">Amazement</text>
+          </g>
+          <g transform="translate(90 288)">
+            <rect width="98" height="34" rx="17" fill="#273136" stroke="#728d9f"/>
+            <circle cx="14" cy="17" r="5" fill="#728d9f"/><text x="26" y="21" class="shade">Confusion</text>
+          </g>
+
+        </g>
+
+        <!-- Blend bridge nodes -->
+        <g>
+          <g transform="translate(240 487)">
+            <rect width="88" height="34" rx="10" fill="#302b25" stroke="#8d7151" stroke-width="1.5"/>
+            <path d="M12 17 l6-6 6 6-6 6z" fill="#8d7151"/><text x="31" y="21" class="blend">Contempt</text>
+          </g>
+          <g transform="translate(169 350)">
+            <rect width="94" height="34" rx="10" fill="#27302d" stroke="#65736c" stroke-width="1.5"/>
+            <path d="M12 17 l6-6 6 6-6 6z" fill="#65736c"/><text x="31" y="21" class="blend">Alienation</text>
+          </g>
+          <g transform="translate(178 194)">
+            <rect width="100" height="34" rx="10" fill="#342c25" stroke="#b58f54" stroke-width="1.5"/>
+            <path d="M12 17 l6-6 6 6-6 6z" fill="#b58f54"/><text x="31" y="21" class="blend">Anticipation</text>
+          </g>
+          <g transform="translate(109 145)">
+            <rect width="90" height="34" rx="10" fill="#35282f" stroke="#b86f9e" stroke-width="1.5"/>
+            <path d="M12 17 l6-6 6 6-6 6z" fill="#b86f9e"/><text x="31" y="21" class="blend">Yearning</text>
+          </g>
+
+          <!-- Selected three-family blend -->
+          <g transform="translate(353 224)" filter="url(#node-shadow)">
+            <rect width="174" height="58" rx="17" fill="#f4efe5" stroke="url(#longing-gradient)" stroke-width="4"/>
+            <circle cx="25" cy="22" r="9" fill="url(#longing-gradient)"/>
+            <text x="44" y="26" fill="#282a24" font-size="14" font-weight="800">Longing</text>
+            <text x="25" y="45" fill="#686c62" font-size="10" font-weight="700">LOVE + SADNESS + DESIRE</text>
+            <circle cx="158" cy="15" r="9" fill="#d8a45e"/><path d="M154 15 l3 3 5-6" fill="none" stroke="#282a24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </g>
+
+        <!-- Center explanation -->
+        <g>
+          <circle cx="440" cy="351" r="72" fill="#20221e" stroke="#4a4f44"/>
+          <path d="M415 329 A30 30 0 0 1 438 319" fill="none" stroke="#d46f80" stroke-width="6" stroke-linecap="round"/>
+          <path d="M444 319 A30 30 0 0 1 466 333" fill="none" stroke="#6687bd" stroke-width="6" stroke-linecap="round"/>
+          <path d="M468 340 A30 30 0 0 1 461 367" fill="none" stroke="#c68b50" stroke-width="6" stroke-linecap="round"/>
+          <text x="440" y="350" text-anchor="middle" class="body-strong">3-way blend</text>
+          <text x="440" y="369" text-anchor="middle" class="muted">shown by bridges</text>
+          <text x="440" y="388" text-anchor="middle" class="muted">and segmented color</text>
+        </g>
+
+        <!-- Legend -->
+        <g transform="translate(20 580)">
+          <circle cx="6" cy="6" r="6" fill="#6687bd"/><text x="18" y="10" class="muted">shade</text>
+          <path d="M82 6 l6-6 6 6-6 6z" fill="#8d7151"/><text x="101" y="10" class="muted">blend</text>
+          <line x1="164" y1="6" x2="194" y2="6" stroke="#d46f80" stroke-width="3"/><text x="204" y="10" class="muted">contributing family</text>
+          <text x="890" y="10" text-anchor="end" class="muted">Color always appears with a name or shape</text>
+        </g>
+      </g>
+
+      <!-- Detail panel -->
+      <g transform="translate(974 132)">
+        <rect width="498" height="628" rx="18" fill="#292b26" stroke="#3b3e36"/>
+        <text x="22" y="30" class="label">SELECTED EMOTION</text>
+
+        <g transform="translate(18 48)">
+          <rect width="462" height="146" rx="16" fill="url(#paper-gradient)"/>
+          <rect width="8" height="146" rx="4" fill="url(#longing-gradient)"/>
+          <circle cx="38" cy="38" r="14" fill="url(#longing-gradient)"/>
+          <text x="64" y="44" class="paper-title">Longing</text>
+          <rect x="354" y="20" width="88" height="26" rx="13" fill="#dfd6c8"/>
+          <text x="398" y="37" text-anchor="middle" class="paper-label">3-WAY BLEND</text>
+          <text x="24" y="78" class="paper-body">A sustained pull toward something loved but absent.</text>
+          <text x="24" y="100" class="paper-body">Tender enough for intimacy; unresolved enough to move the song.</text>
+          <text x="24" y="127" class="paper-label">SELECTED FROM THE MAP · PENDING CONFIRMATION</text>
+        </g>
+
+        <text x="22" y="224" class="label">EMOTIONAL MAKEUP</text>
+        <g transform="translate(22 242)">
+          <text x="0" y="12" class="body-strong">Love</text><text x="440" y="12" text-anchor="end" class="muted">70%</text>
+          <rect y="22" width="440" height="8" rx="4" fill="#20221e"/><rect y="22" width="308" height="8" rx="4" fill="#d46f80"/>
+          <text x="0" y="56" class="body-strong">Sadness</text><text x="440" y="56" text-anchor="end" class="muted">60%</text>
+          <rect y="66" width="440" height="8" rx="4" fill="#20221e"/><rect y="66" width="264" height="8" rx="4" fill="#6687bd"/>
+          <text x="0" y="100" class="body-strong">Desire</text><text x="440" y="100" text-anchor="end" class="muted">50%</text>
+          <rect y="110" width="440" height="8" rx="4" fill="#20221e"/><rect y="110" width="220" height="8" rx="4" fill="#c68b50"/>
+        </g>
+
+        <g transform="translate(18 382)">
+          <rect width="462" height="116" rx="14" fill="#20221e" stroke="#3b3e36"/>
+          <text x="16" y="27" class="label">WHY IT SITS HERE</text>
+          <circle cx="19" cy="50" r="5" fill="#d46f80"/><text x="34" y="54" class="body">Love supplies attachment and tenderness.</text>
+          <circle cx="19" cy="75" r="5" fill="#6687bd"/><text x="34" y="79" class="body">Sadness supplies distance and loss.</text>
+          <circle cx="19" cy="100" r="5" fill="#c68b50"/><text x="34" y="104" class="body">Desire supplies pull and anticipation.</text>
+        </g>
+
+        <g transform="translate(18 516)">
+          <rect width="462" height="54" rx="13" fill="#242620" stroke="#3b3e36"/>
+          <text x="16" y="22" class="body-strong">Need another route?</text>
+          <text x="16" y="39" class="muted">Switch to List for search, descriptions, and screen readers.</text>
+          <path d="M428 20 l9 7-9 7" fill="none" stroke="#d8a45e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <text x="22" y="606" class="muted">Already featured emotions remain visible but unavailable.</text>
+      </g>
+
+      <!-- Modal footer -->
+      <g transform="translate(0 780)">
+        <rect width="1496" height="70" rx="22" fill="#f4efe5"/>
+        <path d="M0 0 H1496 V22 Q1496 0 1474 0 H22 Q0 0 0 22 Z" fill="#f4efe5"/>
+        <circle cx="30" cy="35" r="10" fill="url(#longing-gradient)"/>
+        <text x="50" y="31" fill="#282a24" font-size="13" font-weight="800">Longing</text>
+        <text x="50" y="49" class="paper-body">Love + Sadness + Desire</text>
+        <text x="1165" y="40" text-anchor="end" class="paper-label">REPLACES SLOT 1</text>
+        <rect x="1184" y="15" width="112" height="40" rx="10" fill="#e5dccd"/>
+        <text x="1240" y="40" text-anchor="middle" class="button" fill="#55594f">Cancel</text>
+        <rect x="1306" y="15" width="166" height="40" rx="10" fill="#d8a45e"/>
+        <text x="1389" y="40" text-anchor="middle" class="button" fill="#211a10">Use Longing</text>
+      </g>
+    </g>
+
+    <g transform="translate(52 1022)">
+      <text x="0" y="0" class="eyebrow-warm">INTERACTION</text>
+      <text x="96" y="0" class="body">Family petal → minor shade or bridge → explicit weighted blend → confirmation</text>
+      <text x="1496" y="0" text-anchor="end" class="muted">On narrow screens, the same taxonomy becomes family tabs + grouped cards.</text>
+    </g>
+  </g>
+</svg>

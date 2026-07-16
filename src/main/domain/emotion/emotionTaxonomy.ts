@@ -20,7 +20,34 @@ export const emotionFamilyPresentation: EmotionFamilyPresentation[] = [
   { id: 'desire', label: 'Desire', color: '#c68b50', shortDescription: 'Pull, anticipation, and pursuit' },
 ]
 
-export const emotionTaxonomy: FeaturedEmotion[] = [
+export type EmotionId =
+  | 'serenity'
+  | 'delight'
+  | 'devotion'
+  | 'tenderness'
+  | 'longing'
+  | 'melancholy'
+  | 'grief'
+  | 'despair'
+  | 'apprehension'
+  | 'terror'
+  | 'irritation'
+  | 'rage'
+  | 'contempt'
+  | 'alienation'
+  | 'amazement'
+  | 'confusion'
+  | 'yearning'
+  | 'anticipation'
+
+export type TaxonomyEmotion = FeaturedEmotion & { id: EmotionId }
+
+export interface EmotionPresentation {
+  kind: 'shade' | 'blend'
+  description: string
+}
+
+export const emotionTaxonomy: TaxonomyEmotion[] = [
   { id: 'serenity', name: 'Serenity', families: { joy: .8 }, color: '#75a88c' },
   { id: 'delight', name: 'Delight', families: { joy: 1, wonder: .2 }, color: '#d6b95f' },
   { id: 'devotion', name: 'Devotion', families: { love: .9, desire: .2 }, color: '#c66d91' },
@@ -40,6 +67,32 @@ export const emotionTaxonomy: FeaturedEmotion[] = [
   { id: 'yearning', name: 'Yearning', families: { desire: .9, sadness: .35 }, color: '#b86f9e' },
   { id: 'anticipation', name: 'Anticipation', families: { desire: .7, joy: .3, fear: .15 }, color: '#b58f54' },
 ]
+
+/**
+ * Visual semantics live outside FeaturedEmotion so saved project files remain
+ * compatible. Keeping this as an exhaustive record makes a newly-added emotion
+ * fail type-checking until its stable classification and description are chosen.
+ */
+export const emotionPresentation: Record<EmotionId, EmotionPresentation> = {
+  serenity: { kind: 'shade', description: 'Quiet contentment with room to breathe.' },
+  delight: { kind: 'shade', description: 'Bright pleasure touched by surprise.' },
+  devotion: { kind: 'shade', description: 'Steady love shaped by commitment.' },
+  tenderness: { kind: 'shade', description: 'Gentle care with emotional openness.' },
+  longing: { kind: 'blend', description: 'A sustained pull toward something loved but absent.' },
+  melancholy: { kind: 'shade', description: 'Reflective sadness with a lingering softness.' },
+  grief: { kind: 'shade', description: 'Direct, deep sorrow in response to loss.' },
+  despair: { kind: 'shade', description: 'Sadness intensified by fear that nothing will change.' },
+  apprehension: { kind: 'shade', description: 'Unease before an uncertain possibility.' },
+  terror: { kind: 'shade', description: 'Overwhelming fear with immediate urgency.' },
+  irritation: { kind: 'shade', description: 'Low, persistent friction that asks for release.' },
+  rage: { kind: 'shade', description: 'Anger at full force, close to rejection.' },
+  contempt: { kind: 'blend', description: 'Rejection sharpened by anger and judgment.' },
+  alienation: { kind: 'blend', description: 'Disconnection weighted by sadness.' },
+  amazement: { kind: 'shade', description: 'Wonder opened into vivid surprise.' },
+  confusion: { kind: 'shade', description: 'Wonder made unstable by uncertainty.' },
+  yearning: { kind: 'blend', description: 'Desire stretched across emotional distance.' },
+  anticipation: { kind: 'blend', description: 'Forward pull mixing hope, uncertainty, and desire.' },
+}
 
 export interface EmotionFamilyOption {
   emotion: FeaturedEmotion
@@ -69,11 +122,9 @@ export function emotionsForFamily(family: EmotionFamily): EmotionFamilyOption[] 
   return emotionTaxonomy
     .filter((emotion) => familyWeight(emotion, family) > 0)
     .map((emotion) => {
-      const primary = primaryEmotionFamily(emotion)
-      const secondaryWeight = Math.max(0, ...emotionFamilies.filter((item) => item !== family).map((item) => familyWeight(emotion, item)))
       return {
         emotion,
-        kind: primary === family && secondaryWeight < .3 ? 'core' as const : 'blend' as const,
+        kind: emotionPresentation[emotion.id].kind === 'shade' && primaryEmotionFamily(emotion) === family ? 'core' as const : 'blend' as const,
         familySummary: emotionFamilySummary(emotion),
       }
     })
