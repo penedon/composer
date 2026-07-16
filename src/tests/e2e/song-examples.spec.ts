@@ -19,9 +19,10 @@ test('opens a complete example and exposes every composition step', async ({ pag
   await expect(page.getByText('Indie folk rock · Walking pulse')).toBeVisible()
 
   await phases.getByRole('link', { name: /Emotions/ }).click()
-  await expect(page.getByLabel('Featured emotion 1')).toHaveValue('alienation')
-  await expect(page.getByLabel('Featured emotion 2')).toHaveValue('yearning')
-  await expect(page.getByLabel('Featured emotion 3')).toHaveValue('serenity')
+  const featuredEmotions = page.getByLabel('Featured emotions')
+  await expect(featuredEmotions.getByRole('button', { name: 'Change Alienation' })).toBeVisible()
+  await expect(featuredEmotions.getByRole('button', { name: 'Change Yearning' })).toBeVisible()
+  await expect(featuredEmotions.getByRole('button', { name: 'Change Serenity' })).toBeVisible()
 
   await phases.getByRole('link', { name: /Structure/ }).click()
   await expect(page.getByText('Variation of Chorus')).toHaveCount(2)

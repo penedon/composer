@@ -1,0 +1,78 @@
+.emotion-family-orbit {
+  display: grid;
+  place-items: center;
+}
+
+.emotion-family-orbit__control {
+  aspect-ratio: 1;
+  max-width: 23rem;
+  position: relative;
+  width: 100%;
+}
+
+.emotion-family-orbit svg { display: block; height: 100%; width: 100%; }
+
+.emotion-family-orbit__option {
+  background: color-mix(in srgb, var(--surface-deep) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-strong) 18%, transparent);
+  border-radius: 999px;
+  color: var(--text-strong);
+  cursor: pointer;
+  font-size: .64rem;
+  font-weight: 800;
+  left: calc(50% + var(--orbit-x));
+  letter-spacing: .02em;
+  min-height: 2rem;
+  min-width: 4.7rem;
+  padding: .35rem .55rem;
+  position: absolute;
+  text-transform: uppercase;
+  top: calc(50% + var(--orbit-y));
+  transform: translate(-50%, -50%);
+  transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+  z-index: 2;
+
+  &:hover { background: var(--surface-raised); }
+  &:focus-visible { outline: 3px solid color-mix(in srgb, var(--action) 60%, transparent); outline-offset: 2px; }
+  &--selected { background: var(--paper); border-color: var(--paper); box-shadow: 0 0 0 3px color-mix(in srgb, var(--action) 70%, transparent); color: var(--paper-ink); }
+}
+
+.emotion-family-orbit__center {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  left: 50%;
+  max-width: 8.8rem;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  span { border-radius: 50%; height: .75rem; width: .75rem; }
+  strong { color: var(--text-strong); font-size: .85rem; }
+  small { color: var(--text-muted); font-size: .6rem; line-height: 1.35; }
+}
+
+@media (max-width: 720px) {
+  .emotion-family-orbit__control {
+    aspect-ratio: auto;
+    display: grid;
+    gap: .55rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: none;
+  }
+
+  .emotion-family-orbit svg, .emotion-family-orbit__center { display: none; }
+  .emotion-family-orbit__option {
+    left: auto;
+    min-height: 2.75rem;
+    position: static;
+    top: auto;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .emotion-family-orbit__option { transition: none; }
+}

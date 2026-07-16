@@ -1,19 +1,61 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+
+import { applyStructureTemplate, addSection, createSectionVariation, moveSection, removeSection, updateSection } from '@domain/project/project.operations'
+import { lastAppliedStructureTemplateId, structureTemplateOperationDescription, structureTemplates } from '@domain/structure/structureTemplates'
 import { AppButton } from '@presentation/components/base/AppButton'
 import { useProjectStore } from '@presentation/stores/project.store'
-import { addSection, createSectionVariation, moveSection, removeSection, updateSection } from '@domain/project/project.operations'
 
 const store = useProjectStore()
+const selectedTemplateId = ref(lastAppliedStructureTemplateId(store.project?.operations ?? []) ?? 'story-arc')
+const choosingTemplate = ref(false)
+const selectedTemplate = computed(() => structureTemplates.find((template) => template.id === selectedTemplateId.value) ?? structureTemplates[0]!)
+const totalTemplateBars = computed(() => selectedTemplate.value.sections.reduce((total, section) => total + section.bars, 0))
+const selectedTemplateApplied = computed(() => lastAppliedStructureTemplateId(store.project?.operations ?? []) === selectedTemplate.value.id)
+
+function selectTemplate(templateId: string): void {
+  selectedTemplateId.value = templateId
+  choosingTemplate.value = false
+}
+
+function applySelectedTemplate(): void {
+  const project = store.project
+  if (!project) return
+  const template = selectedTemplate.value
+  store.mutate(structureTemplateOperationDescription(template), (current) => applyStructureTemplate(current, template))
+  const firstSection = store.project?.sections[0]
+  store.selectedSectionId = firstSection?.id ?? ''
+  store.selectedPhraseId = store.project?.phrases.find((phrase) => phrase.sectionId === firstSection?.id)?.id ?? null
+}
 </script>
 
 <template>
   <section v-if="store.project" class="structure-workspace">
     <p class="eyebrow">SONG STRUCTURE</p><h1 class="page-heading">Arrange the emotional journey.</h1>
-    <p class="page-copy">This structure began as a template, but every section remains movable and editable. Variations keep a visible relationship to their source.</p>
-    <div class="structure-workspace__templates" aria-label="Structure templates">
-      <button aria-pressed="true"><strong>Story arc</strong><small>Intro · Verse · Pre · Chorus · Verse · Bridge · Final</small></button>
-      <button><strong>Direct pop</strong><small>Verse · Chorus · Verse · Chorus · Bridge · Chorus</small></button>
-      <button><strong>Build manually</strong><small>Start with an empty arrangement</small></button>
+    <p class="page-copy">Choose a proven form or begin with one blank section. Previewing is safe; a template changes the song only when you apply it, and every section remains editable afterward.</p>
+    <section class="structure-workspace__template-selection" aria-label="Selected structure template" aria-live="polite">
+      <div class="structure-workspace__template-summary">
+        <span class="eyebrow">SELECTED TEMPLATE</span>
+        <strong>{{ selectedTemplate.name }}</strong>
+        <span>{{ selectedTemplate.description }}</span>
+        <span>{{ selectedTemplate.sections.length }} sections · {{ totalTemplateBars }} bars</span>
+        <em>Best for {{ selectedTemplate.bestFor.toLocaleLowerCase() }}</em>
+        <small v-if="selectedTemplateApplied">Applied to this song. Its sections remain independently editable.</small>
+        <small v-else>Applying preserves all {{ store.project.phrases.length }} existing phrases and projects the emotional curve onto the new form.</small>
+      </div>
+      <div class="structure-workspace__template-actions">
+        <AppButton variant="ghost" aria-controls="structure-template-options" :aria-expanded="choosingTemplate" @click="choosingTemplate = !choosingTemplate">
+          {{ choosingTemplate ? 'Close templates' : 'Change template' }}
+        </AppButton>
+        <AppButton v-if="!selectedTemplateApplied" variant="primary" @click="applySelectedTemplate">Apply {{ selectedTemplate.name }}</AppButton>
+      </div>
+    </section>
+    <div v-if="choosingTemplate" id="structure-template-options" class="structure-workspace__templates" aria-label="Choose a structure template">
+      <button v-for="template in structureTemplates" :key="template.id" :aria-pressed="selectedTemplateId === template.id" @click="selectTemplate(template.id)">
+        <strong>{{ template.name }}</strong>
+        <small>{{ template.description }}</small>
+        <em>Best for {{ template.bestFor.toLocaleLowerCase() }}</em>
+      </button>
     </div>
     <ol class="structure-workspace__sections">
       <li v-for="(section, index) in store.project.sections" :key="section.id" :style="{ '--section-color': section.color }" @click="store.selectedSectionId = section.id">

@@ -1,9 +1,15 @@
 import { createId } from '@domain/shared/createId'
+import type { StructureTemplate } from '@domain/structure/structureTemplates'
 
 import type { ArrangementTrack, ChordEvent, CompositionProject, EmotionFamily, FeaturedEmotion, Phrase, SongSection } from './project.types'
 
 function changed(project: CompositionProject): CompositionProject {
   return { ...project, updatedAt: new Date().toISOString() }
+}
+
+function projectIndex(index: number, sourceLength: number, targetLength: number): number {
+  if (sourceLength <= 1 || targetLength <= 1) return 0
+  return Math.round((index * (targetLength - 1)) / (sourceLength - 1))
 }
 
 export function updateStoryBlock(project: CompositionProject, blockId: string, text: string): CompositionProject {
@@ -46,6 +52,38 @@ export function replaceFeaturedEmotion(project: CompositionProject, index: numbe
 export function addSection(project: CompositionProject, name = 'New section'): CompositionProject {
   const section: SongSection = { id: createId('section'), name, bars: 4, color: '#514b43', narrativePurpose: '', sourceSectionId: null }
   return changed({ ...project, sections: [...project.sections, section] })
+}
+
+export function applyStructureTemplate(project: CompositionProject, template: StructureTemplate): CompositionProject {
+  const sectionIds = new Map(template.sections.map((section) => [section.key, createId('section')]))
+  const sections: SongSection[] = template.sections.map((section) => ({
+    id: sectionIds.get(section.key)!,
+    name: section.name,
+    bars: section.bars,
+    color: section.color,
+    narrativePurpose: section.narrativePurpose,
+    sourceSectionId: section.sourceKey ? sectionIds.get(section.sourceKey) ?? null : null,
+  }))
+  const previousSectionIndex = new Map(project.sections.map((section, index) => [section.id, index]))
+  const phraseOrder = new Map<string, number>()
+  const phrases = project.phrases.map((phrase) => {
+    const oldIndex = previousSectionIndex.get(phrase.sectionId) ?? 0
+    const newSection = sections[projectIndex(oldIndex, project.sections.length, sections.length)] ?? sections[0]!
+    const order = phraseOrder.get(newSection.id) ?? 0
+    phraseOrder.set(newSection.id, order + 1)
+    return { ...phrase, sectionId: newSection.id, order }
+  })
+  const pointIntensities = new Map(project.emotionPlan.points.map((point) => [`${point.sectionId}:${point.emotionId}`, point.intensity]))
+  const points = sections.flatMap((section, index) => {
+    const previousSection = project.sections[projectIndex(index, sections.length, project.sections.length)]
+    return project.emotionPlan.featured.map((emotion) => ({
+      sectionId: section.id,
+      emotionId: emotion.id,
+      intensity: previousSection ? pointIntensities.get(`${previousSection.id}:${emotion.id}`) ?? 0 : 0,
+    }))
+  })
+
+  return changed({ ...project, sections, phrases, emotionPlan: { ...project.emotionPlan, points } })
 }
 
 export function moveSection(project: CompositionProject, sectionId: string, direction: -1 | 1): CompositionProject {
