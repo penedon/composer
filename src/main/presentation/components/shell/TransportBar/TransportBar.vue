@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 import { AppButton } from '@presentation/components/base/AppButton'
 import SongPositionTracker from '@presentation/components/shell/SongPositionTracker/SongPositionTracker.vue'
 import { useProjectStore } from '@presentation/stores/project.store'
 
 const store = useProjectStore()
+const route = useRoute()
+const inWorkspace = computed(() => route.name === 'workspace')
 const isPlaying = computed(() => store.playingSong || Boolean(store.playingPhraseId) || Boolean(store.playingSectionId))
 const status = computed(() => store.playbackError ?? (store.playingSong ? 'Playing song' : store.playingSectionId ? 'Looping section' : store.playingPhraseId ? 'Auditioning phrase' : 'Ready'))
 
@@ -16,7 +19,7 @@ function togglePlayback(): void {
 </script>
 
 <template>
-  <footer class="transport-shell">
+  <footer class="transport-shell" :class="{ 'transport-shell--workspace': inWorkspace }">
     <SongPositionTracker />
     <div class="transport-bar">
       <span

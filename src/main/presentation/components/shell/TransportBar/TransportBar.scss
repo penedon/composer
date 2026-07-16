@@ -5,3 +5,4 @@
 .transport-bar__controls .app-button { min-width: 7.5rem; }
 .transport-bar__error { color: #e6a09b; }
 @media(max-width: 700px) { .transport-bar { padding: 0 1rem; } .transport-bar > span:last-child { display: none; } .transport-bar__controls { gap: .8rem; } }
+@media(max-width:599px){.transport-shell{bottom:0;grid-template-rows:var(--transport-bar-height);height:var(--transport-bar-height)}.transport-shell--workspace{bottom:calc(var(--mobile-nav-height) + env(safe-area-inset-bottom,0px))}.transport-shell :deep(.song-position){display:none}.transport-bar{justify-content:center;padding:0 var(--compact-margin)}.transport-bar>span{display:none}.transport-bar__controls{gap:1rem;justify-content:center;width:100%}.transport-bar__controls .app-button{min-width:8rem}.transport-bar__controls>span:nth-of-type(n+2){display:none}}

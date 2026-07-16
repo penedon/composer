@@ -13,3 +13,4 @@
 .library__mark { background: var(--action); border-radius: 1rem; height: .45rem; width: 3rem; }
 .library__card strong { font-size: 1.2rem; }.library__card small { color: var(--paper-muted); }.library__card > span:last-child { font-size: .78rem; font-weight: 700; margin-top: .75rem; }
 .library__empty { border: 1px dashed var(--border-strong); border-radius: var(--radius-md); color: var(--text-muted); padding: 2rem; }
+@media(max-width:599px){.library{padding:2rem var(--compact-margin)}.library__hero h1{font-size:clamp(2.25rem,12vw,3.2rem)}.library__create{align-items:stretch;display:grid}.library__create .app-button{width:100%}.library__examples,.library__recent{margin-top:3.5rem}.library__grid{grid-template-columns:1fr}}

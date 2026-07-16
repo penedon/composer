@@ -9,7 +9,7 @@ test('header, phase rail, and transport remain fixed while the canvas scrolls', 
 
   const header = page.locator('header.project-bar')
   const rail = page.getByRole('navigation', { name: 'Composition phases' })
-  const footer = page.locator('footer.transport-bar')
+  const footer = page.locator('footer.transport-shell')
   const canvas = page.locator('main.workspace-layout__main')
   const before = await Promise.all([header.boundingBox(), rail.boundingBox(), footer.boundingBox()])
 

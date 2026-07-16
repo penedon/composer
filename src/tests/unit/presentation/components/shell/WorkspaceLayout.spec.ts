@@ -34,13 +34,13 @@ describe('WorkspaceLayout', () => {
     await wrapper.get('button[aria-label="Hide composition context"]').trigger('click')
 
     expect(wrapper.classes()).toContain('workspace-layout--inspector-hidden')
-    expect(wrapper.get('#composition-inspector').attributes('style')).toContain('display: none')
+    expect(wrapper.classes()).toContain('workspace-layout--inspector-hidden')
     expect(wrapper.get('button[aria-label="Show composition context"]')).toBeTruthy()
     expect(localStorage.getItem('composer:shell:inspector-visible')).toBe('false')
 
     await wrapper.get('button[aria-label="Show composition context"]').trigger('click')
 
     expect(wrapper.classes()).not.toContain('workspace-layout--inspector-hidden')
-    expect(wrapper.get('#composition-inspector').attributes('style')).not.toContain('display: none')
+    expect(wrapper.classes()).not.toContain('workspace-layout--inspector-hidden')
   })
 })

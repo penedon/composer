@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-labelledby="title desc">
+  <title id="title">Composer mobile arrangement, context, and export drafts</title>
+  <desc id="desc">Compact phone screen drafts for arrangement tracks, a horizontally scrollable sequence editor, selected-note context sheet, and export.</desc>
+  <defs>
+    <style>.ui{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.h1{font-size:34px;font-weight:650;fill:#f4f1e9}.screen-title{font-size:18px;font-weight:750;fill:#f4f1e9}.body{font-size:11px;fill:#b8bbb1}.small{font-size:8px;font-weight:800;letter-spacing:.09em;fill:#8f9489}.paper-title{font-size:16px;font-weight:750;fill:#292b25}.paper{font-size:11px;fill:#55594f}.nav{font-size:8px;font-weight:750;fill:#b8bbb1}.active{fill:#dca65c}</style>
+  </defs>
+  <rect width="1600" height="1040" fill="#171916"/>
+  <g class="ui">
+    <text x="60" y="58" class="small">COMPOSER &#xB7; COMPACT WORKBENCH</text>
+    <text x="60" y="100" class="h1">Arrange, inspect, and take the song with you</text>
+    <text x="1540" y="90" text-anchor="end" class="body">Spatial editors keep intentional local scrolling</text>
+    <g transform="translate(60 152)">
+      <text x="170" text-anchor="middle" class="screen-title">Arrange tracks</text>
+      <rect y="26" width="340" height="736" rx="34" fill="#20221e" stroke="#4a4f44" stroke-width="2"/>
+      <rect y="26" width="340" height="54" rx="34" fill="#20221e"/>
+      <circle cx="22" cy="54" r="7" fill="#dca65c"/>
+      <text x="40" y="58" font-size="12" font-weight="750" fill="#f4f1e9">Long Road</text>
+      <text x="316" y="58" text-anchor="end" class="body">&#x21B6;  &#x21B7;</text>
+      <text x="16" y="112" class="small">ARRANGE WORKSPACE</text>
+      <text x="16" y="140" class="screen-title">Build the sound around the song.</text>
+      <g transform="translate(16 162)">
+        <rect width="308" height="42" rx="12" fill="#1b1d19"/>
+        <text x="16" y="26" class="nav">Intro</text>
+        <text x="72" y="26" class="nav active">Verse 1</text>
+        <text x="134" y="26" class="nav">Pre</text>
+        <text x="184" y="26" class="nav">Chorus</text>
+        <text x="286" y="26" text-anchor="end" class="nav">&#x203A;</text>
+      </g>
+      <text x="16" y="234" class="small">TRACKS &#xB7; 4</text>
+      <g transform="translate(16 250)">
+        <g>
+          <rect width="308" height="92" rx="14" fill="#2b2e28"/>
+          <circle cx="28" cy="28" r="12" fill="#dca65c"/>
+          <text x="50" y="25" font-size="11" font-weight="750" fill="#f4f1e9">Harmony</text>
+          <text x="50" y="42" class="body">Soft piano &#xB7; 78%</text>
+          <rect x="18" y="56" width="180" height="24" rx="6" fill="#20221e"/>
+          <path d="M26 68h48m10 0h40m10 0h54" stroke="#dca65c" stroke-width="5" stroke-linecap="round"/>
+          <rect x="214" y="50" width="76" height="34" rx="10" fill="#dca65c"/>
+          <text x="252" y="71" text-anchor="middle" font-size="8" font-weight="800" fill="#211a10">Edit notes</text>
+        </g>
+        <g transform="translate(0 102)">
+          <rect width="308" height="92" rx="14" fill="#2b2e28"/>
+          <circle cx="28" cy="28" r="12" fill="#6687bd"/>
+          <text x="50" y="25" font-size="11" font-weight="750" fill="#f4f1e9">Bass</text>
+          <text x="50" y="42" class="body">Upright &#xB7; 72%</text>
+          <rect x="18" y="56" width="180" height="24" rx="6" fill="#20221e"/>
+          <path d="M26 68h38m12 0h46m12 0h54" stroke="#6687bd" stroke-width="5" stroke-linecap="round"/>
+          <rect x="214" y="50" width="76" height="34" rx="10" fill="#34372f"/>
+          <text x="252" y="71" text-anchor="middle" font-size="8" font-weight="800" fill="#f4f1e9">Edit notes</text>
+        </g>
+        <g transform="translate(0 204)">
+          <rect width="308" height="92" rx="14" fill="#2b2e28"/>
+          <circle cx="28" cy="28" r="12" fill="#55a3a3"/>
+          <text x="50" y="25" font-size="11" font-weight="750" fill="#f4f1e9">Rhythm</text>
+          <text x="50" y="42" class="body">Brush kit &#xB7; 64%</text>
+          <rect x="18" y="56" width="180" height="24" rx="6" fill="#20221e"/>
+          <g fill="#55a3a3">
+            <circle cx="30" cy="68" r="4"/>
+            <circle cx="54" cy="68" r="4"/>
+            <circle cx="78" cy="68" r="4"/>
+            <circle cx="102" cy="68" r="4"/>
+            <circle cx="126" cy="68" r="4"/>
+            <circle cx="150" cy="68" r="4"/>
+            <circle cx="174" cy="68" r="4"/>
+          </g>
+          <rect x="214" y="50" width="76" height="34" rx="10" fill="#34372f"/>
+          <text x="252" y="71" text-anchor="middle" font-size="8" font-weight="800" fill="#f4f1e9">Edit hits</text>
+        </g>
+      </g>
+      <g transform="translate(0 626)">
+        <rect width="340" height="48" fill="#2b2e28"/>
+        <rect x="118" y="6" width="104" height="36" rx="12" fill="#dca65c"/>
+        <text x="170" y="29" text-anchor="middle" font-size="9" font-weight="800" fill="#211a10">&#x25B6; Play song</text>
+        <rect y="48" width="340" height="64" rx="0 0 34 34" fill="#1b1d19"/>
+        <g class="nav" text-anchor="middle">
+          <text x="34" y="84">Setup</text>
+          <text x="102" y="84">Map</text>
+          <text x="170" y="84">Compose</text>
+          <text x="238" y="84" class="active">Arrange</text>
+          <text x="306" y="84">Export</text>
+        </g>
+      </g>
+    </g>
+    <g transform="translate(440 152)">
+      <text x="170" text-anchor="middle" class="screen-title">Sequence editor</text>
+      <rect y="26" width="340" height="736" rx="34" fill="#20221e" stroke="#4a4f44" stroke-width="2"/>
+      <rect y="26" width="340" height="54" rx="34" fill="#20221e"/>
+      <text x="18" y="59" font-size="12" font-weight="750" fill="#f4f1e9">&#x2039; Harmony &#xB7; Verse 1</text>
+      <text x="316" y="59" text-anchor="end" class="body">Context</text>
+      <g transform="translate(16 98)">
+        <rect width="308" height="48" rx="12" fill="#2b2e28"/>
+        <rect x="4" y="4" width="48" height="40" rx="10" fill="#dca65c"/>
+        <text x="28" y="29" text-anchor="middle" font-size="8" font-weight="800" fill="#211a10">Draw</text>
+        <text x="82" y="29" text-anchor="middle" class="nav">Select</text>
+        <text x="142" y="29" text-anchor="middle" class="nav">Paint</text>
+        <text x="204" y="29" text-anchor="middle" class="nav">Erase</text>
+        <text x="280" y="29" text-anchor="middle" class="nav">&#x21BB; Loop</text>
+      </g>
+      <text x="16" y="176" class="small">HORIZONTAL CANVAS &#xB7; STICKY KEYS</text>
+      <g transform="translate(16 192)">
+        <rect width="308" height="360" rx="14" fill="#1b1d19" stroke="#34372f"/>
+        <g stroke="#34372f">
+          <path d="M58 0v360M92 0v360M126 0v360M160 0v360M194 0v360M228 0v360M262 0v360M296 0v360"/>
+          <path d="M0 30h308M0 60h308M0 90h308M0 120h308M0 150h308M0 180h308M0 210h308M0 240h308M0 270h308M0 300h308M0 330h308"/>
+        </g>
+        <rect width="58" height="360" rx="14 0 0 14" fill="#2b2e28"/>
+        <g class="nav">
+          <text x="12" y="20">C5</text>
+          <text x="12" y="50">B4</text>
+          <text x="12" y="80">A4</text>
+          <text x="12" y="110">G4</text>
+          <text x="12" y="140">F4</text>
+          <text x="12" y="170">E4</text>
+          <text x="12" y="200">D4</text>
+          <text x="12" y="230">C4</text>
+        </g>
+        <g fill="#dca65c">
+          <rect x="76" y="182" width="48" height="22" rx="5"/>
+          <rect x="130" y="122" width="64" height="22" rx="5"/>
+          <rect x="202" y="152" width="48" height="22" rx="5"/>
+          <rect x="258" y="92" width="56" height="22" rx="5"/>
+        </g>
+        <path d="M174 0v360" stroke="#fffaf0" stroke-width="2"/>
+      </g>
+      <rect x="16" y="570" width="308" height="46" rx="12" fill="#2b2e28"/>
+      <text x="34" y="598" class="body">Selected: D4 &#xB7; beat 4 &#xB7; 1 beat</text>
+      <text x="304" y="598" text-anchor="end" class="active" font-size="10" font-weight="800">Edit</text>
+      <g transform="translate(0 626)">
+        <rect width="340" height="48" fill="#2b2e28"/>
+        <rect x="118" y="6" width="104" height="36" rx="12" fill="#dca65c"/>
+        <text x="170" y="29" text-anchor="middle" font-size="9" font-weight="800" fill="#211a10">&#x25A0; Stop section</text>
+        <rect y="48" width="340" height="64" rx="0 0 34 34" fill="#1b1d19"/>
+        <g class="nav" text-anchor="middle">
+          <text x="34" y="84">Setup</text>
+          <text x="102" y="84">Map</text>
+          <text x="170" y="84">Compose</text>
+          <text x="238" y="84" class="active">Arrange</text>
+          <text x="306" y="84">Export</text>
+        </g>
+      </g>
+    </g>
+    <g transform="translate(820 152)">
+      <text x="170" text-anchor="middle" class="screen-title">Context sheet</text>
+      <rect y="26" width="340" height="736" rx="34" fill="#20221e" stroke="#4a4f44" stroke-width="2"/>
+      <rect y="26" width="340" height="388" rx="34" fill="#141613"/>
+      <g opacity=".35">
+        <rect x="16" y="98" width="308" height="250" rx="14" fill="#2b2e28"/>
+      </g>
+      <rect y="270" width="340" height="492" rx="28 28 34 34" fill="#f4efe5"/>
+      <rect x="130" y="284" width="80" height="5" rx="3" fill="#b9b1a4"/>
+      <text x="24" y="322" class="small" fill="#73776d">SELECTED NOTE</text>
+      <text x="24" y="354" class="paper-title">D4 &#xB7; Soft piano</text>
+      <text x="316" y="348" text-anchor="end" font-size="10" font-weight="800" fill="#73776d">Close</text>
+      <line x1="24" y1="372" x2="316" y2="372" stroke="#d8d0c2"/>
+      <text x="24" y="404" class="small" fill="#73776d">POSITION</text>
+      <text x="24" y="432" class="paper">Starts at beat</text>
+      <rect x="190" y="410" width="126" height="48" rx="12" fill="#fffaf0" stroke="#b9b1a4"/>
+      <text x="206" y="440" class="paper">4.0</text>
+      <text x="24" y="482" class="paper">Length in beats</text>
+      <rect x="190" y="460" width="126" height="48" rx="12" fill="#fffaf0" stroke="#b9b1a4"/>
+      <text x="206" y="490" class="paper">1.0</text>
+      <text x="24" y="536" class="paper">Velocity &#xB7; 84</text>
+      <line x1="24" y1="568" x2="302" y2="568" stroke="#b9b1a4" stroke-width="5"/>
+      <circle cx="214" cy="568" r="12" fill="#dca65c"/>
+      <text x="24" y="618" class="paper">Tap fields for exact edits; spatial drawing</text>
+      <text x="24" y="638" class="paper">is never the only way to change a note.</text>
+      <rect x="24" y="676" width="292" height="48" rx="12" fill="#2b2e28"/>
+      <text x="170" y="705" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">Done</text>
+    </g>
+    <g transform="translate(1200 152)">
+      <text x="170" text-anchor="middle" class="screen-title">Export</text>
+      <rect y="26" width="340" height="736" rx="34" fill="#20221e" stroke="#4a4f44" stroke-width="2"/>
+      <rect y="26" width="340" height="54" rx="34" fill="#20221e"/>
+      <circle cx="22" cy="54" r="7" fill="#dca65c"/>
+      <text x="40" y="58" font-size="12" font-weight="750" fill="#f4f1e9">Long Road</text>
+      <text x="316" y="58" text-anchor="end" class="body">&#x21B6;  &#x21B7;</text>
+      <text x="16" y="112" class="small">EXPORT WORKSPACE</text>
+      <text x="16" y="140" class="screen-title">Take the sketch with you.</text>
+      <text x="16" y="162" class="body">Local files. No account or cloud required.</text>
+      <g transform="translate(16 188)">
+        <rect width="308" height="66" rx="14" fill="#2b2e28"/>
+        <text x="18" y="25" class="small">READINESS</text>
+        <text x="18" y="47" font-size="11" font-weight="750" fill="#f4f1e9">7 sections &#xB7; 16 phrases &#xB7; 4 tracks</text>
+        <text x="286" y="40" text-anchor="end" font-size="16" fill="#a8c096">&#x2713;</text>
+        <rect y="78" width="308" height="168" rx="16" fill="#f4efe5"/>
+        <circle cx="42" cy="112" r="18" fill="#2b2e28"/>
+        <text x="42" y="117" text-anchor="middle" font-size="12" fill="#fff">&#x266B;</text>
+        <text x="72" y="109" class="paper-title">Multitrack MIDI</text>
+        <text x="72" y="128" class="paper">Separate instrument tracks for your DAW.</text>
+        <text x="18" y="160" class="paper">Harmony &#xB7; Bass &#xB7; Rhythm &#xB7; Melody</text>
+        <rect x="18" y="184" width="272" height="48" rx="12" fill="#dca65c"/>
+        <text x="154" y="213" text-anchor="middle" font-size="10" font-weight="800" fill="#211a10">Export MIDI tracks</text>
+        <rect y="258" width="308" height="152" rx="16" fill="#f4efe5"/>
+        <circle cx="42" cy="292" r="18" fill="#2b2e28"/>
+        <text x="42" y="297" text-anchor="middle" font-size="12" fill="#fff">{ }</text>
+        <text x="72" y="289" class="paper-title">Composer project</text>
+        <text x="72" y="308" class="paper">Story, intent, history, and music data.</text>
+        <rect x="18" y="340" width="272" height="48" rx="12" fill="#e5dccd"/>
+        <text x="154" y="369" text-anchor="middle" font-size="10" font-weight="800" fill="#55594f">Save project file</text>
+      </g>
+      <g transform="translate(0 626)">
+        <rect width="340" height="48" fill="#2b2e28"/>
+        <rect x="118" y="6" width="104" height="36" rx="12" fill="#dca65c"/>
+        <text x="170" y="29" text-anchor="middle" font-size="9" font-weight="800" fill="#211a10">&#x25B6; Play song</text>
+        <rect y="48" width="340" height="64" rx="0 0 34 34" fill="#1b1d19"/>
+        <g class="nav" text-anchor="middle">
+          <text x="34" y="84">Setup</text>
+          <text x="102" y="84">Map</text>
+          <text x="170" y="84">Compose</text>
+          <text x="238" y="84">Arrange</text>
+          <text x="306" y="84" class="active">Export</text>
+        </g>
+      </g>
+    </g>
+    <text x="60" y="970" class="small">SPATIAL EDITOR EXCEPTION</text>
+    <text x="242" y="970" class="body">Only the timeline/grid scrolls in two dimensions; the page shell and forms reflow to one column.</text>
+  </g>
+</svg>

@@ -54,7 +54,7 @@ describe('PhaseRail', () => {
   it('keeps every destination available in the contracted icon rail', async () => {
     const { wrapper } = await mountRail('/projects/the-doorway/compose', true)
 
-    const links = wrapper.findAll('a')
+    const links = wrapper.findAll('.phase-rail__desktop a')
     expect(links).toHaveLength(7)
     expect(links.map((link) => link.attributes('aria-label'))).toEqual(['Story', 'Frame', 'Emotions', 'Structure', 'Compose', 'Arrange', 'Export'])
     expect(wrapper.get('a[aria-label="Compose"]').attributes('aria-current')).toBe('page')

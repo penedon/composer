@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Composer mobile core flow screen drafts</title>
+  <desc id="desc">Four compact phone screen drafts for Story, Emotions, Structure, and Phrase Workspace.</desc>
+  <defs>
+    <style>.ui{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.h1{font-size:34px;font-weight:650;fill:#f4f1e9}.screen-title{font-size:19px;font-weight:750;fill:#f4f1e9}.body{font-size:11px;fill:#b8bbb1}.small{font-size:8px;font-weight:800;letter-spacing:.09em;fill:#8f9489}.paper-title{font-size:19px;font-weight:700;fill:#292b25}.paper{font-size:12px;fill:#44473f}.nav{font-size:8px;font-weight:750;fill:#b8bbb1}.active{fill:#dca65c}</style>
+  </defs>
+  <rect width="1600" height="1100" fill="#171916"/>
+  <g class="ui">
+    <text x="60" y="58" class="small">COMPOSER &#xB7; COMPACT SCREEN DRAFTS</text>
+    <text x="60" y="100" class="h1">Intent to first phrase</text>
+    <text x="1540" y="90" text-anchor="end" class="body">390 &#xD7; 844 reference viewport</text>
+    <g transform="translate(60 152)">
+      <text x="170" y="0" text-anchor="middle" class="screen-title">1 &#xB7; Story</text>
+      <rect y="26" width="340" height="736" rx="34" fill="#20221e" stroke="#4a4f44" stroke-width="2"/>
+      <rect y="26" width="340" height="54" rx="34" fill="#20221e"/>
+      <circle cx="22" cy="54" r="7" fill="#dca65c"/>
+      <text x="40" y="58" font-size="12" font-weight="750" fill="#f4f1e9">Long Road</text>
+      <text x="316" y="58" text-anchor="end" class="body">&#x21B6;  &#x21B7;</text>
+      <g transform="translate(14 92)">
+        <rect width="312" height="38" rx="12" fill="#1b1d19"/>
+        <text x="52" y="24" text-anchor="middle" class="nav active">Story</text>
+        <text x="156" y="24" text-anchor="middle" class="nav">Frame</text>
+        <text x="260" y="24" text-anchor="middle" class="nav">Emotions</text>
+      </g>
+      <text x="16" y="158" class="small">STORY WORKSPACE</text>
+      <text x="16" y="184" class="screen-title">Write the song first.</text>
+      <rect x="16" y="204" width="308" height="386" rx="18" fill="#f4efe5"/>
+      <text x="34" y="234" class="small" fill="#73776d">WORKING PREMISE</text>
+      <text x="34" y="270" class="paper-title">The Long Road Within</text>
+      <line x1="34" y1="286" x2="306" y2="286" stroke="#d8d0c2"/>
+      <rect x="34" y="310" width="78" height="24" rx="12" fill="#e5dccd"/>
+      <text x="73" y="326" text-anchor="middle" font-size="8" font-weight="800" fill="#73776d">PREMISE</text>
+      <text x="34" y="358" class="paper">A traveler returns home, unsure</text>
+      <text x="34" y="378" class="paper">whether the road changed him.</text>
+      <line x1="34" y1="404" x2="306" y2="404" stroke="#ddd4c5"/>
+      <rect x="34" y="424" width="74" height="24" rx="12" fill="#e5dccd"/>
+      <text x="71" y="440" text-anchor="middle" font-size="8" font-weight="800" fill="#73776d">CONFLICT</text>
+      <text x="34" y="472" class="paper">Home feels familiar and strange.</text>
+      <rect x="222" y="544" width="84" height="36" rx="12" fill="#2b2e28"/>
+      <text x="264" y="566" text-anchor="middle" font-size="9" font-weight="800" fill="#fff">Next &#xB7; Frame</text>
+      <g transform="translate(0 600)">
+        <rect width="340" height="48" fill="#2b2e28"/>
+        <rect x="118" y="6" width="104" height="36" rx="12" fill="#dca65c"/>
+        <text x="170" y="29" text-anchor="middle" font-size="9" font-weight="800" fill="#211a10">&#x25B6; Play song</text>
+        <rect y="48" width="340" height="64" rx="0 0 34 34" fill="#1b1d19"/>
+        <g class="nav" text-anchor="middle">
+          <text x="34" y="84" class="active">Setup</text>
+          <text x="102" y="84">Map</text>
+          <text x="170" y="84">Compose</text>
+          <text x="238" y="84">Arrange</text>
+          <text x="306" y="84">Export</text>
+        </g>
+      </g>
+    </g>
+    <g transform="translate(440 152)">
+      <text x="170" y="0" text-anchor="middle" class="screen-title">2 &#xB7; Emotions</text>
+      <rect y="26" width="340" height="736" rx="34" fill="#20221e" stroke="#4a4f44" stroke-width="2"/>
+      <rect y="26" width="340" height="54" rx="34" fill="#20221e"/>
+      <circle cx="22" cy="54" r="7" fill="#dca65c"/>
+      <text x="40" y="58" font-size="12" font-weight="750" fill="#f4f1e9">Long Road</text>
+      <text x="316" y="58" text-anchor="end" class="body">&#x21B6;  &#x21B7;</text>
+      <g transform="translate(14 92)">
+        <rect width="312" height="38" rx="12" fill="#1b1d19"/>
+        <text x="52" y="24" text-anchor="middle" class="nav">Story</text>
+        <text x="156" y="24" text-anchor="middle" class="nav">Frame</text>
+        <text x="260" y="24" text-anchor="middle" class="nav active">Emotions</text>
+      </g>
+      <text x="16" y="158" class="small">EMOTION WORKSPACE</text>
+      <text x="16" y="184" class="screen-title">Choose the emotional lens.</text>
+      <text x="16" y="206" class="body">Labels are expressive aids, not diagnoses.</text>
+      <rect x="16" y="228" width="308" height="140" rx="18" fill="#2b2e28"/>
+      <text x="32" y="254" class="small">DOMINANT FAMILY</text>
+      <circle cx="70" cy="310" r="34" fill="#6687bd"/>
+      <circle cx="138" cy="310" r="27" fill="#d46f80"/>
+      <circle cx="197" cy="310" r="24" fill="#c68b50"/>
+      <circle cx="252" cy="310" r="21" fill="#55a3a3"/>
+      <text x="70" y="314" text-anchor="middle" font-size="9" font-weight="800" fill="#fff">Sadness</text>
+      <text x="16" y="402" class="small">FEATURED EMOTIONS &#xB7; 3 OF 3</text>
+      <g transform="translate(16 420)">
+        <rect width="308" height="50" rx="14" fill="#f4efe5"/>
+        <circle cx="24" cy="25" r="6" fill="#6687bd"/>
+        <text x="42" y="29" class="paper">Melancholy</text>
+        <text x="286" y="29" text-anchor="end" font-size="10" fill="#73776d">&#x2713;</text>
+        <rect y="60" width="308" height="50" rx="14" fill="#f4efe5"/>
+        <circle cx="24" cy="85" r="6" fill="#d46f80"/>
+        <text x="42" y="89" class="paper">Longing</text>
+        <text x="286" y="89" text-anchor="end" font-size="10" fill="#73776d">&#x2713;</text>
+        <rect y="120" width="308" height="50" rx="14" fill="#f4efe5"/>
+        <circle cx="24" cy="145" r="6" fill="#c68b50"/>
+        <text x="42" y="149" class="paper">Desire</text>
+        <text x="286" y="149" text-anchor="end" font-size="10" fill="#73776d">&#x2713;</text>
+      </g>
+      <g transform="translate(0 626)">
+        <rect width="340" height="48" fill="#2b2e28"/>
+        <rect x="118" y="6" width="104" height="36" rx="12" fill="#dca65c"/>
+        <text x="170" y="29" text-anchor="middle" font-size="9" font-weight="800" fill="#211a10">&#x25B6; Play song</text>
+        <rect y="48" width="340" height="64" rx="0 0 34 34" fill="#1b1d19"/>
+        <g class="nav" text-anchor="middle">
+          <text x="34" y="84" class="active">Setup</text>
+          <text x="102" y="84">Map</text>
+          <text x="170" y="84">Compose</text>
+          <text x="238" y="84">Arrange</text>
+          <text x="306" y="84">Export</text>
+        </g>
+      </g>
+    </g>
+    <g transform="translate(820 152)">
+      <text x="170" y="0" text-anchor="middle" class="screen-title">3 &#xB7; Structure</text>
+      <rect y="26" width="340" height="736" rx="34" fill="#20221e" stroke="#4a4f44" stroke-width="2"/>
+      <rect y="26" width="340" height="54" rx="34" fill="#20221e"/>
+      <circle cx="22" cy="54" r="7" fill="#dca65c"/>
+      <text x="40" y="58" font-size="12" font-weight="750" fill="#f4f1e9">Long Road</text>
+      <text x="316" y="58" text-anchor="end" class="body">&#x21B6;  &#x21B7;</text>
+      <text x="16" y="112" class="small">STRUCTURE WORKSPACE</text>
+      <text x="16" y="140" class="screen-title">Shape the song's journey.</text>
+      <rect x="16" y="162" width="308" height="92" rx="16" fill="#f4efe5"/>
+      <text x="32" y="190" class="small" fill="#73776d">CURRENT FORM</text>
+      <text x="32" y="218" class="paper-title">Story arc</text>
+      <rect x="232" y="180" width="74" height="44" rx="12" fill="#e5dccd"/>
+      <text x="269" y="207" text-anchor="middle" font-size="9" font-weight="800" fill="#55594f">Change</text>
+      <text x="16" y="288" class="small">7 SECTIONS &#xB7; 48 BARS</text>
+      <g transform="translate(16 306)">
+        <rect width="308" height="68" rx="14" fill="#2b2e28"/>
+        <rect width="7" height="68" rx="4" fill="#51493d"/>
+        <text x="24" y="27" font-size="12" font-weight="750" fill="#f4f1e9">Intro</text>
+        <text x="24" y="47" class="body">4 bars &#xB7; establish distance</text>
+        <text x="286" y="38" text-anchor="end" class="body">&#x22EE;</text>
+        <rect y="78" width="308" height="68" rx="14" fill="#2b2e28"/>
+        <rect y="78" width="7" height="68" rx="4" fill="#3a4658"/>
+        <text x="24" y="105" font-size="12" font-weight="750" fill="#f4f1e9">Verse 1</text>
+        <text x="24" y="125" class="body">8 bars &#xB7; name the conflict</text>
+        <text x="286" y="116" text-anchor="end" class="body">&#x22EE;</text>
+        <rect y="156" width="308" height="68" rx="14" fill="#2b2e28"/>
+        <rect y="156" width="7" height="68" rx="4" fill="#5d3941"/>
+        <text x="24" y="183" font-size="12" font-weight="750" fill="#f4f1e9">Chorus</text>
+        <text x="24" y="203" class="body">8 bars &#xB7; emotional thesis</text>
+        <text x="286" y="194" text-anchor="end" class="body">&#x22EE;</text>
+      </g>
+      <g transform="translate(0 626)">
+        <rect width="340" height="48" fill="#2b2e28"/>
+        <rect x="118" y="6" width="104" height="36" rx="12" fill="#dca65c"/>
+        <text x="170" y="29" text-anchor="middle" font-size="9" font-weight="800" fill="#211a10">&#x25B6; Play song</text>
+        <rect y="48" width="340" height="64" rx="0 0 34 34" fill="#1b1d19"/>
+        <g class="nav" text-anchor="middle">
+          <text x="34" y="84">Setup</text>
+          <text x="102" y="84" class="active">Map</text>
+          <text x="170" y="84">Compose</text>
+          <text x="238" y="84">Arrange</text>
+          <text x="306" y="84">Export</text>
+        </g>
+      </g>
+    </g>
+    <g transform="translate(1200 152)">
+      <text x="170" y="0" text-anchor="middle" class="screen-title">4 &#xB7; Compose</text>
+      <rect y="26" width="340" height="736" rx="34" fill="#20221e" stroke="#4a4f44" stroke-width="2"/>
+      <rect y="26" width="340" height="54" rx="34" fill="#20221e"/>
+      <circle cx="22" cy="54" r="7" fill="#dca65c"/>
+      <text x="40" y="58" font-size="12" font-weight="750" fill="#f4f1e9">Long Road</text>
+      <text x="316" y="58" text-anchor="end" class="body">&#x21B6;  &#x21B7;</text>
+      <text x="16" y="112" class="small">PHRASE WORKSPACE</text>
+      <text x="16" y="140" class="screen-title">Write one musical thought.</text>
+      <g transform="translate(16 162)">
+        <rect width="308" height="36" rx="18" fill="#1b1d19"/>
+        <text x="26" y="23" font-size="9" font-weight="800" fill="#f4f1e9">Verse 1</text>
+        <text x="104" y="23" class="nav">Phrase 2 of 4</text>
+        <text x="288" y="23" text-anchor="end" class="nav">Change &#x25BE;</text>
+      </g>
+      <rect x="16" y="216" width="308" height="314" rx="18" fill="#f4efe5"/>
+      <rect x="16" y="216" width="7" height="314" rx="4" fill="#d46f80"/>
+      <text x="36" y="246" class="small" fill="#73776d">VERSE 1 &#xB7; PHRASE 2 &#xB7; ACTIVE</text>
+      <g transform="translate(36 266)">
+        <rect width="76" height="38" rx="11" fill="#eee2cf" stroke="#d2a76a"/>
+        <text x="12" y="24" font-size="11" font-weight="800" fill="#74562f">Dm</text>
+        <rect x="92" width="76" height="38" rx="11" fill="#eee2cf" stroke="#d2a76a"/>
+        <text x="104" y="24" font-size="11" font-weight="800" fill="#74562f">Bb</text>
+      </g>
+      <text x="36" y="342" font-family="Georgia,serif" font-size="18" fill="#292b25">I still set the table</text>
+      <text x="36" y="368" font-family="Georgia,serif" font-size="18" fill="#292b25">like you might come home</text>
+      <line x1="36" y1="392" x2="304" y2="392" stroke="#ddd4c5"/>
+      <g transform="translate(36 420)">
+        <rect width="48" height="48" rx="12" fill="#2b2e28"/>
+        <text x="24" y="30" text-anchor="middle" font-size="15" fill="#fff">&#x25B6;</text>
+        <rect x="58" width="48" height="48" rx="12" fill="#e7dfd2"/>
+        <text x="82" y="30" text-anchor="middle" font-size="13" fill="#50534b">&#x21BB;</text>
+        <rect x="116" width="48" height="48" rx="12" fill="#e7dfd2"/>
+        <text x="140" y="30" text-anchor="middle" font-size="15" fill="#50534b">&#xFF0B;</text>
+        <rect x="174" width="48" height="48" rx="12" fill="#e7dfd2"/>
+        <text x="198" y="30" text-anchor="middle" font-size="15" fill="#50534b">&#x22EF;</text>
+      </g>
+      <rect x="36" y="480" width="268" height="38" rx="11" fill="#dca65c"/>
+      <text x="170" y="504" text-anchor="middle" font-size="9" font-weight="800" fill="#211a10">&#x25B6; Play &amp; next phrase</text>
+      <g transform="translate(0 626)">
+        <rect width="340" height="48" fill="#2b2e28"/>
+        <rect x="118" y="6" width="104" height="36" rx="12" fill="#dca65c"/>
+        <text x="170" y="29" text-anchor="middle" font-size="9" font-weight="800" fill="#211a10">&#x25B6; Play song</text>
+        <rect y="48" width="340" height="64" rx="0 0 34 34" fill="#1b1d19"/>
+        <g class="nav" text-anchor="middle">
+          <text x="34" y="84">Setup</text>
+          <text x="102" y="84">Map</text>
+          <text x="170" y="84" class="active">Compose</text>
+          <text x="238" y="84">Arrange</text>
+          <text x="306" y="84">Export</text>
+        </g>
+      </g>
+    </g>
+    <text x="60" y="970" class="small">MOBILE PRINCIPLES</text>
+    <line x1="60" y1="986" x2="1540" y2="986" stroke="#34372f"/>
+    <text x="60" y="1026" class="body">One pane &#xB7; 16 px margins &#xB7; 48 px controls &#xB7; explicit Play &amp; next &#xB7; no hover-only actions &#xB7; color always paired with meaning</text>
+  </g>
+</svg>

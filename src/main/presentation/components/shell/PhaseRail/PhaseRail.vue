@@ -67,6 +67,36 @@ watch(() => store.project?.id, restoreSetupPreference, { immediate: true })
 
 <template>
   <nav class="phase-rail" :class="{ 'phase-rail--collapsed': props.collapsed }" aria-label="Composition phases">
+    <div class="phase-rail__mobile-context" aria-label="Current composition area">
+      <template v-if="isSetupPhase">
+        <RouterLink
+          v-for="phase in setupPhases"
+          :key="`mobile-setup-${phase}`"
+          :class="{ 'phase-rail__mobile-context-link--active': current === phase }"
+          :to="`${projectPath}/${phase}`"
+          :aria-current="current === phase ? 'page' : undefined"
+        >{{ labels[phase] }}</RouterLink>
+      </template>
+      <template v-else>
+        <span><PhaseIcon :phase="current" />{{ labels[current] }}</span>
+        <small>{{ descriptions[current] ?? (current === 'structure' ? 'Sections · arc · flow' : 'Project files · MIDI') }}</small>
+      </template>
+    </div>
+
+    <div class="phase-rail__mobile-destinations">
+      <RouterLink
+        :class="{ 'phase-rail__mobile-destination--active': isSetupPhase }"
+        :to="`${projectPath}/${isSetupPhase ? current : 'story'}`"
+        :aria-current="isSetupPhase ? 'page' : undefined"
+        aria-label="Setup"
+      ><PhaseIcon phase="story" /><span>Setup</span></RouterLink>
+      <RouterLink :class="{ 'phase-rail__mobile-destination--active': current === 'structure' }" :to="`${projectPath}/structure`" :aria-current="current === 'structure' ? 'page' : undefined" aria-label="Map"><PhaseIcon phase="structure" /><span>Map</span></RouterLink>
+      <RouterLink :class="{ 'phase-rail__mobile-destination--active': current === 'compose' }" :to="`${projectPath}/compose`" :aria-current="current === 'compose' ? 'page' : undefined" aria-label="Compose"><PhaseIcon phase="compose" /><span>Compose</span></RouterLink>
+      <RouterLink :class="{ 'phase-rail__mobile-destination--active': current === 'arrange' }" :to="`${projectPath}/arrange`" :aria-current="current === 'arrange' ? 'page' : undefined" aria-label="Arrange"><PhaseIcon phase="arrange" /><span>Arrange</span></RouterLink>
+      <RouterLink :class="{ 'phase-rail__mobile-destination--active': current === 'export' }" :to="`${projectPath}/export`" :aria-current="current === 'export' ? 'page' : undefined" aria-label="Export"><PhaseIcon phase="export" /><span>Export</span></RouterLink>
+    </div>
+
+    <div class="phase-rail__desktop">
     <template v-if="props.collapsed">
       <p class="sr-only">Composition phases</p>
       <RouterLink
@@ -166,6 +196,7 @@ watch(() => store.project?.id, restoreSetupPreference, { immediate: true })
         <small>{{ store.project.emotionPlan.featured.map((item) => item.name).join(' · ') }}</small>
       </div>
     </template>
+    </div>
   </nav>
 </template>
 

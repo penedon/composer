@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1130" viewBox="0 0 1440 1130" role="img" aria-labelledby="title desc">
   <title id="title">Composer design atlas</title>
   <desc id="desc">An index of the implemented design foundations and representative screens, with the remaining screen groups shown as upcoming work.</desc>
   <defs>
@@ -18,7 +18,7 @@
   <g class="ui">
     <text x="52" y="54" class="small">COMPOSER · DESIGN ATLAS</text>
     <text x="52" y="94" class="h1">A songwriting system built around intent</text>
-    <text x="1388" y="82" text-anchor="end" class="body">Phase A · visual language validation</text>
+    <text x="1388" y="82" text-anchor="end" class="body">Desktop + compact mobile system</text>
 
     <text x="52" y="150" class="small">FOUNDATIONS</text>
     <line x1="52" y1="162" x2="1388" y2="162" stroke="#34372f"/>
@@ -125,5 +125,17 @@
       <rect width="240" height="102" rx="16" fill="#20221e" stroke="#3a3d35"/>
       <text x="20" y="32" class="status" fill="#90958b">FLOW BOARDS</text><text x="20" y="60" class="h2">Six complete flows</text><text x="20" y="82" class="body">Happy paths and revision</text>
     </g>
+
+    <text x="52" y="916" class="small">COMPACT MOBILE DRAFT</text>
+    <line x1="52" y1="928" x2="1388" y2="928" stroke="#34372f"/>
+    <a href="flows/03-mobile-experience-map.svg">
+      <g transform="translate(52 954)"><rect width="408" height="132" rx="18" fill="#20221e" stroke="#3a3d35"/><rect width="8" height="132" rx="4" fill="#55a3a3"/><text x="28" y="34" class="status" fill="#55a3a3">DRAFT · MOBILE FLOW</text><text x="28" y="64" class="h2">Compact experience map</text><text x="28" y="90" class="body">Five destinations · one pane · context sheet</text><text x="380" y="112" text-anchor="end" class="body">Open →</text></g>
+    </a>
+    <a href="screens/25-mobile-core-flow.svg">
+      <g transform="translate(484 954)"><rect width="408" height="132" rx="18" fill="#20221e" stroke="#3a3d35"/><rect width="8" height="132" rx="4" fill="#d46f80"/><text x="28" y="34" class="status" fill="#d46f80">DRAFT · 25</text><text x="28" y="64" class="h2">Intent to first phrase</text><text x="28" y="90" class="body">Story · Emotions · Structure · Compose</text><text x="380" y="112" text-anchor="end" class="body">Open →</text></g>
+    </a>
+    <a href="screens/26-mobile-workbench-flow.svg">
+      <g transform="translate(916 954)"><rect width="472" height="132" rx="18" fill="#20221e" stroke="#3a3d35"/><rect width="8" height="132" rx="4" fill="#d8a45e"/><text x="28" y="34" class="status" fill="#d8a45e">DRAFT · 26</text><text x="28" y="64" class="h2">Mobile workbench</text><text x="28" y="90" class="body">Arrange · Sequence · Context · Export</text><text x="444" y="112" text-anchor="end" class="body">Open →</text></g>
+    </a>
   </g>
 </svg>

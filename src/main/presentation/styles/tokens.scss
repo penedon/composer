@@ -27,6 +27,10 @@
   --transport-bar-height: 4rem;
   --song-tracker-height: 3.25rem;
   --transport-stack-height: calc(var(--transport-bar-height) + var(--song-tracker-height));
+  --mobile-nav-height: 0rem;
+  --workspace-bottom-height: var(--transport-stack-height);
+  --compact-margin: 1rem;
+  --touch-target: 3rem;
   font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -46,4 +50,15 @@ a { color: inherit; }
 .field input, .field textarea, .field select { background: var(--surface-raised); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); color: var(--text-strong); padding: .75rem .9rem; }
 .field input:focus-visible, .field textarea:focus-visible, .field select:focus-visible { outline: 3px solid color-mix(in srgb, var(--action) 45%, transparent); outline-offset: 2px; }
 .sr-only { height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; clip: rect(0,0,0,0); }
+@media (max-width: 599px) {
+  :root {
+    --project-bar-height: calc(3.5rem + env(safe-area-inset-top, 0px));
+    --transport-bar-height: 3.5rem;
+    --song-tracker-height: 0rem;
+    --transport-stack-height: var(--transport-bar-height);
+    --mobile-nav-height: 4.5rem;
+    --workspace-bottom-height: calc(var(--transport-stack-height) + var(--mobile-nav-height) + env(safe-area-inset-bottom, 0px));
+  }
+  .field input, .field textarea, .field select { min-height: var(--touch-target); }
+}
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }

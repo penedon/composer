@@ -6,3 +6,4 @@
 .project-bar__project strong { font-size: .86rem; font-weight: 500; }
 .project-bar__actions { align-items: center; display: flex; gap: .35rem; margin-left: auto; }
 .project-bar__status { color: var(--text-muted); font-size: .75rem; margin-left: .75rem; min-width: 5.5rem; }
+@media(max-width:599px){.project-bar{padding:0 .75rem;padding-top:env(safe-area-inset-top,0px)}.project-bar__brand{font-size:1rem;gap:.5rem;width:auto}.project-bar__brand span{height:.75rem;width:.75rem}.project-bar__project{margin-left:.75rem;min-width:0;padding-left:.75rem}.project-bar__project small{display:none}.project-bar__project strong{display:block;font-size:.78rem;max-width:8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.project-bar__actions{gap:0}.project-bar__actions .app-button{min-width:var(--touch-target);padding:.5rem}.project-bar__action-label,.project-bar__status{display:none}}
