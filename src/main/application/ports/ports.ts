@@ -14,13 +14,14 @@ export interface PhrasePlaybackRequest {
   meter: string
   leadInChord: string | null
   loop: boolean
+  instrumentId?: string
 }
 
 export interface PlaybackEngine {
   playPhrase(request: PhrasePlaybackRequest): Promise<void>
   playSong(project: CompositionProject, startBeat?: number): Promise<number>
-  auditionChord(symbol: string): Promise<void>
-  auditionNote(midiNote: number, role: TrackRole, volume?: number): Promise<void>
+  auditionChord(symbol: string, instrumentId?: string): Promise<void>
+  auditionNote(midiNote: number, role: TrackRole, instrumentId: string, volume?: number): Promise<void>
   stop(): Promise<void>
 }
 

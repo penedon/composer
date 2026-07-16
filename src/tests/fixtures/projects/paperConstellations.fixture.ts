@@ -11,7 +11,7 @@ const sections: SongSection[] = [
 export function createPaperConstellationsProject(): CompositionProject {
   const timestamp = '2026-07-16T00:00:00.000Z'
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     id: 'paper-constellations',
     title: 'Paper Constellations',
     createdAt: timestamp,
@@ -47,10 +47,10 @@ export function createPaperConstellationsProject(): CompositionProject {
       { id: 'final-2', sectionId: 'final', order: 1, bars: 4, lyrics: 'No proof above me, only open road', chords: [{ id: 'final2-am', symbol: 'Am', beat: 0, duration: 4 }, { id: 'final2-f', symbol: 'F', beat: 4, duration: 4 }, { id: 'final2-g', symbol: 'G7', beat: 8, duration: 4 }, { id: 'final2-c', symbol: 'C', beat: 12, duration: 4 }], emotionId: 'serenity', rhythm: 'Driving', dynamics: 'Full', instrumental: false },
     ],
     tracks: [
-      { id: 'track-harmony', name: 'Harmony', role: 'harmony', instrument: 'Electric piano', volume: .82, muted: false, solo: false },
-      { id: 'track-bass', name: 'Bass', role: 'bass', instrument: 'Electric bass', volume: .72, muted: false, solo: false },
-      { id: 'track-rhythm', name: 'Rhythm', role: 'rhythm', instrument: 'Acoustic kit', volume: .7, muted: false, solo: false },
-      { id: 'track-melody', name: 'Melody guide', role: 'melody', instrument: 'Voice', volume: .76, muted: false, solo: false },
+      { id: 'track-harmony', name: 'Harmony', role: 'harmony', instrumentId: 'keys.electric-piano', volume: .82, muted: false, solo: false },
+      { id: 'track-bass', name: 'Bass', role: 'bass', instrumentId: 'bass.electric', volume: .72, muted: false, solo: false },
+      { id: 'track-rhythm', name: 'Rhythm', role: 'rhythm', instrumentId: 'kit.acoustic', volume: .7, muted: false, solo: false },
+      { id: 'track-melody', name: 'Melody guide', role: 'melody', instrumentId: 'voice.guide', volume: .76, muted: false, solo: false },
     ],
     sequenceClips: [],
     alternatives: [],

@@ -7,6 +7,26 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.clear())
 })
 
+test('persists role-compatible sampled instruments on arrangement tracks', async ({ page }) => {
+  const composer = new ComposerDriver(page)
+  await composer.createProject('Instrument Song')
+  await composer.openPhase('Arrange')
+
+  await page.getByLabel('Instrument for Harmony').selectOption({ label: 'Nylon guitar' })
+  await page.getByLabel('Instrument for Rhythm').selectOption({ label: 'Electronic kit' })
+
+  await expect(page.getByLabel('Instrument for Harmony')).toHaveValue('guitar.nylon')
+  await expect(page.getByLabel('Instrument for Rhythm')).toHaveValue('kit.electronic')
+  await expect.poll(() => composer.localProjectJson('instrument-song')).toContain('"instrumentId":"guitar.nylon"')
+  await expect.poll(() => composer.localProjectJson('instrument-song')).toContain('"instrumentId":"kit.electronic"')
+
+  await page.getByRole('link', { name: /Composer/ }).click()
+  await page.getByRole('link', { name: /Instrument Song/ }).click()
+  await composer.openPhase('Arrange')
+  await expect(page.getByLabel('Instrument for Harmony')).toHaveValue('guitar.nylon')
+  await expect(page.getByLabel('Instrument for Rhythm')).toHaveValue('kit.electronic')
+})
+
 test('writes drum hits and piano notes into separate section clips', async ({ page }) => {
   const composer = new ComposerDriver(page)
   await composer.createProject('Sequencer Song')

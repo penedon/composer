@@ -11,7 +11,12 @@ export class ComposerDriver {
   }
 
   async openPhase(name: 'Story' | 'Frame' | 'Emotions' | 'Structure' | 'Compose' | 'Arrange' | 'Export'): Promise<void> {
-    await this.page.getByRole('navigation', { name: 'Composition phases' }).getByRole('link', { name: new RegExp(name) }).click()
+    const navigation = this.page.getByRole('navigation', { name: 'Composition phases' })
+    const link = navigation.getByRole('link', { name: new RegExp(name) })
+    if (['Story', 'Frame', 'Emotions'].includes(name) && !(await link.isVisible())) {
+      await navigation.getByRole('button', { name: 'Expand Song setup' }).click()
+    }
+    await link.click()
   }
 
   async localProjectJson(projectId = 'e2e-song'): Promise<string | null> {

@@ -5,6 +5,8 @@ import { addSequenceNote, makeSequenceVariation, removeSequenceNote, updateSeque
 import { resolveSequenceClip } from '@domain/project/project.sequence'
 import type { MidiNoteEvent } from '@domain/project/project.types'
 import { buildSectionTimelineLabels } from '@domain/structure/sectionTimelineLabels'
+import { gmDrumMap } from '@domain/arrangement/gmDrumMap'
+import { instrumentLabel } from '@domain/arrangement/instrumentCatalog'
 import { useProjectStore } from '@presentation/stores/project.store'
 
 type EditTool = 'select' | 'draw' | 'erase'
@@ -15,17 +17,6 @@ const stepBeats = ref(.25)
 const usedRowsOnly = ref(false)
 const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 const pitchClasses: Record<string, number> = { C: 0, 'C#': 1, Db: 1, D: 2, 'D#': 3, Eb: 3, E: 4, F: 5, 'F#': 6, Gb: 6, G: 7, 'G#': 8, Ab: 8, A: 9, 'A#': 10, Bb: 10, B: 11 }
-
-const drumRows = [
-  { pitch: 51, name: 'Ride bell' },
-  { pitch: 49, name: 'Crash' },
-  { pitch: 46, name: 'Open hat' },
-  { pitch: 42, name: 'Closed hat' },
-  { pitch: 38, name: 'Snare' },
-  { pitch: 37, name: 'Side stick' },
-  { pitch: 45, name: 'Low tom' },
-  { pitch: 36, name: 'Kick' },
-] as const
 
 const track = computed(() => store.project?.tracks.find((candidate) => candidate.id === store.selectedSequenceTrackId) ?? null)
 const section = computed(() => store.project?.sections.find((candidate) => candidate.id === store.selectedSectionId) ?? null)
@@ -47,7 +38,7 @@ const visiblePianoRows = computed(() => {
   if (!usedRowsOnly.value || !clip.value?.notes.length) return allPianoRows.value
   return [...new Set(clip.value.notes.map((note) => note.pitch))].sort((left, right) => right - left)
 })
-const activeRows = computed(() => isDrums.value ? drumRows : visiblePianoRows.value.map((pitch) => ({ pitch, name: noteName(pitch) })))
+const activeRows = computed(() => isDrums.value ? gmDrumMap : visiblePianoRows.value.map((pitch) => ({ pitch, name: noteName(pitch) })))
 const selectedNote = computed(() => clip.value?.notes.find((note) => note.id === store.selectedSequenceNoteId) ?? null)
 const playheadPercent = computed(() => store.playingSectionId === section.value?.id ? Math.min(100, store.sectionPlaybackPositionBeats / totalBeats.value * 100) : 0)
 const playheadLeft = computed(() => 144 + playheadPercent.value / 100 * steps.value * 18)
@@ -131,7 +122,7 @@ function toggleSectionLoop(): void {
 
 function audition(pitch: number): void {
   if (!track.value) return
-  void store.auditionNote(pitch, track.value.role, track.value.volume)
+  void store.auditionNote(pitch, track.value.role, track.value.instrumentId, track.value.volume)
 }
 </script>
 
@@ -201,7 +192,7 @@ function audition(pitch: number): void {
 
     <div class="sequence-editor__surface" :class="{ 'is-locked': linked }">
       <div class="sequence-editor__surface-header">
-        <span>{{ track.instrument }} · {{ section.name }}</span>
+        <span>{{ instrumentLabel(track.instrumentId) }} · {{ section.name }}</span>
         <span>{{ section.bars }} bars · scroll horizontally to edit the full section</span>
       </div>
       <div class="sequence-editor__scroll">

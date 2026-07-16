@@ -59,7 +59,7 @@ const trackSchema = z.object({
   id: z.string(),
   name: z.string(),
   role: z.enum(['harmony', 'bass', 'rhythm', 'melody']),
-  instrument: z.string(),
+  instrumentId: z.string().min(1),
   volume: z.number().min(0).max(1),
   muted: z.boolean(),
   solo: z.boolean(),
@@ -85,7 +85,7 @@ const alternativeSchema = z.object({ id: z.string(), targetId: z.string(), name:
 const operationSchema = z.object({ id: z.string(), description: z.string(), createdAt: z.string() })
 
 export const compositionProjectSchema = z.object({
-  schemaVersion: z.literal(2),
+  schemaVersion: z.literal(3),
   id: z.string(),
   title: z.string(),
   createdAt: z.string(),

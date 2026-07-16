@@ -8,6 +8,7 @@ export interface SongPreviewEvent {
   midiNotes: number[]
   trackId: string
   role: TrackRole
+  instrumentId: string
   volume: number
   velocity: number
 }
@@ -50,6 +51,7 @@ export function buildSongPreview(project: CompositionProject): SongPreview {
             midiNotes: [note.pitch],
             trackId: track.id,
             role: track.role,
+            instrumentId: track.instrumentId,
             volume: track.volume,
             velocity: note.velocity,
           })
@@ -62,7 +64,7 @@ export function buildSongPreview(project: CompositionProject): SongPreview {
       for (const phrase of phrases) {
         if (track.role === 'rhythm') {
           for (let beat = 0; beat < phrase.bars * 4; beat += 1) {
-            events.push({ beat: startBeat + phraseCursorBeat + beat, duration: .12, midiNotes: [beat % 4 === 0 ? 36 : 42], trackId: track.id, role: track.role, volume: track.volume, velocity: 70 })
+            events.push({ beat: startBeat + phraseCursorBeat + beat, duration: .12, midiNotes: [beat % 4 === 0 ? 36 : 42], trackId: track.id, role: track.role, instrumentId: track.instrumentId, volume: track.volume, velocity: 70 })
           }
           phraseCursorBeat += phrase.bars * 4
           continue
@@ -71,7 +73,7 @@ export function buildSongPreview(project: CompositionProject): SongPreview {
         for (const chord of phrase.chords) {
           const chordNotes = chordMidiNotes(chord.symbol, track.role === 'bass' ? 2 : track.role === 'melody' ? 5 : 4)
           const midiNotes = track.role === 'bass' ? chordNotes.slice(0, 1) : track.role === 'melody' ? chordNotes.slice(-1) : chordNotes
-          events.push({ beat: startBeat + phraseCursorBeat + chord.beat, duration: chord.duration, midiNotes, trackId: track.id, role: track.role, volume: track.volume, velocity: 76 })
+          events.push({ beat: startBeat + phraseCursorBeat + chord.beat, duration: chord.duration, midiNotes, trackId: track.id, role: track.role, instrumentId: track.instrumentId, volume: track.volume, velocity: 76 })
         }
         phraseCursorBeat += phrase.bars * 4
       }

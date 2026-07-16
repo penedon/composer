@@ -77,7 +77,7 @@ export interface ArrangementTrack {
   id: string
   name: string
   role: TrackRole
-  instrument: string
+  instrumentId: string
   volume: number
   muted: boolean
   solo: boolean
@@ -113,7 +113,7 @@ export interface OperationRecord {
 }
 
 export interface CompositionProject {
-  schemaVersion: 2
+  schemaVersion: 3
   id: string
   title: string
   createdAt: string

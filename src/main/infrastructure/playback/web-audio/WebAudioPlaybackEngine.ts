@@ -88,7 +88,7 @@ export class WebAudioPlaybackEngine implements PlaybackEngine {
     })
   }
 
-  async auditionNote(midiNote: number, role: TrackRole, volume = .8): Promise<void> {
+  async auditionNote(midiNote: number, role: TrackRole, _instrumentId: string, volume = .8): Promise<void> {
     const context = await this.audioContext()
     if (!context) return
     this.scheduleNote(midiNote, context.currentTime + .01, role === 'rhythm' ? .12 : .42, role, volume, 104)

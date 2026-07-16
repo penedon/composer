@@ -178,7 +178,7 @@ function arrangementSequences(): SequenceClip[] {
 
 export function createLongRoadWithinProject(): CompositionProject {
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     id: 'example-long-road-within',
     title: 'The Long Road Within',
     createdAt: timestamp,
@@ -206,10 +206,10 @@ export function createLongRoadWithinProject(): CompositionProject {
     sections,
     phrases,
     tracks: [
-      { id: 'track-harmony', name: 'Harmony', role: 'harmony', instrument: 'Nylon guitar', volume: .84, muted: false, solo: false },
-      { id: 'track-bass', name: 'Bass', role: 'bass', instrument: 'Electric bass', volume: .7, muted: false, solo: false },
-      { id: 'track-rhythm', name: 'Rhythm', role: 'rhythm', instrument: 'Acoustic kit', volume: .68, muted: false, solo: false },
-      { id: 'track-melody', name: 'Melody guide', role: 'melody', instrument: 'Voice', volume: .78, muted: false, solo: false },
+      { id: 'track-harmony', name: 'Harmony', role: 'harmony', instrumentId: 'guitar.nylon', volume: .84, muted: false, solo: false },
+      { id: 'track-bass', name: 'Bass', role: 'bass', instrumentId: 'bass.electric', volume: .7, muted: false, solo: false },
+      { id: 'track-rhythm', name: 'Rhythm', role: 'rhythm', instrumentId: 'kit.acoustic', volume: .68, muted: false, solo: false },
+      { id: 'track-melody', name: 'Melody guide', role: 'melody', instrumentId: 'voice.guide', volume: .78, muted: false, solo: false },
     ],
     sequenceClips: arrangementSequences(),
     alternatives: [{
@@ -232,6 +232,8 @@ export function createLongRoadWithinProject(): CompositionProject {
 
 export const longRoadWithinExample: SongExample = {
   id: 'long-road-within',
+  kind: 'original',
+  availability: 'ready',
   theme: 'Knowing yourself after a long, lonely trip',
   summary: 'A complete indie-folk song that moves from alienation through yearning into a quiet recognition of the self.',
   steps: ['Story', 'Musical frame', 'Emotion palette', 'Emotional arc', 'Structure', 'Phrases & harmony', 'Arrangement & MIDI'],

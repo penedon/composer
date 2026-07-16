@@ -18,7 +18,7 @@ describe('composition project schema', () => {
 
   it('migrates the legacy unversioned name field', () => {
     const migrated = parseProject({ id: 'legacy', name: 'Old song' })
-    expect(migrated.schemaVersion).toBe(2)
+    expect(migrated.schemaVersion).toBe(3)
     expect(migrated.title).toBe('Old song')
     expect(migrated.story.length).toBeGreaterThan(0)
   })
@@ -27,7 +27,27 @@ describe('composition project schema', () => {
     const current = createProject()
     const legacy = { ...current, schemaVersion: 1, sequenceClips: undefined }
     const migrated = parseProject(legacy)
-    expect(migrated.schemaVersion).toBe(2)
+    expect(migrated.schemaVersion).toBe(3)
     expect(migrated.sequenceClips).toEqual([])
+  })
+
+  it('migrates version two instrument labels to stable catalog IDs', () => {
+    const current = createProject()
+    const legacy = {
+      ...current,
+      schemaVersion: 2,
+      tracks: current.tracks.map((track) => ({
+        id: track.id,
+        name: track.name,
+        role: track.role,
+        volume: track.volume,
+        muted: track.muted,
+        solo: track.solo,
+        instrument: track.role === 'rhythm' ? 'Acoustic kit' : 'Electric piano',
+      })),
+    }
+    const migrated = parseProject(legacy)
+    expect(migrated.tracks.find((track) => track.role === 'rhythm')?.instrumentId).toBe('kit.acoustic')
+    expect(migrated.tracks.find((track) => track.role === 'harmony')?.instrumentId).toBe('keys.electric-piano')
   })
 })

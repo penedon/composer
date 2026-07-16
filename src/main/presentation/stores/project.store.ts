@@ -126,6 +126,7 @@ export const useProjectStore = defineStore('project', () => {
       .sort((a, b) => a.order - b.order)
     const index = ordered.findIndex((item) => item.id === phrase.id)
     const previous = index > 0 ? ordered[index - 1] : undefined
+    const harmonyInstrumentId = project.value.tracks.find((track) => track.role === 'harmony')?.instrumentId
     const request: PhrasePlaybackRequest = {
       phrase,
       tempo: project.value.frame.tempo,
@@ -133,6 +134,7 @@ export const useProjectStore = defineStore('project', () => {
       meter: project.value.frame.meter,
       leadInChord: leadIn ? previous?.chords.at(-1)?.symbol ?? null : null,
       loop,
+      ...(harmonyInstrumentId ? { instrumentId: harmonyInstrumentId } : {}),
     }
     playingPhraseId.value = phrase.id
     await composerApplication.playback.playPhrase(request)
@@ -289,11 +291,12 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   async function auditionChord(symbol: string): Promise<void> {
-    await composerApplication.playback.auditionChord(symbol)
+    const instrumentId = project.value?.tracks.find((track) => track.role === 'harmony')?.instrumentId
+    await composerApplication.playback.auditionChord(symbol, instrumentId)
   }
 
-  async function auditionNote(midiNote: number, role: TrackRole, volume?: number): Promise<void> {
-    await composerApplication.playback.auditionNote(midiNote, role, volume)
+  async function auditionNote(midiNote: number, role: TrackRole, instrumentId: string, volume?: number): Promise<void> {
+    await composerApplication.playback.auditionNote(midiNote, role, instrumentId, volume)
   }
 
   function openSequenceEditor(trackId: string, sectionId: string): void {

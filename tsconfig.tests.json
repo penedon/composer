@@ -4,5 +4,5 @@
     "composite": true,
     "types": ["vite/client", "node", "vitest/globals", "@playwright/test"]
   },
-  "include": ["src/main/**/*.ts", "src/main/**/*.vue", "src/tests/**/*.ts"]
+  "include": ["src/main/**/*.ts", "src/main/**/*.vue", "src/tests/**/*.ts", "scripts/licensed-reference-examples.ts"]
 }

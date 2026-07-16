@@ -37,6 +37,6 @@ describe('song preview projection', () => {
     }]
     const preview = buildSongPreview(project)
     const harmony = preview.events.filter((event) => event.trackId === 'track-harmony' && event.beat >= 16 && event.beat < 48)
-    expect(harmony).toEqual([{ beat: 18.5, duration: 1.5, midiNotes: [69], trackId: 'track-harmony', role: 'harmony', volume: .82, velocity: 99 }])
+    expect(harmony).toEqual([{ beat: 18.5, duration: 1.5, midiNotes: [69], trackId: 'track-harmony', role: 'harmony', instrumentId: 'keys.soft-piano', volume: .82, velocity: 99 }])
   })
 })

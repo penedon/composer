@@ -53,9 +53,9 @@ test('artist journey preserves the composition vision', async ({ page }) => {
   await composer.capture('phrase-workspace.png')
 
   await composer.openPhase('Arrange')
-  await page.getByLabel('Instrument for Harmony').selectOption('Electric piano')
+  await page.getByLabel('Instrument for Harmony').selectOption({ label: 'Electric piano' })
   await page.getByRole('button', { name: 'S' }).first().click()
-  await expect(page.getByLabel('Instrument for Harmony')).toHaveValue('Electric piano')
+  await expect(page.getByLabel('Instrument for Harmony')).toHaveValue('keys.electric-piano')
   await composer.capture('arrangement.png')
 
   await composer.openPhase('Export')

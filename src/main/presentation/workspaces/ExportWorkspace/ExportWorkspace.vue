@@ -3,6 +3,7 @@ import { computed } from 'vue'
 
 import { AppButton } from '@presentation/components/base/AppButton'
 import { useProjectStore } from '@presentation/stores/project.store'
+import { instrumentLabel } from '@domain/arrangement/instrumentCatalog'
 
 const store = useProjectStore()
 const phraseCount = computed(() => store.project?.phrases.length ?? 0)
@@ -23,7 +24,7 @@ const emptySections = computed(() => store.project?.sections.filter((section) =>
 
     <div class="export-workspace__formats">
       <article>
-        <span class="export-workspace__icon">♪</span><div><p class="eyebrow">STANDARD MIDI FILE</p><h2>Continue in your DAW</h2><p>Type 1 MIDI with a tempo map and separate harmony, bass, rhythm, and melody tracks.</p><ul><li v-for="track in store.project.tracks" :key="track.id">{{ track.name }} · {{ track.instrument }}</li></ul></div>
+        <span class="export-workspace__icon">♪</span><div><p class="eyebrow">STANDARD MIDI FILE</p><h2>Continue in your DAW</h2><p>Type 1 MIDI with a tempo map and separate harmony, bass, rhythm, and melody tracks.</p><ul><li v-for="track in store.project.tracks" :key="track.id">{{ track.name }} · {{ instrumentLabel(track.instrumentId) }}</li></ul></div>
         <AppButton variant="primary" size="large" @click="store.downloadMidi">Export MIDI</AppButton>
       </article>
       <article>

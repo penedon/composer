@@ -14,6 +14,7 @@ import ExportWorkspace from '@presentation/workspaces/ExportWorkspace/ExportWork
 import { useProjectStore } from '@presentation/stores/project.store'
 import { resolveSequenceClip } from '@domain/project/project.sequence'
 import { updateSequenceNote } from '@domain/project/project.operations'
+import { instrumentLabel } from '@domain/arrangement/instrumentCatalog'
 
 const route = useRoute()
 const store = useProjectStore()
@@ -46,7 +47,7 @@ watch(() => route.params.phase, (phase) => { if (phase !== 'arrange') store.clos
 
 <template>
   <WorkspaceLayout>
-    <template #rail><PhaseRail /></template>
+    <template #rail="{ collapsed }"><PhaseRail :collapsed="collapsed" /></template>
     <div v-if="store.loading" class="workspace-loading" role="status">Opening your local project…</div>
     <div v-else-if="store.error" class="workspace-error" role="alert">{{ store.error }}</div>
     <component :is="activeWorkspace" v-else-if="store.project" />
@@ -55,7 +56,7 @@ watch(() => route.params.phase, (phase) => { if (phase !== 'arrange') store.clos
         <p class="eyebrow">{{ selectedSequenceNote ? (sequenceTrack?.role === 'rhythm' ? 'SELECTED HIT' : 'SELECTED NOTE') : 'SEQUENCE EDITOR' }}</p>
         <template v-if="selectedSequenceNote">
           <h2>{{ noteName(selectedSequenceNote.pitch) }}</h2>
-          <p>{{ sequenceTrack?.role === 'rhythm' ? `${sequenceTrack.instrument} kit piece · MIDI ${selectedSequenceNote.pitch}` : `MIDI ${selectedSequenceNote.pitch} on ${sequenceTrack?.instrument}` }}</p>
+          <p>{{ sequenceTrack?.role === 'rhythm' ? `${instrumentLabel(sequenceTrack.instrumentId)} kit piece · MIDI ${selectedSequenceNote.pitch}` : `MIDI ${selectedSequenceNote.pitch} on ${instrumentLabel(sequenceTrack?.instrumentId ?? '')}` }}</p>
           <hr />
           <p class="eyebrow">POSITION</p>
           <label class="inspector__sequence-field"><span>Starts at beat</span><input :value="selectedSequenceNote.startBeat" type="number" min="0" :max="(sequenceSection?.bars ?? 1) * 4" step="0.25" @change="updateSelectedSequenceNote({ startBeat: Number(($event.target as HTMLInputElement).value) })" /></label>
@@ -66,7 +67,7 @@ watch(() => route.params.phase, (phase) => { if (phase !== 'arrange') store.clos
         </template>
         <template v-else>
           <h2>{{ sequenceTrack?.name }}</h2>
-          <p>{{ sequenceTrack?.instrument }} · {{ sequenceSection?.name }}</p>
+          <p>{{ instrumentLabel(sequenceTrack?.instrumentId ?? '') }} · {{ sequenceSection?.name }}</p>
           <hr />
           <p class="inspector__note">Choose Draw or Paint, then click the grid. Select a note or hit to edit its position, length, and velocity here.</p>
         </template>

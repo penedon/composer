@@ -1,10 +1,51 @@
-.phase-rail { background: var(--surface-deep); border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: .25rem; height: 100%; min-height: 0; min-width: 0; overflow: auto; padding: 1.5rem .75rem; width: 100%; }
-.phase-rail__eyebrow { color: var(--text-muted); font-size: .66rem; font-weight: 800; letter-spacing: .11em; margin: 0 .75rem .65rem; }
-.phase-rail__link { align-items: center; border-radius: var(--radius-sm); color: var(--text-soft); display: flex; font-size: .82rem; font-weight: 650; gap: .75rem; padding: .65rem .75rem; text-decoration: none; }
-.phase-rail__link span { align-items: center; background: var(--surface-raised); border-radius: 50%; color: var(--text-muted); display: flex; height: 1.45rem; justify-content: center; width: 1.45rem; }
-.phase-rail__link--active { background: color-mix(in srgb, var(--action) 16%, var(--surface-raised)); color: var(--text-strong); }
-.phase-rail__link--active span { background: var(--action); color: var(--action-ink); }
-.phase-rail__compass { border: 1px solid var(--border); border-radius: var(--radius-md); margin: auto .5rem 0; padding: 1rem; }
-.phase-rail__compass .phase-rail__eyebrow { margin: 0 0 .75rem; }
-.phase-rail__compass strong { display: block; font-size: .9rem; text-transform: capitalize; }
-.phase-rail__compass small { color: var(--text-muted); display: block; font-size: .68rem; line-height: 1.5; margin-top: .5rem; }
+.phase-rail { background: var(--surface-deep); display: flex; flex-direction: column; gap: .35rem; height: 100%; min-height: 0; min-width: 0; overflow: auto; padding: 1.15rem .7rem; width: 100%; }
+.phase-rail__eyebrow { color: var(--text-muted); flex: 0 0 auto; font-size: .62rem; font-weight: 800; letter-spacing: .11em; margin: 0 .55rem .35rem; }
+.phase-rail__eyebrow--section { margin-top: .85rem; }
+.phase-rail__setup { background: color-mix(in srgb, var(--surface-raised) 44%, transparent); border: 1px solid var(--border); border-radius: var(--radius-sm); flex: 0 0 auto; overflow: hidden; }
+.phase-rail__setup--active { border-color: var(--border-strong); }
+.phase-rail__setup-toggle { align-items: center; background: transparent; border: 0; color: var(--text); cursor: pointer; display: grid; gap: .65rem; grid-template-columns: auto minmax(0, 1fr) auto; padding: .7rem; text-align: left; width: 100%; }
+.phase-rail__setup-toggle:disabled { cursor: default; opacity: 1; }
+.phase-rail__setup-status { align-items: center; background: var(--surface-raised); border-radius: 50%; color: var(--text-muted); display: flex; font-size: .68rem; font-weight: 800; height: 1.3rem; justify-content: center; width: 1.3rem; }
+.phase-rail__setup-status--ready { background: color-mix(in srgb, #79936a 26%, var(--surface-raised)); color: #b4cba6; }
+.phase-rail__setup-copy { display: grid; gap: .12rem; min-width: 0; }
+.phase-rail__setup-copy strong { color: var(--text-strong); font-size: .78rem; }
+.phase-rail__setup-copy small { color: var(--text-muted); font-size: .6rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.phase-rail__setup-copy .phase-rail__setup-progress { color: var(--text-soft); font-weight: 700; }
+.phase-rail__chevron { color: var(--text-muted); font-size: 1rem; transform: rotate(0); transition: transform .15s ease; }
+.phase-rail__chevron--open { transform: rotate(180deg); }
+.phase-rail__setup-links { border-top: 1px solid var(--border); display: grid; padding: .35rem; }
+.phase-rail__setup-links--compact { gap: .08rem; padding: .25rem .35rem .35rem; }
+.phase-rail__setup-link { align-items: center; border-radius: .55rem; color: var(--text-soft); display: grid; gap: .55rem; grid-template-columns: auto minmax(0, 1fr) auto; padding: .5rem; text-decoration: none; }
+.phase-rail__setup-links--compact .phase-rail__setup-link { min-height: 2rem; padding: .27rem .5rem; }
+.phase-rail__setup-links--compact .phase-rail__step { font-size: .55rem; height: 1.15rem; width: 1.15rem; }
+.phase-rail__setup-links--compact .phase-rail__setup-link strong { font-size: .68rem; font-weight: 650; }
+.phase-rail__setup-link:hover { background: color-mix(in srgb, var(--surface-raised) 55%, transparent); }
+.phase-rail__setup-link--active { background: color-mix(in srgb, var(--action) 14%, var(--surface-raised)); color: var(--text-strong); }
+.phase-rail__setup-link > span:nth-child(2) { display: grid; gap: .13rem; min-width: 0; }
+.phase-rail__setup-link strong { font-size: .73rem; }
+.phase-rail__setup-link small { color: var(--text-muted); font-size: .57rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.phase-rail__step { align-items: center; background: var(--surface-raised); border-radius: 50%; display: flex; font-size: .61rem; font-weight: 800; height: 1.35rem; justify-content: center; width: 1.35rem; }
+.phase-rail__setup-link--active .phase-rail__step { background: var(--action); color: var(--action-ink); }
+.phase-rail__complete { color: #a8c096; font-size: .68rem; font-weight: 800; }
+.phase-rail__destination { align-items: center; border-radius: var(--radius-sm); color: var(--text-soft); display: grid; flex: 0 0 auto; gap: .7rem; grid-template-columns: auto minmax(0, 1fr); min-height: 2.8rem; padding: .6rem .65rem; text-decoration: none; }
+.phase-rail__destination:hover { background: color-mix(in srgb, var(--surface-raised) 55%, transparent); }
+.phase-rail__destination > span:last-child { display: grid; gap: .18rem; min-width: 0; }
+.phase-rail__destination strong { color: inherit; font-size: .77rem; }
+.phase-rail__destination small { color: var(--text-muted); font-size: .58rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.phase-rail__destination-icon { align-items: center; color: var(--text-muted); display: flex; justify-content: center; width: 1.25rem; }
+.phase-rail__destination--primary { background: color-mix(in srgb, var(--surface-raised) 42%, transparent); min-height: 3.25rem; }
+.phase-rail__destination--primary strong { color: var(--text-strong); font-size: .85rem; }
+.phase-rail__destination--active { background: color-mix(in srgb, var(--action) 17%, var(--surface-raised)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--action) 76%, transparent); color: var(--text-strong); }
+.phase-rail__destination--active .phase-rail__destination-icon { color: var(--action); }
+.phase-rail__divider { border-top: 1px solid var(--border); flex: 0 0 auto; margin: .8rem .55rem .35rem; }
+.phase-rail__destination--export { min-height: 2.65rem; }
+.phase-rail__compass { border: 1px solid var(--border); border-radius: var(--radius-md); flex: 0 0 auto; margin: auto .15rem 0; padding: .8rem; }
+.phase-rail__compass .phase-rail__eyebrow { margin: 0 0 .55rem; }
+.phase-rail__compass strong { display: block; font-size: .78rem; text-transform: capitalize; }
+.phase-rail__compass small { color: var(--text-muted); display: block; font-size: .58rem; line-height: 1.45; margin-top: .35rem; }
+.phase-rail--collapsed { align-items: center; gap: .38rem; overflow-x: hidden; padding: 1rem .45rem; }
+.phase-rail__icon-link { align-items: center; border-radius: .65rem; color: var(--text-muted); display: flex; flex: 0 0 auto; height: 2.5rem; justify-content: center; position: relative; text-decoration: none; width: 2.5rem; }
+.phase-rail__icon-link:hover { background: var(--surface-raised); color: var(--text); }
+.phase-rail__icon-link--active { background: color-mix(in srgb, var(--action) 18%, var(--surface-raised)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--action) 75%, transparent); color: var(--action); }
+.phase-rail__icon-link--active::after { background: var(--action); border-radius: 2px; content: ''; height: 1.35rem; position: absolute; right: -.42rem; width: 3px; }
+.phase-rail a:focus-visible, .phase-rail button:focus-visible { outline: 3px solid color-mix(in srgb, var(--action) 50%, transparent); outline-offset: 2px; }

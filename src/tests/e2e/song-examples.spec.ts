@@ -6,8 +6,12 @@ test('opens a complete example and exposes every composition step', async ({ pag
 
   const examples = page.getByRole('region', { name: 'Song examples' })
   await examples.scrollIntoViewIfNeeded()
-  await expect(examples).toContainText('The Long Road Within')
-  await expect(examples.getByRole('list', { name: 'Completed composition steps' }).getByRole('listitem')).toHaveCount(7)
+  const originalExample = examples.getByRole('article').filter({ hasText: 'The Long Road Within' })
+  const licensedReference = examples.getByRole('article').filter({ hasText: 'Wind of Change' })
+  await expect(originalExample).toBeVisible()
+  await expect(originalExample.getByRole('list', { name: 'Completed composition steps' }).getByRole('listitem')).toHaveCount(7)
+  await expect(licensedReference).toContainText('Local assets required')
+  await expect(licensedReference.getByRole('button', { name: 'Waiting for local assets' })).toBeDisabled()
   await expect(examples).toHaveScreenshot('song-examples.png', { animations: 'disabled' })
   await examples.getByRole('button', { name: 'Explore every step' }).click()
 

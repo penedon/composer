@@ -1,10 +1,35 @@
 import { fileURLToPath, URL } from 'node:url'
+import { resolve } from 'node:path'
 
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 
-export default defineConfig({
-  plugins: [vue()],
+import { licensedReferenceAssetPaths, loadLicensedReferenceExamples } from './scripts/licensed-reference-examples'
+
+const licensedExamplesModuleId = 'virtual:licensed-song-examples'
+const resolvedLicensedExamplesModuleId = `\0${licensedExamplesModuleId}`
+
+export default defineConfig(({ command, mode }) => ({
+  plugins: [
+    vue(),
+    {
+      name: 'dev-licensed-song-examples',
+      resolveId(id) {
+        return id === licensedExamplesModuleId ? resolvedLicensedExamplesModuleId : null
+      },
+      async load(id) {
+        if (id !== resolvedLicensedExamplesModuleId) return null
+        const examples = command === 'serve' && mode !== 'production'
+          ? await loadLicensedReferenceExamples(fileURLToPath(new URL('.', import.meta.url)))
+          : []
+        return `export const licensedSongExamples = ${JSON.stringify(examples)}`
+      },
+      configureServer(server) {
+        const root = fileURLToPath(new URL('.', import.meta.url))
+        server.watcher.add(licensedReferenceAssetPaths.map((path) => resolve(root, path)))
+      },
+    },
+  ],
   server: {
     port: 1420,
     strictPort: true,
@@ -19,4 +44,4 @@ export default defineConfig({
       '@tests': fileURLToPath(new URL('./src/tests', import.meta.url)),
     },
   },
-})
+}))

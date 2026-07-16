@@ -7,18 +7,12 @@ import { resolveSequenceClip } from '@domain/project/project.sequence'
 import type { ArrangementTrack, SongSection } from '@domain/project/project.types'
 import { updateFrame, toggleTrack, updateTrack } from '@domain/project/project.operations'
 import { buildSectionTimelineLabels } from '@domain/structure/sectionTimelineLabels'
+import { instrumentLabel, instrumentsForRole } from '@domain/arrangement/instrumentCatalog'
 import { useProjectStore } from '@presentation/stores/project.store'
 
 const store = useProjectStore()
 const totalBars = computed(() => store.project?.sections.reduce((sum, section) => sum + section.bars, 0) ?? 0)
 const sectionLabels = computed(() => new Map(buildSectionTimelineLabels(store.project?.sections ?? []).map((label) => [label.sectionId, label])))
-const instruments: Record<string, string[]> = {
-  harmony: ['Soft piano', 'Electric piano', 'Nylon guitar', 'Warm strings'],
-  bass: ['Upright bass', 'Electric bass', 'Synth bass', 'Cello'],
-  rhythm: ['Brush kit', 'Acoustic kit', 'Electronic kit', 'Hand percussion'],
-  melody: ['Voice', 'Electric guitar', 'Flute', 'Synth lead'],
-}
-
 function sequence(track: ArrangementTrack, section: SongSection) {
   return store.project ? resolveSequenceClip(store.project, track.id, section.id) : null
 }
@@ -81,7 +75,7 @@ function noteStyle(track: ArrangementTrack, section: SongSection, startBeat: num
       <article v-for="track in store.project.tracks" :key="track.id" :class="{ 'is-muted': track.muted }">
         <div class="arrange-workspace__track-controls">
           <div class="arrange-workspace__track-title"><span>{{ track.role.slice(0, 1).toUpperCase() }}</span><div><strong>{{ track.name }}</strong><small>{{ track.role === 'rhythm' ? 'drum sequencer' : 'piano sequencer' }}</small></div></div>
-          <label><span class="sr-only">Instrument for {{ track.name }}</span><select :value="track.instrument" @change="store.mutate('Change instrument', (project) => updateTrack(project, track.id, { instrument: ($event.target as HTMLSelectElement).value }))"><option v-for="instrument in instruments[track.role]" :key="instrument">{{ instrument }}</option></select></label>
+          <label><span class="sr-only">Instrument for {{ track.name }}</span><select :value="track.instrumentId" @change="store.mutate('Change instrument', (project) => updateTrack(project, track.id, { instrumentId: ($event.target as HTMLSelectElement).value }))"><option v-if="!instrumentsForRole(track.role).some((instrument) => instrument.id === track.instrumentId)" :value="track.instrumentId">{{ instrumentLabel(track.instrumentId) }}</option><option v-for="instrument in instrumentsForRole(track.role)" :key="instrument.id" :value="instrument.id">{{ instrument.label }}</option></select></label>
           <label class="arrange-workspace__volume"><span class="sr-only">Volume for {{ track.name }}</span><input :value="track.volume" type="range" min="0" max="1" step="0.01" @input="store.mutate('Update track volume', (project) => updateTrack(project, track.id, { volume: Number(($event.target as HTMLInputElement).value) }))" /></label>
           <div class="arrange-workspace__track-toggles"><AppButton :variant="track.muted ? 'primary' : 'ghost'" :aria-pressed="track.muted" @click="store.mutate('Toggle track mute', (project) => toggleTrack(project, track.id, 'muted'))">M</AppButton><AppButton :variant="track.solo ? 'primary' : 'ghost'" :aria-pressed="track.solo" @click="store.mutate('Toggle track solo', (project) => toggleTrack(project, track.id, 'solo'))">S</AppButton></div>
         </div>

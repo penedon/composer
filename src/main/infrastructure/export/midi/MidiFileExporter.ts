@@ -2,6 +2,7 @@ import type { BinaryFile, MidiExporter } from '@application/ports/ports'
 import type { ArrangementTrack, CompositionProject } from '@domain/project/project.types'
 import { chordMidiNotes } from '@domain/harmony/chords'
 import { resolveSequenceClip } from '@domain/project/project.sequence'
+import { instrumentLabel } from '@domain/arrangement/instrumentCatalog'
 
 const PPQ = 480
 
@@ -46,7 +47,7 @@ function tempoTrack(project: CompositionProject): number[] {
 }
 
 function musicalTrack(project: CompositionProject, track: ArrangementTrack, channel: number): number[] {
-  const data: number[] = [...textEvent(0x03, `${track.name} · ${track.instrument}`)]
+  const data: number[] = [...textEvent(0x03, `${track.name} · ${instrumentLabel(track.instrumentId)}`)]
   const events: Array<{ tick: number; bytes: number[] }> = []
   let sectionBeat = 0
   project.sections.forEach((section) => {

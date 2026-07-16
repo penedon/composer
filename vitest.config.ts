@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
+      'virtual:licensed-song-examples': fileURLToPath(new URL('./src/tests/fixtures/licensedSongExamples.empty.ts', import.meta.url)),
       '@main': fileURLToPath(new URL('./src/main', import.meta.url)),
       '@domain': fileURLToPath(new URL('./src/main/domain', import.meta.url)),
       '@application': fileURLToPath(new URL('./src/main/application', import.meta.url)),
