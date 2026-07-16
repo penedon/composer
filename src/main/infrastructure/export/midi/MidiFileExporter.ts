@@ -1,6 +1,7 @@
 import type { BinaryFile, MidiExporter } from '@application/ports/ports'
 import type { ArrangementTrack, CompositionProject } from '@domain/project/project.types'
 import { chordMidiNotes } from '@domain/harmony/chords'
+import { resolveSequenceClip } from '@domain/project/project.sequence'
 
 const PPQ = 480
 
@@ -49,6 +50,17 @@ function musicalTrack(project: CompositionProject, track: ArrangementTrack, chan
   const events: Array<{ tick: number; bytes: number[] }> = []
   let sectionBeat = 0
   project.sections.forEach((section) => {
+    const sequence = resolveSequenceClip(project, track.id, section.id)
+    if (sequence) {
+      sequence.clip.notes.forEach((note) => {
+        const onTick = Math.round((sectionBeat + note.startBeat) * PPQ)
+        const offTick = onTick + Math.max(1, Math.round(note.durationBeats * PPQ))
+        events.push({ tick: onTick, bytes: [0x90 | channel, note.pitch, note.velocity] })
+        events.push({ tick: offTick, bytes: [0x80 | channel, note.pitch, 0] })
+      })
+      sectionBeat += section.bars * 4
+      return
+    }
     const phrases = project.phrases.filter((phrase) => phrase.sectionId === section.id).sort((a, b) => a.order - b.order)
     let phraseBeat = sectionBeat
     phrases.forEach((phrase) => {

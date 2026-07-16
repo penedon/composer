@@ -1,7 +1,8 @@
 import { createId } from '@domain/shared/createId'
 import type { StructureTemplate } from '@domain/structure/structureTemplates'
 
-import type { ArrangementTrack, ChordEvent, CompositionProject, EmotionFamily, FeaturedEmotion, Phrase, SongSection } from './project.types'
+import { findDirectSequenceClip, resolveSequenceClip } from './project.sequence'
+import type { ArrangementTrack, ChordEvent, CompositionProject, EmotionFamily, FeaturedEmotion, MidiNoteEvent, Phrase, SequenceClip, SongSection } from './project.types'
 
 function changed(project: CompositionProject): CompositionProject {
   return { ...project, updatedAt: new Date().toISOString() }
@@ -83,7 +84,21 @@ export function applyStructureTemplate(project: CompositionProject, template: St
     }))
   })
 
-  return changed({ ...project, sections, phrases, emotionPlan: { ...project.emotionPlan, points } })
+  const sequenceClipsByTarget = new Map<string, SequenceClip>()
+  for (const clip of project.sequenceClips) {
+    const oldIndex = previousSectionIndex.get(clip.sectionId) ?? 0
+    const newSection = sections[projectIndex(oldIndex, project.sections.length, sections.length)] ?? sections[0]
+    if (!newSection) continue
+    const key = `${clip.trackId}:${newSection.id}`
+    const existing = sequenceClipsByTarget.get(key)
+    if (existing) {
+      existing.notes.push(...clip.notes.map((note) => boundedNote({ ...note, id: createId('note') }, newSection.bars * 4)))
+    } else {
+      sequenceClipsByTarget.set(key, { ...clip, sectionId: newSection.id, sourceClipId: null, notes: clip.notes.map((note) => boundedNote({ ...note }, newSection.bars * 4)) })
+    }
+  }
+
+  return changed({ ...project, sections, phrases, sequenceClips: [...sequenceClipsByTarget.values()], emotionPlan: { ...project.emotionPlan, points } })
 }
 
 export function moveSection(project: CompositionProject, sectionId: string, direction: -1 | 1): CompositionProject {
@@ -117,6 +132,7 @@ export function removeSection(project: CompositionProject, sectionId: string): C
     ...project,
     sections: sections.map((section) => section.sourceSectionId === sectionId ? { ...section, sourceSectionId: null } : section),
     phrases: project.phrases.filter((phrase) => phrase.sectionId !== sectionId),
+    sequenceClips: project.sequenceClips.filter((clip) => clip.sectionId !== sectionId),
     emotionPlan: { ...project.emotionPlan, points: project.emotionPlan.points.filter((point) => point.sectionId !== sectionId) },
   })
 }
@@ -217,4 +233,70 @@ export function updateTrack(project: CompositionProject, trackId: string, patch:
     ...project,
     tracks: project.tracks.map((track) => (track.id === trackId ? { ...track, ...patch, id: track.id } : track)),
   })
+}
+
+function boundedNote(note: MidiNoteEvent, sectionBeats: number): MidiNoteEvent {
+  const startBeat = Math.max(0, Math.min(sectionBeats - .0625, note.startBeat))
+  return {
+    ...note,
+    pitch: Math.max(0, Math.min(127, Math.round(note.pitch))),
+    startBeat,
+    durationBeats: Math.max(.0625, Math.min(sectionBeats - startBeat, note.durationBeats)),
+    velocity: Math.max(1, Math.min(127, Math.round(note.velocity))),
+  }
+}
+
+export function addSequenceNote(
+  project: CompositionProject,
+  trackId: string,
+  sectionId: string,
+  note: Omit<MidiNoteEvent, 'id'>,
+): CompositionProject {
+  const section = project.sections.find((candidate) => candidate.id === sectionId)
+  if (!section || !project.tracks.some((track) => track.id === trackId)) return project
+  if (!findDirectSequenceClip(project, trackId, sectionId) && resolveSequenceClip(project, trackId, sectionId)?.linked) return project
+
+  const nextNote = boundedNote({ ...note, id: createId('note') }, section.bars * 4)
+  const direct = findDirectSequenceClip(project, trackId, sectionId)
+  const sequenceClips = direct
+    ? project.sequenceClips.map((clip) => clip.id === direct.id ? { ...clip, notes: [...clip.notes, nextNote] } : clip)
+    : [...project.sequenceClips, { id: createId('clip'), trackId, sectionId, sourceClipId: null, notes: [nextNote] }]
+  return changed({ ...project, sequenceClips })
+}
+
+export function updateSequenceNote(project: CompositionProject, clipId: string, noteId: string, patch: Partial<MidiNoteEvent>): CompositionProject {
+  const clip = project.sequenceClips.find((candidate) => candidate.id === clipId)
+  const section = clip && project.sections.find((candidate) => candidate.id === clip.sectionId)
+  if (!clip || !section) return project
+  return changed({
+    ...project,
+    sequenceClips: project.sequenceClips.map((candidate) => candidate.id === clipId
+      ? { ...candidate, notes: candidate.notes.map((note) => note.id === noteId ? boundedNote({ ...note, ...patch, id: note.id }, section.bars * 4) : note) }
+      : candidate),
+  })
+}
+
+export function removeSequenceNote(project: CompositionProject, clipId: string, noteId: string): CompositionProject {
+  const clip = project.sequenceClips.find((candidate) => candidate.id === clipId)
+  if (!clip) return project
+  return changed({
+    ...project,
+    sequenceClips: project.sequenceClips.map((candidate) => candidate.id === clipId
+      ? { ...candidate, notes: candidate.notes.filter((note) => note.id !== noteId) }
+      : candidate),
+  })
+}
+
+export function makeSequenceVariation(project: CompositionProject, trackId: string, sectionId: string): CompositionProject {
+  if (findDirectSequenceClip(project, trackId, sectionId)) return project
+  const resolved = resolveSequenceClip(project, trackId, sectionId)
+  if (!resolved?.linked) return project
+  const variation: SequenceClip = {
+    id: createId('clip'),
+    trackId,
+    sectionId,
+    sourceClipId: resolved.clip.id,
+    notes: resolved.clip.notes.map((note) => ({ ...note, id: createId('note') })),
+  }
+  return changed({ ...project, sequenceClips: [...project.sequenceClips, variation] })
 }

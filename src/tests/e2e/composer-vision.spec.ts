@@ -66,7 +66,7 @@ test('artist journey preserves the composition vision', async ({ page }) => {
   for await (const chunk of stream) chunks.push(Buffer.from(chunk))
   const midiBytes = [...Buffer.concat(chunks)]
   expect(String.fromCharCode(...midiBytes.slice(0, 4))).toBe('MThd')
-  expect((midiBytes[10]! << 8) | midiBytes[11]!).toBe(4)
+  expect((midiBytes[10]! << 8) | midiBytes[11]!).toBe(5)
   const project = await composer.downloadFrom('Download project')
   expect(project.suggestedFilename()).toBe('e2e-song.composer.json')
 

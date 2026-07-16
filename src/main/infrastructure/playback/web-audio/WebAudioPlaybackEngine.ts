@@ -14,7 +14,7 @@ export class WebAudioPlaybackEngine implements PlaybackEngine {
     return this.context
   }
 
-  private scheduleNote(midiNote: number, start: number, duration: number, role: TrackRole, volume: number): void {
+  private scheduleNote(midiNote: number, start: number, duration: number, role: TrackRole, volume: number, velocity = 100): void {
     if (!this.context) return
     const oscillator = this.context.createOscillator()
     const gain = this.context.createGain()
@@ -23,7 +23,8 @@ export class WebAudioPlaybackEngine implements PlaybackEngine {
     oscillator.frequency.value = isRhythm
       ? midiNote === 36 ? 72 : 180
       : 440 * 2 ** ((midiNote - 69) / 12)
-    const peak = Math.max(.008, Math.min(.16, volume * (isRhythm ? .07 : role === 'bass' ? .11 : .055)))
+    const velocityGain = Math.max(.08, Math.min(1, velocity / 127))
+    const peak = Math.max(.008, Math.min(.16, volume * velocityGain * (isRhythm ? .07 : role === 'bass' ? .11 : .055)))
     const end = start + Math.max(.04, duration)
     gain.gain.setValueAtTime(.0001, start)
     gain.gain.exponentialRampToValueAtTime(peak, start + .012)
@@ -70,7 +71,7 @@ export class WebAudioPlaybackEngine implements PlaybackEngine {
       const relativeStartBeat = Math.max(0, event.beat - safeStartBeat)
       for (const midiNote of event.midiNotes) {
         const seconds = event.role === 'rhythm' ? Math.min(.11, secondsPerBeat * .2) : remainingBeats * secondsPerBeat * .92
-        this.scheduleNote(midiNote, start + relativeStartBeat * secondsPerBeat, seconds, event.role, event.volume)
+        this.scheduleNote(midiNote, start + relativeStartBeat * secondsPerBeat, seconds, event.role, event.volume, event.velocity)
       }
     }
     return preview.totalBeats * secondsPerBeat
@@ -85,6 +86,12 @@ export class WebAudioPlaybackEngine implements PlaybackEngine {
       leadInChord: null,
       loop: false,
     })
+  }
+
+  async auditionNote(midiNote: number, role: TrackRole, volume = .8): Promise<void> {
+    const context = await this.audioContext()
+    if (!context) return
+    this.scheduleNote(midiNote, context.currentTime + .01, role === 'rhythm' ? .12 : .42, role, volume, 104)
   }
 
   async stop(): Promise<void> {

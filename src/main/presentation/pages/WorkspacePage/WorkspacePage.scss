@@ -2,3 +2,7 @@
 .workspace-error { color: #ffaaa4; }
 .inspector h2 { color: var(--text-strong); font-size: 1.3rem; margin: 0; }.inspector > p { color: var(--text-soft); font-size: .85rem; line-height: 1.55; }
 .inspector hr { border: 0; border-top: 1px solid var(--border); margin: 1.8rem 0; }.inspector ul { display: grid; gap: .8rem; list-style: none; padding: 0; }.inspector li { align-items: center; display: flex; font-size: .85rem; gap: .65rem; }.inspector li span { border-radius: 50%; height: .65rem; width: .65rem; }.inspector__note { color: var(--text-muted) !important; font-size: .75rem !important; }
+.inspector__sequence-field { display: grid; gap: .45rem; margin-top: 1rem; }
+.inspector__sequence-field span { color: var(--text-muted); font-size: .7rem; font-weight: 700; }
+.inspector__sequence-field input[type='number'] { background: var(--surface-raised); border: 1px solid var(--border-strong); border-radius: .5rem; color: var(--text); padding: .55rem .65rem; width: 100%; }
+.inspector__sequence-field input[type='range'] { accent-color: var(--action); width: 100%; }

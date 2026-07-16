@@ -6,8 +6,8 @@ import SongPositionTracker from '@presentation/components/shell/SongPositionTrac
 import { useProjectStore } from '@presentation/stores/project.store'
 
 const store = useProjectStore()
-const isPlaying = computed(() => store.playingSong || Boolean(store.playingPhraseId))
-const status = computed(() => store.playbackError ?? (store.playingSong ? 'Playing song' : store.playingPhraseId ? 'Auditioning phrase' : 'Ready'))
+const isPlaying = computed(() => store.playingSong || Boolean(store.playingPhraseId) || Boolean(store.playingSectionId))
+const status = computed(() => store.playbackError ?? (store.playingSong ? 'Playing song' : store.playingSectionId ? 'Looping section' : store.playingPhraseId ? 'Auditioning phrase' : 'Ready'))
 
 function togglePlayback(): void {
   if (isPlaying.value) void store.stop()

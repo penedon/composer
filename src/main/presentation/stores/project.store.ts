@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 
 import { composerApplication } from '@main/application'
 import { buildSongPreview } from '@domain/playback/songPreview'
-import type { CompositionProject, Phrase, ProjectSummary } from '@domain/project/project.types'
+import { resolveSequenceClip } from '@domain/project/project.sequence'
+import type { CompositionProject, Phrase, ProjectSummary, TrackRole } from '@domain/project/project.types'
 import type { PhrasePlaybackRequest } from '@application/ports/ports'
 
 export const useProjectStore = defineStore('project', () => {
@@ -16,11 +17,15 @@ export const useProjectStore = defineStore('project', () => {
   const playingPhraseId = ref<string | null>(null)
   const phrasePlaybackPositionBeats = ref(0)
   const playingSong = ref(false)
+  const playingSectionId = ref<string | null>(null)
+  const sectionPlaybackPositionBeats = ref(0)
   const songPlaybackPositionSeconds = ref(0)
   const songPlaybackDurationSeconds = ref(0)
   const playbackError = ref<string | null>(null)
   const selectedPhraseId = ref<string | null>(null)
   const selectedSectionId = ref<string>('verse-1')
+  const selectedSequenceTrackId = ref<string | null>(null)
+  const selectedSequenceNoteId = ref<string | null>(null)
   const revision = ref(0)
   let playbackTimer: ReturnType<typeof setTimeout> | null = null
   let playbackPositionTimer: ReturnType<typeof setInterval> | null = null
@@ -159,6 +164,8 @@ export const useProjectStore = defineStore('project', () => {
     playingPhraseId.value = null
     phrasePlaybackPositionBeats.value = 0
     playingSong.value = false
+    playingSectionId.value = null
+    sectionPlaybackPositionBeats.value = 0
     songPlaybackPositionSeconds.value = 0
     songPlaybackDurationSeconds.value = 0
   }
@@ -174,6 +181,8 @@ export const useProjectStore = defineStore('project', () => {
     const startSeconds = requestedStartBeat * secondsPerBeat
     songPlaybackPositionSeconds.value = startSeconds
     playingPhraseId.value = null
+    playingSectionId.value = null
+    sectionPlaybackPositionBeats.value = 0
     phrasePlaybackPositionBeats.value = 0
     playbackError.value = null
     playingSong.value = true
@@ -206,6 +215,57 @@ export const useProjectStore = defineStore('project', () => {
     }
   }
 
+  async function playSection(sectionId: string, loop = true): Promise<void> {
+    if (!project.value) return
+    const section = project.value.sections.find((candidate) => candidate.id === sectionId)
+    if (!section) return
+    clearPlaybackTimer()
+    await composerApplication.playback.stop()
+    playingPhraseId.value = null
+    playingSong.value = false
+    playingSectionId.value = sectionId
+    sectionPlaybackPositionBeats.value = 0
+    playbackError.value = null
+
+    const sectionClips = project.value.tracks.flatMap((track) => {
+      const resolved = resolveSequenceClip(project.value!, track.id, sectionId)
+      return resolved ? [{ ...resolved.clip, id: `${resolved.clip.id}:${sectionId}`, sectionId, sourceClipId: resolved.linked ? resolved.clip.id : resolved.clip.sourceClipId }] : []
+    })
+    const scopedProject: CompositionProject = {
+      ...project.value,
+      sections: [section],
+      phrases: project.value.phrases.filter((phrase) => phrase.sectionId === sectionId),
+      sequenceClips: sectionClips,
+    }
+    const secondsPerBeat = 60 / scopedProject.frame.tempo
+    const durationSeconds = section.bars * 4 * secondsPerBeat
+    const startedAt = performance.now()
+    playbackPositionTimer = setInterval(() => {
+      const elapsedBeats = (performance.now() - startedAt) / 1000 / secondsPerBeat
+      sectionPlaybackPositionBeats.value = loop ? elapsedBeats % (section.bars * 4) : Math.min(section.bars * 4, elapsedBeats)
+    }, 50)
+
+    const playPass = async (): Promise<void> => {
+      if (playingSectionId.value !== sectionId) return
+      const duration = await composerApplication.playback.playSong(scopedProject, 0)
+      if (duration <= 0) {
+        clearPlaybackTimer()
+        playingSectionId.value = null
+        playbackError.value = 'Add notes or hits before looping this section.'
+        return
+      }
+      playbackTimer = setTimeout(() => {
+        if (loop && playingSectionId.value === sectionId) void playPass()
+        else {
+          clearPlaybackTimer()
+          playingSectionId.value = null
+          sectionPlaybackPositionBeats.value = section.bars * 4
+        }
+      }, durationSeconds * 1000)
+    }
+    await playPass()
+  }
+
   async function seekSong(beat: number): Promise<void> {
     if (!project.value) return
     const preview = buildSongPreview(project.value)
@@ -232,6 +292,21 @@ export const useProjectStore = defineStore('project', () => {
     await composerApplication.playback.auditionChord(symbol)
   }
 
+  async function auditionNote(midiNote: number, role: TrackRole, volume?: number): Promise<void> {
+    await composerApplication.playback.auditionNote(midiNote, role, volume)
+  }
+
+  function openSequenceEditor(trackId: string, sectionId: string): void {
+    selectedSequenceTrackId.value = trackId
+    selectedSectionId.value = sectionId
+    selectedSequenceNoteId.value = null
+  }
+
+  function closeSequenceEditor(): void {
+    selectedSequenceTrackId.value = null
+    selectedSequenceNoteId.value = null
+  }
+
   function downloadProject(): void {
     if (!project.value) return
     composerApplication.portable.download(composerApplication.portable.exportProject(project.value))
@@ -243,8 +318,8 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   return {
-    project, projects, loading, saving, lastSavedAt, error, playingPhraseId, phrasePlaybackPositionBeats, playingSong, songPlaybackPositionSeconds, songPlaybackDurationSeconds, playbackError, selectedPhraseId, selectedSectionId,
+    project, projects, loading, saving, lastSavedAt, error, playingPhraseId, phrasePlaybackPositionBeats, playingSong, playingSectionId, sectionPlaybackPositionBeats, songPlaybackPositionSeconds, songPlaybackDurationSeconds, playbackError, selectedPhraseId, selectedSectionId, selectedSequenceTrackId, selectedSequenceNoteId,
     canUndo, canRedo, refreshLibrary, load, create, importProject, openExample, selectNativeProject, mutate, undo, redo, save, playPhrase, stop,
-    playSong, seekSong, downloadProject, downloadMidi, auditionChord,
+    playSong, playSection, seekSong, downloadProject, downloadMidi, auditionChord, auditionNote, openSequenceEditor, closeSequenceEditor,
   }
 })

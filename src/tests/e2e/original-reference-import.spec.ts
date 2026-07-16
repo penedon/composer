@@ -16,8 +16,8 @@ test('imports the complete original song and exposes its lyrics and arrangement'
   await expect(page.getByText('4 separate instrument tracks')).toBeVisible()
 
   await page.getByRole('button', { name: 'Play song', exact: true }).click()
-  await expect(page.locator('footer.transport-bar').getByRole('status')).toHaveText('Playing song')
+  await expect(page.locator('.transport-bar').getByRole('status')).toHaveText('Playing song')
   await expect(page.getByRole('button', { name: 'Stop song playback' })).toBeVisible()
   await page.getByRole('button', { name: 'Stop song playback' }).click()
-  await expect(page.locator('footer.transport-bar').getByRole('status')).toHaveText('Ready')
+  await expect(page.locator('.transport-bar').getByRole('status')).toHaveText('Ready')
 })

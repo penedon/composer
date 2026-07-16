@@ -22,6 +22,7 @@ class FakePlayback implements PlaybackEngine {
   async playPhrase(request: PhrasePlaybackRequest): Promise<void> { this.requests.push(request) }
   async playSong(): Promise<number> { return 10 }
   async auditionChord(symbol: string): Promise<void> { this.auditioned.push(symbol) }
+  async auditionNote(): Promise<void> {}
   async stop(): Promise<void> {}
 }
 
@@ -58,5 +59,51 @@ describe('ComposerApplication', () => {
     const reopened = await app.openExample(seed)
     expect(reopened.frame.tempo).toBe(97)
     expect(reopened.title).toBe('The Long Road Within')
+  })
+
+  it('backfills missing example sequences without replacing existing edits', async () => {
+    const repository = new MemoryRepository()
+    const seed = createLongRoadWithinProject()
+    const legacyCopy = {
+      ...structuredClone(seed),
+      frame: { ...seed.frame, tempo: 97 },
+      sequenceClips: [structuredClone(seed.sequenceClips[0]!)],
+      operations: seed.operations.filter((operation) => !operation.description.startsWith('Sequenced ')),
+    }
+    legacyCopy.sequenceClips[0]!.notes[0]!.velocity = 41
+    await repository.save(legacyCopy)
+
+    const app = new ComposerApplication(repository, new FakePlayback(), new MidiFileExporter(), new BrowserPortableProjectGateway())
+    const upgraded = await app.openExample(seed)
+
+    expect(upgraded.frame.tempo).toBe(97)
+    expect(upgraded.sequenceClips).toHaveLength(seed.sequenceClips.length)
+    expect(upgraded.sequenceClips[0]?.notes[0]?.velocity).toBe(41)
+    expect(upgraded.operations.at(-1)?.description).toContain('Sequenced guitar, bass, drums, and melody')
+    expect(repository.projects.get(seed.id)?.sequenceClips).toHaveLength(seed.sequenceClips.length)
+  })
+
+  it('also upgrades an old example when it is reopened from recent projects', async () => {
+    const repository = new MemoryRepository()
+    const seed = createLongRoadWithinProject()
+    await repository.save({
+      ...structuredClone(seed),
+      sequenceClips: [],
+      operations: seed.operations.filter((operation) => !operation.description.startsWith('Sequenced ')),
+    })
+    const app = new ComposerApplication(repository, new FakePlayback(), new MidiFileExporter(), new BrowserPortableProjectGateway())
+
+    const upgraded = await app.load(seed.id)
+    expect(upgraded.sequenceClips).toHaveLength(seed.sequenceClips.length)
+  })
+
+  it('does not restore sequences after the arrangement upgrade has been recorded', async () => {
+    const repository = new MemoryRepository()
+    const seed = createLongRoadWithinProject()
+    await repository.save({ ...structuredClone(seed), sequenceClips: [] })
+    const app = new ComposerApplication(repository, new FakePlayback(), new MidiFileExporter(), new BrowserPortableProjectGateway())
+
+    const reopened = await app.openExample(seed)
+    expect(reopened.sequenceClips).toEqual([])
   })
 })

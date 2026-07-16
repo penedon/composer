@@ -1,4 +1,5 @@
-import type { ChordEvent, CompositionProject, Phrase, SongSection } from '@domain/project/project.types'
+import { chordMidiNotes } from '@domain/harmony/chords'
+import type { ChordEvent, CompositionProject, MidiNoteEvent, Phrase, SequenceClip, SongSection } from '@domain/project/project.types'
 
 import type { SongExample } from './example.types'
 
@@ -42,9 +43,142 @@ const phrases: Phrase[] = [
   phrase('outro-1', 'outro', 0, 'Morning finds me facing home, not finished, but finally my own.', ['Em', 'C', 'G', 'G'], 'serenity', 'Settling'),
 ]
 
+interface TimedChord {
+  symbol: string
+  startBeat: number
+  duration: number
+}
+
+function timedChords(sectionId: string): TimedChord[] {
+  let phraseOffset = 0
+  return phrases
+    .filter((candidate) => candidate.sectionId === sectionId)
+    .sort((left, right) => left.order - right.order)
+    .flatMap((candidate) => {
+      const events = candidate.chords.map((chord) => ({ symbol: chord.symbol, startBeat: phraseOffset + chord.beat, duration: chord.duration }))
+      phraseOffset += candidate.bars * 4
+      return events
+    })
+}
+
+function note(id: string, pitch: number, startBeat: number, durationBeats: number, velocity: number): MidiNoteEvent {
+  return { id, pitch, startBeat, durationBeats, velocity }
+}
+
+function harmonySequence(sectionId: string): MidiNoteEvent[] {
+  const intimate = ['intro', 'verse-1', 'verse-2', 'outro'].includes(sectionId)
+  const velocity = sectionId === 'intro' ? 54 : sectionId === 'outro' ? 50 : intimate ? 64 : sectionId === 'final-chorus' ? 92 : 80
+  let eventIndex = 0
+  return timedChords(sectionId).flatMap((chord) => {
+    const chordNotes = chordMidiNotes(chord.symbol, 3).slice(0, 3)
+    if (intimate) {
+      const events: MidiNoteEvent[] = []
+      for (let offset = 0; offset < chord.duration; offset += .5) {
+        const pitch = chordNotes[Math.round(offset * 2) % chordNotes.length]!
+        events.push(note(`sequence-harmony-${sectionId}-${eventIndex++}`, pitch, chord.startBeat + offset, .42, velocity + (offset % 2 === 0 ? 5 : 0)))
+      }
+      return events
+    }
+
+    const events: MidiNoteEvent[] = []
+    for (let pulse = 0; pulse < chord.duration; pulse += 2) {
+      chordNotes.forEach((pitch, chordIndex) => {
+        events.push(note(`sequence-harmony-${sectionId}-${eventIndex++}`, pitch, chord.startBeat + pulse + chordIndex * .035, Math.min(1.8, chord.duration - pulse), velocity - chordIndex * 3))
+      })
+    }
+    return events
+  })
+}
+
+function bassSequence(sectionId: string): MidiNoteEvent[] {
+  const sparse = ['intro', 'verse-1', 'outro'].includes(sectionId)
+  const step = sparse ? 2 : 1
+  const velocity = sectionId === 'intro' ? 48 : sectionId === 'outro' ? 52 : sparse ? 64 : sectionId === 'final-chorus' ? 94 : 78
+  let eventIndex = 0
+  return timedChords(sectionId).flatMap((chord) => {
+    const chordNotes = chordMidiNotes(chord.symbol, 2)
+    const root = chordNotes[0]!
+    const fifth = chordNotes[2] ?? root + 7
+    const events: MidiNoteEvent[] = []
+    for (let offset = 0; offset < chord.duration; offset += step) {
+      const pitch = offset / step % 2 === 0 ? root : fifth - 12
+      events.push(note(`sequence-bass-${sectionId}-${eventIndex++}`, pitch, chord.startBeat + offset, step * .88, velocity + (offset % 4 === 0 ? 6 : 0)))
+    }
+    return events
+  })
+}
+
+function drumSequence(section: SongSection): MidiNoteEvent[] {
+  const totalBeats = section.bars * 4
+  const events: MidiNoteEvent[] = []
+  let eventIndex = 0
+  const add = (pitch: number, beat: number, velocity: number, duration = .2): void => {
+    events.push(note(`sequence-rhythm-${section.id}-${eventIndex++}`, pitch, beat, duration, velocity))
+  }
+
+  if (section.id === 'intro') {
+    for (let beat = 8; beat < totalBeats; beat += 2) add(37, beat, beat % 4 === 0 ? 58 : 48)
+    return events
+  }
+
+  if (section.id === 'outro') {
+    for (let beat = 0; beat < totalBeats; beat += 2) add(51, beat, beat % 4 === 0 ? 58 : 46)
+    add(36, 0, 66)
+    return events
+  }
+
+  const lateEntry = section.id === 'verse-1' ? 16 : 0
+  const full = ['chorus', 'chorus-variation', 'bridge', 'final-chorus'].includes(section.id)
+  const baseVelocity = section.id === 'final-chorus' ? 102 : full ? 88 : 70
+  if (full) add(49, 0, Math.min(127, baseVelocity + 14), .4)
+  for (let barStart = lateEntry; barStart < totalBeats; barStart += 4) {
+    const hatStep = full ? .5 : 1
+    for (let offset = 0; offset < 4; offset += hatStep) add(full ? 42 : 51, barStart + offset, baseVelocity - (offset % 1 ? 16 : 8))
+    add(36, barStart, baseVelocity + 4)
+    add(36, barStart + (full ? 2.5 : 2), baseVelocity - 4)
+    add(full ? 38 : 37, barStart + 1, baseVelocity + 2)
+    add(full ? 38 : 37, barStart + 3, baseVelocity + 6)
+  }
+  if (section.id === 'bridge') {
+    add(45, totalBeats - 2, 82)
+    add(47, totalBeats - 1.5, 88)
+    add(50, totalBeats - 1, 96)
+  }
+  return events
+}
+
+function melodySequence(sectionId: string): MidiNoteEvent[] {
+  const velocity = sectionId === 'intro' ? 52 : sectionId === 'outro' ? 56 : sectionId === 'final-chorus' ? 98 : sectionId.includes('chorus') ? 88 : 72
+  let eventIndex = 0
+  let contour = 0
+  return timedChords(sectionId).flatMap((chord) => {
+    const chordNotes = chordMidiNotes(chord.symbol, 4)
+    const events: MidiNoteEvent[] = []
+    const step = sectionId === 'intro' || sectionId === 'outro' ? 2 : 1
+    for (let offset = 0; offset < chord.duration; offset += step) {
+      const contourIndex = [0, 1, 2, 1, 2, 0][contour++ % 6]!
+      const pitch = chordNotes[contourIndex % chordNotes.length]!
+      events.push(note(`sequence-melody-${sectionId}-${eventIndex++}`, pitch, chord.startBeat + offset, step * .82, velocity + (offset % 4 === 0 ? 7 : 0)))
+    }
+    return events
+  })
+}
+
+function arrangementSequences(): SequenceClip[] {
+  return sections.flatMap((section) => {
+    const source = section.sourceSectionId
+    return [
+      { id: `sequence-harmony-${section.id}`, trackId: 'track-harmony', sectionId: section.id, sourceClipId: source ? `sequence-harmony-${source}` : null, notes: harmonySequence(section.id) },
+      { id: `sequence-bass-${section.id}`, trackId: 'track-bass', sectionId: section.id, sourceClipId: source ? `sequence-bass-${source}` : null, notes: bassSequence(section.id) },
+      { id: `sequence-rhythm-${section.id}`, trackId: 'track-rhythm', sectionId: section.id, sourceClipId: source ? `sequence-rhythm-${source}` : null, notes: drumSequence(section) },
+      { id: `sequence-melody-${section.id}`, trackId: 'track-melody', sectionId: section.id, sourceClipId: source ? `sequence-melody-${source}` : null, notes: melodySequence(section.id) },
+    ]
+  })
+}
+
 export function createLongRoadWithinProject(): CompositionProject {
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     id: 'example-long-road-within',
     title: 'The Long Road Within',
     createdAt: timestamp,
@@ -77,6 +211,7 @@ export function createLongRoadWithinProject(): CompositionProject {
       { id: 'track-rhythm', name: 'Rhythm', role: 'rhythm', instrument: 'Acoustic kit', volume: .68, muted: false, solo: false },
       { id: 'track-melody', name: 'Melody guide', role: 'melody', instrument: 'Voice', volume: .78, muted: false, solo: false },
     ],
+    sequenceClips: arrangementSequences(),
     alternatives: [{
       id: 'alternative-chorus-intimate',
       targetId: 'chorus-1',
@@ -90,6 +225,7 @@ export function createLongRoadWithinProject(): CompositionProject {
       { id: 'operation-4', description: 'Shaped the emotional arc across nine sections', createdAt: timestamp },
       { id: 'operation-5', description: 'Wrote fifteen phrases with contextual harmony', createdAt: timestamp },
       { id: 'operation-6', description: 'Arranged four separate instrument tracks', createdAt: timestamp },
+      { id: 'operation-7', description: 'Sequenced guitar, bass, drums, and melody across every section', createdAt: timestamp },
     ],
   }
 }

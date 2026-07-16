@@ -65,11 +65,27 @@ const trackSchema = z.object({
   solo: z.boolean(),
 })
 
+const midiNoteEventSchema = z.object({
+  id: z.string(),
+  pitch: z.number().int().min(0).max(127),
+  startBeat: z.number().min(0),
+  durationBeats: z.number().positive(),
+  velocity: z.number().int().min(1).max(127),
+})
+
+const sequenceClipSchema = z.object({
+  id: z.string(),
+  trackId: z.string(),
+  sectionId: z.string(),
+  sourceClipId: z.string().nullable(),
+  notes: z.array(midiNoteEventSchema),
+})
+
 const alternativeSchema = z.object({ id: z.string(), targetId: z.string(), name: z.string(), phrase: phraseSchema })
 const operationSchema = z.object({ id: z.string(), description: z.string(), createdAt: z.string() })
 
 export const compositionProjectSchema = z.object({
-  schemaVersion: z.literal(1),
+  schemaVersion: z.literal(2),
   id: z.string(),
   title: z.string(),
   createdAt: z.string(),
@@ -84,6 +100,7 @@ export const compositionProjectSchema = z.object({
   sections: z.array(sectionSchema),
   phrases: z.array(phraseSchema),
   tracks: z.array(trackSchema),
+  sequenceClips: z.array(sequenceClipSchema),
   alternatives: z.array(alternativeSchema),
   operations: z.array(operationSchema),
 })

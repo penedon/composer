@@ -32,4 +32,26 @@ describe('The Long Road Within example', () => {
     expect(new TextDecoder().decode(bytes.slice(0, 4))).toBe('MThd')
     expect((bytes[10]! << 8) | bytes[11]!).toBe(project.tracks.length + 1)
   })
+
+  it('arranges every instrument across every section with a deliberate dynamic arc', () => {
+    const project = createLongRoadWithinProject()
+    expect(project.sequenceClips).toHaveLength(project.sections.length * project.tracks.length)
+    for (const section of project.sections) {
+      for (const track of project.tracks) {
+        expect(project.sequenceClips.some((clip) => clip.sectionId === section.id && clip.trackId === track.id), `${track.name} · ${section.name}`).toBe(true)
+      }
+    }
+
+    const introDrums = project.sequenceClips.find((clip) => clip.trackId === 'track-rhythm' && clip.sectionId === 'intro')!
+    const firstVerseDrums = project.sequenceClips.find((clip) => clip.trackId === 'track-rhythm' && clip.sectionId === 'verse-1')!
+    const finalDrums = project.sequenceClips.find((clip) => clip.trackId === 'track-rhythm' && clip.sectionId === 'final-chorus')!
+    expect(introDrums.notes.length).toBeLessThan(finalDrums.notes.length)
+    expect(Math.min(...firstVerseDrums.notes.map((note) => note.startBeat))).toBe(16)
+    expect(Math.max(...finalDrums.notes.map((note) => note.velocity))).toBeGreaterThan(Math.max(...introDrums.notes.map((note) => note.velocity)))
+
+    const finalMelody = project.sequenceClips.find((clip) => clip.trackId === 'track-melody' && clip.sectionId === 'final-chorus')!
+    expect(finalMelody.sourceClipId).toBe('sequence-melody-chorus')
+    expect(finalMelody.notes.length).toBeGreaterThan(20)
+    expect(project.operations.at(-1)?.description).toContain('Sequenced guitar, bass, drums, and melody')
+  })
 })

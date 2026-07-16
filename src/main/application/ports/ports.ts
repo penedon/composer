@@ -1,4 +1,4 @@
-import type { CompositionProject, Phrase, ProjectSummary } from '@domain/project/project.types'
+import type { CompositionProject, Phrase, ProjectSummary, TrackRole } from '@domain/project/project.types'
 
 export interface ProjectRepository {
   list(): Promise<ProjectSummary[]>
@@ -20,6 +20,7 @@ export interface PlaybackEngine {
   playPhrase(request: PhrasePlaybackRequest): Promise<void>
   playSong(project: CompositionProject, startBeat?: number): Promise<number>
   auditionChord(symbol: string): Promise<void>
+  auditionNote(midiNote: number, role: TrackRole, volume?: number): Promise<void>
   stop(): Promise<void>
 }
 

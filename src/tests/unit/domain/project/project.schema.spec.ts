@@ -18,8 +18,16 @@ describe('composition project schema', () => {
 
   it('migrates the legacy unversioned name field', () => {
     const migrated = parseProject({ id: 'legacy', name: 'Old song' })
-    expect(migrated.schemaVersion).toBe(1)
+    expect(migrated.schemaVersion).toBe(2)
     expect(migrated.title).toBe('Old song')
     expect(migrated.story.length).toBeGreaterThan(0)
+  })
+
+  it('adds empty sequence clips when migrating version one projects', () => {
+    const current = createProject()
+    const legacy = { ...current, schemaVersion: 1, sequenceClips: undefined }
+    const migrated = parseProject(legacy)
+    expect(migrated.schemaVersion).toBe(2)
+    expect(migrated.sequenceClips).toEqual([])
   })
 })

@@ -54,7 +54,7 @@ const phrases: Phrase[] = [
 export function createProject(id = 'the-doorway', title = 'The Doorway'): CompositionProject {
   const now = new Date().toISOString()
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     id,
     title,
     createdAt: now,
@@ -84,7 +84,9 @@ export function createProject(id = 'the-doorway', title = 'The Doorway'): Compos
       { id: 'track-harmony', name: 'Harmony', role: 'harmony', instrument: 'Soft piano', volume: 0.82, muted: false, solo: false },
       { id: 'track-bass', name: 'Bass', role: 'bass', instrument: 'Upright bass', volume: 0.72, muted: false, solo: false },
       { id: 'track-rhythm', name: 'Rhythm', role: 'rhythm', instrument: 'Brush kit', volume: 0.68, muted: false, solo: false },
+      { id: 'track-melody', name: 'Melody', role: 'melody', instrument: 'Voice', volume: 0.76, muted: false, solo: false },
     ],
+    sequenceClips: [],
     alternatives: [],
     operations: [],
   }

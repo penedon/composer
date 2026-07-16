@@ -1,5 +1,6 @@
 import type { CompositionProject, ProjectSummary } from '@domain/project/project.types'
 import { createProject } from '@domain/project/project.factory'
+import { songExamples } from '@domain/examples/songExamples'
 
 import type { MidiExporter, PlaybackEngine, PortableProjectGateway, ProjectRepository } from '../ports/ports'
 import { ProjectSession } from './ProjectSession'
@@ -39,7 +40,11 @@ export class ComposerApplication {
   }
 
   async load(id: string): Promise<CompositionProject> {
-    const project = (await this.repository.load(id)) ?? createProject(id, id === 'the-doorway' ? 'The Doorway' : 'Untitled song')
+    const existing = await this.repository.load(id)
+    const exampleSeed = songExamples.find((example) => example.project.id === id)?.project
+    const project = existing
+      ? exampleSeed ? this.upgradeExample(existing, exampleSeed) : existing
+      : createProject(id, id === 'the-doorway' ? 'The Doorway' : 'Untitled song')
     this.session = new ProjectSession(project)
     await this.repository.save(project)
     return project
@@ -54,10 +59,27 @@ export class ComposerApplication {
 
   async openExample(seed: CompositionProject): Promise<CompositionProject> {
     const existing = await this.repository.load(seed.id)
-    const project = existing ?? structuredClone(seed)
+    const project = existing ? this.upgradeExample(existing, seed) : structuredClone(seed)
     this.session = new ProjectSession(project)
-    if (!existing) await this.repository.save(project)
+    if (!existing || project !== existing) await this.repository.save(project)
     return project
+  }
+
+  private upgradeExample(existing: CompositionProject, seed: CompositionProject): CompositionProject {
+    const arrangementMarker = seed.operations.find((operation) => operation.description.startsWith('Sequenced '))
+    if (!arrangementMarker || existing.operations.some((operation) => operation.description === arrangementMarker.description)) return existing
+
+    const occupied = new Set(existing.sequenceClips.map((clip) => `${clip.trackId}:${clip.sectionId}`))
+    const missingClips = seed.sequenceClips
+      .filter((clip) => !occupied.has(`${clip.trackId}:${clip.sectionId}`))
+      .map((clip) => structuredClone(clip))
+
+    return {
+      ...existing,
+      updatedAt: new Date().toISOString(),
+      sequenceClips: [...existing.sequenceClips, ...missingClips],
+      operations: [...existing.operations, structuredClone(arrangementMarker)],
+    }
   }
 
   mutate(description: string, transform: (project: CompositionProject) => CompositionProject): CompositionProject {

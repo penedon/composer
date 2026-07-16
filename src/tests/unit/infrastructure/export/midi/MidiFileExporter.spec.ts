@@ -23,4 +23,11 @@ describe('MidiFileExporter', () => {
     expect(new TextDecoder().decode(bytes)).toContain('Harmony · Soft piano')
     expect(JSON.stringify(project)).toBe(before)
   })
+
+  it('writes explicit sequencer pitch and velocity data', () => {
+    const project = createProject()
+    project.sequenceClips = [{ id: 'clip-1', trackId: 'track-harmony', sectionId: 'intro', sourceClipId: null, notes: [{ id: 'note-1', pitch: 77, startBeat: 0, durationBeats: 1, velocity: 111 }] }]
+    const bytes = [...new MidiFileExporter().export(project).bytes]
+    expect(bytes.some((byte, index) => (byte & 0xf0) === 0x90 && bytes[index + 1] === 77 && bytes[index + 2] === 111)).toBe(true)
+  })
 })

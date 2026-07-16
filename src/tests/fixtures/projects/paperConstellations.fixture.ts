@@ -11,7 +11,7 @@ const sections: SongSection[] = [
 export function createPaperConstellationsProject(): CompositionProject {
   const timestamp = '2026-07-16T00:00:00.000Z'
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     id: 'paper-constellations',
     title: 'Paper Constellations',
     createdAt: timestamp,
@@ -52,6 +52,7 @@ export function createPaperConstellationsProject(): CompositionProject {
       { id: 'track-rhythm', name: 'Rhythm', role: 'rhythm', instrument: 'Acoustic kit', volume: .7, muted: false, solo: false },
       { id: 'track-melody', name: 'Melody guide', role: 'melody', instrument: 'Voice', volume: .76, muted: false, solo: false },
     ],
+    sequenceClips: [],
     alternatives: [],
     operations: [],
   }

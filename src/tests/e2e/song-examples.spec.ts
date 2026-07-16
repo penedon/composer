@@ -34,8 +34,39 @@ test('opens a complete example and exposes every composition step', async ({ pag
 
   await phases.getByRole('link', { name: /Arrange/ }).click()
   await expect(page.getByText('4 separate instrument tracks')).toBeVisible()
+  await expect(page.getByRole('button', { name: /^Edit Melody guide sequence for Chorus,/ })).toBeVisible()
+  await expect(page.getByRole('button', { name: /Edit Rhythm sequence for Final chorus/ })).toBeVisible()
 
   await phases.getByRole('link', { name: /Export/ }).click()
   await expect(page.getByText('15', { exact: true }).first()).toBeVisible()
   await expect(page.getByRole('button', { name: 'Export MIDI' })).toBeVisible()
+})
+
+test('upgrades a previously saved example that predates instrument sequences', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem('example-upgrade-test')) return
+    localStorage.clear()
+    sessionStorage.setItem('example-upgrade-test', 'ready')
+  })
+  await page.goto('/projects')
+  await page.getByRole('button', { name: 'Explore every step' }).click()
+
+  await page.evaluate(() => {
+    const key = 'composer:project:example-long-road-within'
+    const raw = localStorage.getItem(key)
+    if (!raw) throw new Error('Expected seeded example')
+    const project = JSON.parse(raw) as { sequenceClips: unknown[]; operations: Array<{ description: string }>; frame: { tempo: number } }
+    project.sequenceClips = []
+    project.operations = project.operations.filter((operation) => !operation.description.startsWith('Sequenced '))
+    project.frame.tempo = 97
+    localStorage.setItem(key, JSON.stringify(project))
+  })
+
+  await page.goto('/projects/example-long-road-within/arrange')
+  await expect(page.locator('output').filter({ hasText: '97 BPM' })).toBeVisible()
+  await expect(page.getByRole('button', { name: /^Edit Harmony sequence for Intro,/ })).toBeVisible()
+  await expect(page.getByRole('button', { name: /^Edit Rhythm sequence for Final chorus,/ })).toBeVisible()
+
+  const upgraded = await page.evaluate(() => JSON.parse(localStorage.getItem('composer:project:example-long-road-within') ?? '{}') as { sequenceClips?: unknown[] })
+  expect(upgraded.sequenceClips).toHaveLength(36)
 })

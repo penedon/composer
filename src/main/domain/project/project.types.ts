@@ -83,6 +83,22 @@ export interface ArrangementTrack {
   solo: boolean
 }
 
+export interface MidiNoteEvent {
+  id: string
+  pitch: number
+  startBeat: number
+  durationBeats: number
+  velocity: number
+}
+
+export interface SequenceClip {
+  id: string
+  trackId: string
+  sectionId: string
+  sourceClipId: string | null
+  notes: MidiNoteEvent[]
+}
+
 export interface Alternative {
   id: string
   targetId: string
@@ -97,7 +113,7 @@ export interface OperationRecord {
 }
 
 export interface CompositionProject {
-  schemaVersion: 1
+  schemaVersion: 2
   id: string
   title: string
   createdAt: string
@@ -108,6 +124,7 @@ export interface CompositionProject {
   sections: SongSection[]
   phrases: Phrase[]
   tracks: ArrangementTrack[]
+  sequenceClips: SequenceClip[]
   alternatives: Alternative[]
   operations: OperationRecord[]
 }

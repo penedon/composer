@@ -7,7 +7,7 @@ describe('song preview projection', () => {
   it('places composed events inside the complete planned song timeline', () => {
     const preview = buildSongPreview(createProject())
     expect(preview.events[0]?.beat).toBe(16)
-    expect(new Set(preview.events.map((event) => event.role))).toEqual(new Set(['harmony', 'bass', 'rhythm']))
+    expect(new Set(preview.events.map((event) => event.role))).toEqual(new Set(['harmony', 'bass', 'rhythm', 'melody']))
     expect(preview.totalBeats).toBe(176)
     expect(preview.sections).toEqual([
       { sectionId: 'intro', startBeat: 0, endBeat: 16, composedBeats: 0 },
@@ -27,5 +27,16 @@ describe('song preview projection', () => {
     const preview = buildSongPreview(project)
     expect(new Set(preview.events.map((event) => event.role))).toEqual(new Set(['bass']))
     expect(JSON.stringify(project)).toBe(before)
+  })
+
+  it('uses explicit sequence notes instead of generated accompaniment for that track and section', () => {
+    const project = createProject()
+    project.sequenceClips = [{
+      id: 'clip-melody', trackId: 'track-harmony', sectionId: 'verse-1', sourceClipId: null,
+      notes: [{ id: 'note-a', pitch: 69, startBeat: 2.5, durationBeats: 1.5, velocity: 99 }],
+    }]
+    const preview = buildSongPreview(project)
+    const harmony = preview.events.filter((event) => event.trackId === 'track-harmony' && event.beat >= 16 && event.beat < 48)
+    expect(harmony).toEqual([{ beat: 18.5, duration: 1.5, midiNotes: [69], trackId: 'track-harmony', role: 'harmony', volume: .82, velocity: 99 }])
   })
 })
