@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1024" viewBox="0 0 1440 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Composer Story Workspace</title>
+  <desc id="desc">A desktop songwriting interface with phase navigation, a freeform story document, optional narrative labels, a contextual outline, and persistent playback controls.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#000" flood-opacity=".18"/></filter>
+    <style>
+      .ui { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .serif { font-family: Georgia, "Times New Roman", serif; }
+      .title { font-size: 22px; font-weight: 600; fill: #f4f1e9; }
+      .section { font-size: 12px; font-weight: 700; letter-spacing: .07em; fill: #8f9489; }
+      .body { font-size: 14px; fill: #d6d7d0; }
+      .muted { font-size: 12px; fill: #8f9489; }
+      .nav { font-size: 13px; font-weight: 600; fill: #b8bbb1; }
+      .paper-title { font-size: 34px; font-weight: 600; fill: #2a2b25; }
+      .paper-body { font-size: 20px; fill: #3f423a; }
+      .paper-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; fill: #777b71; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="1024" fill="#171916"/>
+  <g class="ui">
+    <rect width="1440" height="64" fill="#20221e"/>
+    <circle cx="26" cy="32" r="10" fill="#d8a45e"/>
+    <text x="48" y="38" class="title">Composer</text>
+    <line x1="157" y1="18" x2="157" y2="46" stroke="#3b3e36"/>
+    <text x="180" y="29" class="muted">PROJECT</text>
+    <text x="180" y="47" class="body">The Doorway</text>
+    <text x="1198" y="38" class="muted">Saved locally · just now</text>
+    <rect x="1332" y="16" width="80" height="32" rx="9" fill="#2b2e28" stroke="#44483f"/>
+    <text x="1372" y="37" text-anchor="middle" font-size="12" font-weight="600" fill="#d6d7d0">•••</text>
+
+    <rect x="0" y="64" width="208" height="896" fill="#1d1f1b"/>
+    <text x="24" y="98" class="section">CREATE</text>
+    <g transform="translate(12 116)">
+      <rect width="184" height="44" rx="10" fill="#333027"/>
+      <circle cx="22" cy="22" r="11" fill="#d8a45e"/>
+      <text x="22" y="26" text-anchor="middle" font-size="11" font-weight="700" fill="#221b12">1</text>
+      <text x="44" y="27" class="nav" fill="#f4f1e9">Story</text>
+    </g>
+    <g transform="translate(12 166)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">2</text><text x="44" y="27" class="nav">Frame</text></g>
+    <g transform="translate(12 216)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">3</text><text x="44" y="27" class="nav">Emotions</text></g>
+    <g transform="translate(12 266)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">4</text><text x="44" y="27" class="nav">Structure</text></g>
+    <g transform="translate(12 316)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">5</text><text x="44" y="27" class="nav">Compose</text></g>
+    <g transform="translate(12 366)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">6</text><text x="44" y="27" class="nav">Arrange</text></g>
+    <line x1="24" y1="436" x2="184" y2="436" stroke="#34372f"/>
+    <text x="24" y="472" class="section">PROJECT</text>
+    <text x="24" y="506" class="nav">References</text>
+    <text x="24" y="542" class="nav">Alternatives</text>
+    <text x="24" y="578" class="nav">History</text>
+    <text x="24" y="614" class="nav">Export</text>
+    <rect x="20" y="826" width="168" height="104" rx="14" fill="#242620" stroke="#34372f"/>
+    <text x="36" y="852" class="section">CREATIVE COMPASS</text>
+    <circle cx="38" cy="878" r="6" fill="#6687bd"/>
+    <text x="54" y="883" class="body">Sadness</text>
+    <text x="36" y="910" class="muted">3 emotions · not mapped yet</text>
+
+    <rect x="208" y="64" width="946" height="896" fill="#292b26"/>
+    <text x="244" y="106" class="section">STORY WORKSPACE</text>
+    <text x="244" y="137" class="title">Write the song before writing the music.</text>
+    <rect x="1002" y="94" width="124" height="36" rx="10" fill="#363930" stroke="#4b4f45"/>
+    <text x="1064" y="117" text-anchor="middle" font-size="12" font-weight="600" fill="#d6d7d0">Focus mode</text>
+
+    <rect x="242" y="158" width="878" height="742" rx="20" fill="#f4efe5" filter="url(#shadow)"/>
+    <g transform="translate(292 208)">
+      <text x="0" y="0" class="paper-label">WORKING PREMISE</text>
+      <text x="0" y="48" class="serif paper-title">The light beside the doorway</text>
+      <line x1="0" y1="76" x2="778" y2="76" stroke="#d8d0c2"/>
+
+      <rect x="0" y="104" width="94" height="28" rx="14" fill="#e5dccd"/>
+      <text x="47" y="123" text-anchor="middle" class="paper-label">PREMISE</text>
+      <text x="0" y="172" class="serif paper-body">Someone keeps preparing for a person who has already decided</text>
+      <text x="0" y="204" class="serif paper-body">not to return. The ritual feels loving at first, then becomes an</text>
+      <text x="0" y="236" class="serif paper-body">admission that the relationship is over.</text>
+
+      <rect x="0" y="278" width="104" height="28" rx="14" fill="#e5dccd"/>
+      <text x="52" y="297" text-anchor="middle" class="paper-label">CONFLICT</text>
+      <text x="0" y="346" class="serif paper-body">He wants the familiar gesture to mean hope. Instead, every night</text>
+      <text x="0" y="378" class="serif paper-body">it proves that hope is becoming habit.</text>
+
+      <rect x="0" y="420" width="134" height="28" rx="14" fill="#d9dfeb"/>
+      <text x="67" y="439" text-anchor="middle" class="paper-label">TURNING POINT</text>
+      <text x="0" y="488" class="serif paper-body">He finally turns the light off—not because he stopped loving her,</text>
+      <text x="0" y="520" class="serif paper-body">but because he understands that waiting cannot bring her back.</text>
+
+      <text x="0" y="598" class="paper-label">Start another thought…</text>
+      <line x1="0" y1="618" x2="778" y2="618" stroke="#cfc7b8"/>
+      <rect x="0" y="640" width="146" height="34" rx="10" fill="#e5dccd"/>
+      <text x="73" y="662" text-anchor="middle" font-size="12" font-weight="600" fill="#575a52">+ Add optional label</text>
+    </g>
+
+    <rect x="1154" y="64" width="286" height="896" fill="#20221e"/>
+    <text x="1182" y="106" class="section">STORY OUTLINE</text>
+    <text x="1182" y="136" class="body">Optional organization</text>
+    <line x1="1182" y1="158" x2="1412" y2="158" stroke="#34372f"/>
+
+    <g transform="translate(1182 184)">
+      <circle cx="8" cy="8" r="8" fill="#d8a45e"/><text x="30" y="13" class="nav" fill="#f4f1e9">Premise</text><text x="30" y="34" class="muted">Waiting as a ritual</text>
+      <line x1="8" y1="20" x2="8" y2="66" stroke="#4b4f45"/>
+      <circle cx="8" cy="78" r="8" fill="#d8a45e"/><text x="30" y="83" class="nav" fill="#f4f1e9">Conflict</text><text x="30" y="104" class="muted">Hope becomes habit</text>
+      <line x1="8" y1="90" x2="8" y2="136" stroke="#4b4f45"/>
+      <circle cx="8" cy="148" r="8" fill="#6687bd"/><text x="30" y="153" class="nav" fill="#f4f1e9">Turning point</text><text x="30" y="174" class="muted">The light is turned off</text>
+      <line x1="8" y1="160" x2="8" y2="206" stroke="#4b4f45"/>
+      <circle cx="8" cy="218" r="8" fill="#34372f" stroke="#777c70"/><text x="30" y="223" class="nav">Ending</text><text x="30" y="244" class="muted">Not defined</text>
+    </g>
+
+    <rect x="1178" y="476" width="238" height="138" rx="14" fill="#292b26" stroke="#3c4037"/>
+    <text x="1196" y="504" class="section">A QUESTION, NOT A REQUIREMENT</text>
+    <text x="1196" y="534" class="body">What should remain with the</text>
+    <text x="1196" y="555" class="body">listener after the song ends?</text>
+    <text x="1196" y="589" class="muted">Leave unanswered</text>
+
+    <rect x="1178" y="642" width="238" height="48" rx="12" fill="#d8a45e"/>
+    <text x="1297" y="672" text-anchor="middle" font-size="13" font-weight="700" fill="#211a10">Continue to musical frame →</text>
+    <text x="1297" y="720" text-anchor="middle" class="muted">You can return at any time</text>
+
+    <rect x="0" y="960" width="1440" height="64" fill="#20221e"/>
+    <text x="28" y="998" class="muted">No musical playback yet</text>
+    <circle cx="672" cy="992" r="18" fill="#2d3029"/><text x="672" y="997" text-anchor="middle" font-size="16" fill="#898e84">▶</text>
+    <text x="720" y="997" class="body">92 BPM</text>
+    <text x="796" y="997" class="muted">4/4</text>
+    <text x="852" y="997" class="muted">D minor</text>
+    <text x="1388" y="997" text-anchor="end" class="muted">00:00 · 00:00</text>
+  </g>
+</svg>

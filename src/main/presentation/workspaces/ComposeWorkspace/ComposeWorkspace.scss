@@ -1,0 +1,18 @@
+.compose-workspace { margin: 0 auto; max-width: 72rem; }
+.compose-workspace__heading { align-items: end; display: flex; justify-content: space-between; }
+.compose-workspace__context { color: var(--text-muted); display: flex; font-size: .72rem; gap: .5rem; }
+.compose-workspace__context span { border: 1px solid var(--border); border-radius: 2rem; padding: .35rem .65rem; }
+.compose-workspace__sections { display: flex; gap: .45rem; margin: 1.5rem 0 1rem; overflow: auto; padding-bottom: .35rem; }
+.compose-workspace__sections button { align-items: center; background: transparent; border: 1px solid var(--border); border-radius: 2rem; color: var(--text-soft); cursor: pointer; display: flex; flex: 0 0 auto; gap: .45rem; padding: .5rem .7rem; }
+.compose-workspace__sections button > span { background: var(--section-color); border-radius: 50%; height: .55rem; width: .55rem; }
+.compose-workspace__sections button[aria-pressed='true'] { background: var(--surface-raised); border-color: var(--action); color: var(--text-strong); }
+.compose-workspace__sections small { color: var(--text-muted); }
+.compose-workspace__intention { align-items: baseline; background: var(--surface); border-left: 3px solid var(--action); display: flex; gap: 1rem; margin-bottom: 1rem; padding: .75rem 1rem; }
+.compose-workspace__intention span { color: var(--text-muted); font-size: .65rem; font-weight: 800; letter-spacing: .08em; }
+.compose-workspace__phrases { display: grid; gap: 1rem; }
+.compose-workspace__empty { align-items: center; background: var(--surface); border: 1px dashed var(--border-strong); border-radius: var(--radius-md); display: grid; gap: .35rem; justify-items: center; padding: 4rem 1rem; }
+.compose-workspace__empty span, .compose-workspace__actions > span { color: var(--text-muted); }
+.compose-workspace__actions { align-items: center; display: flex; gap: .65rem; margin-top: 1rem; }
+.compose-workspace__actions > span { margin-left: auto; }
+.compose-workspace__alternatives { border-top: 1px solid var(--border); margin-top: 1.5rem; padding-top: 1.2rem; }.compose-workspace__alternatives article { align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); display: flex; justify-content: space-between; margin-top: .5rem; padding: .75rem; }.compose-workspace__alternatives article div { display: grid; }.compose-workspace__alternatives article span { color: var(--text-muted); font-size: .75rem; }
+@media(max-width:700px){.compose-workspace__heading{align-items:start;flex-direction:column;gap:1rem}.compose-workspace__actions{align-items:stretch;flex-direction:column}.compose-workspace__actions>span{margin-left:0}}

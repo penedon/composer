@@ -1,0 +1,47 @@
+:root {
+  color-scheme: dark;
+  --background: #171916;
+  --surface-deep: #1b1d19;
+  --surface: #20221e;
+  --surface-raised: #2b2e28;
+  --paper: #f4efe5;
+  --paper-raised: #fffaf0;
+  --paper-ink: #292b25;
+  --paper-muted: #73776d;
+  --text-strong: #f4f1e9;
+  --text: #d6d7d0;
+  --text-soft: #b8bbb1;
+  --text-muted: #8f9489;
+  --border: #34372f;
+  --border-strong: #4a4f44;
+  --action: #dca65c;
+  --action-ink: #211a10;
+  --danger: #b44d47;
+  --sadness: #6687bd;
+  --love: #d46f80;
+  --despair: #c68b50;
+  --radius-sm: .7rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.3rem;
+  --project-bar-height: 4rem;
+  --transport-bar-height: 4rem;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { height: 100%; margin: 0; min-height: 100%; }
+body { background: var(--background); color: var(--text); min-width: 320px; }
+button, input, textarea, select { font: inherit; }
+a { color: inherit; }
+.eyebrow { color: var(--text-muted); font-size: .7rem; font-weight: 800; letter-spacing: .1em; margin: 0 0 .6rem; text-transform: uppercase; }
+.page-heading { color: var(--text-strong); font-size: clamp(1.5rem, 2.2vw, 2rem); margin: 0; }
+.page-copy { color: var(--text-soft); line-height: 1.6; max-width: 54rem; }
+.paper { background: var(--paper); border-radius: var(--radius-lg); color: var(--paper-ink); }
+.field { display: grid; gap: .4rem; }
+.field label { color: var(--text-muted); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.field input, .field textarea, .field select { background: var(--surface-raised); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); color: var(--text-strong); padding: .75rem .9rem; }
+.field input:focus-visible, .field textarea:focus-visible, .field select:focus-visible { outline: 3px solid color-mix(in srgb, var(--action) 45%, transparent); outline-offset: 2px; }
+.sr-only { height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; clip: rect(0,0,0,0); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }

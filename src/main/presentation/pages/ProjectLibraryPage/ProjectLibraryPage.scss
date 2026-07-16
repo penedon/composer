@@ -1,0 +1,15 @@
+.library { height: calc(100vh - var(--project-bar-height) - var(--transport-bar-height)); min-height: 0; overflow: auto; padding: 5rem clamp(1.5rem, 8vw, 9rem); }
+.library__hero { max-width: 62rem; }
+.library__hero h1 { color: var(--text-strong); font-family: Georgia, serif; font-size: clamp(2.6rem, 5vw, 5rem); line-height: 1.02; margin: 0; max-width: 58rem; }
+.library__hero > p:not(.eyebrow) { color: var(--text-soft); font-size: 1.1rem; line-height: 1.7; max-width: 48rem; }
+.library__create { align-items: end; display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+.library__create .field { min-width: min(25rem, 100%); }
+.library__examples, .library__recent { margin-top: 5rem; }
+.library__examples h2, .library__recent h2 { color: var(--text-strong); font-size: 1.8rem; margin: 0 0 .55rem; }
+.library__examples > p:not(.eyebrow) { color: var(--text-soft); line-height: 1.6; margin: 0 0 1.4rem; max-width: 50rem; }
+.library__example-grid { display: grid; gap: 1rem; }
+.library__grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.library__card { background: var(--paper); border-radius: var(--radius-lg); color: var(--paper-ink); display: grid; gap: .75rem; padding: 1.4rem; text-decoration: none; }
+.library__mark { background: var(--action); border-radius: 1rem; height: .45rem; width: 3rem; }
+.library__card strong { font-size: 1.2rem; }.library__card small { color: var(--paper-muted); }.library__card > span:last-child { font-size: .78rem; font-weight: 700; margin-top: .75rem; }
+.library__empty { border: 1px dashed var(--border-strong); border-radius: var(--radius-md); color: var(--text-muted); padding: 2rem; }

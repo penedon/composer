@@ -1,0 +1,5 @@
+.transport-bar { align-items: center; background: var(--surface); border-top: 1px solid var(--border); bottom: 0; color: var(--text-muted); display: flex; font-size: .75rem; height: var(--transport-bar-height); justify-content: space-between; left: 0; padding: 0 1.5rem; position: fixed; right: 0; z-index: 20; }
+.transport-bar__controls { align-items: center; display: flex; gap: 1.5rem; }
+.transport-bar__controls strong { color: var(--text-strong); }
+.transport-bar__controls .app-button { min-width: 7.5rem; }
+.transport-bar__error { color: #e6a09b; }

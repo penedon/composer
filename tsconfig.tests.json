@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "composite": true,
+    "types": ["vite/client", "node", "vitest/globals", "@playwright/test"]
+  },
+  "include": ["src/main/**/*.ts", "src/main/**/*.vue", "src/tests/**/*.ts"]
+}

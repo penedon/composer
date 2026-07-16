@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "baseUrl": ".",
+    "paths": {
+      "@main/*": ["src/main/*"],
+      "@domain/*": ["src/main/domain/*"],
+      "@application/*": ["src/main/application/*"],
+      "@infrastructure/*": ["src/main/infrastructure/*"],
+      "@presentation/*": ["src/main/presentation/*"],
+      "@tests/*": ["src/tests/*"]
+    },
+    "types": ["vite/client"]
+  },
+  "include": ["src/main/**/*.ts", "src/main/**/*.vue"]
+}

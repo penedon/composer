@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1024" viewBox="0 0 1440 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Composer Phrase Workspace</title>
+  <desc id="desc">An original phrase-based songwriting interface with lyrics, chords positioned over words, per-phrase playback, emotional context, harmony guidance, and persistent deterministic timeline state.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="9" stdDeviation="16" flood-color="#000" flood-opacity=".17"/></filter>
+    <style>
+      .ui { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .serif { font-family: Georgia, "Times New Roman", serif; }
+      .title { font-size: 22px; font-weight: 600; fill: #f4f1e9; }
+      .section { font-size: 11px; font-weight: 700; letter-spacing: .08em; fill: #8f9489; }
+      .body { font-size: 14px; fill: #d6d7d0; }
+      .muted { font-size: 12px; fill: #8f9489; }
+      .nav { font-size: 13px; font-weight: 600; fill: #b8bbb1; }
+      .paper-label { font-size: 11px; font-weight: 700; letter-spacing: .07em; fill: #74786e; }
+      .paper-body { font-size: 14px; fill: #50534b; }
+      .lyric { font-size: 24px; fill: #292b25; }
+      .chord { font-size: 14px; font-weight: 700; fill: #76582f; }
+      .btn { font-size: 12px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="1024" fill="#171916"/>
+  <g class="ui">
+    <rect width="1440" height="64" fill="#20221e"/>
+    <circle cx="26" cy="32" r="10" fill="#d8a45e"/><text x="48" y="38" class="title">Composer</text>
+    <line x1="157" y1="18" x2="157" y2="46" stroke="#3b3e36"/>
+    <text x="180" y="29" class="muted">PROJECT</text><text x="180" y="47" class="body">The Doorway</text>
+    <path d="M1114 33 l7 -7 l7 7" fill="none" stroke="#8f9489" stroke-width="2"/><text x="1140" y="38" class="muted">Undo</text>
+    <path d="M1214 33 l-7 -7 l-7 7" fill="none" stroke="#575b52" stroke-width="2"/><text x="1232" y="38" class="muted" fill="#575b52">Redo</text>
+    <text x="1320" y="38" class="muted">Saved locally</text>
+
+    <rect x="0" y="64" width="208" height="896" fill="#1d1f1b"/>
+    <text x="24" y="98" class="section">CREATE</text>
+    <g transform="translate(12 116)"><circle cx="22" cy="22" r="11" fill="#3a3d35"/><text x="22" y="26" text-anchor="middle" class="muted">✓</text><text x="44" y="27" class="nav">Story</text></g>
+    <g transform="translate(12 166)"><circle cx="22" cy="22" r="11" fill="#3a3d35"/><text x="22" y="26" text-anchor="middle" class="muted">✓</text><text x="44" y="27" class="nav">Frame</text></g>
+    <g transform="translate(12 216)"><circle cx="22" cy="22" r="11" fill="#3a3d35"/><text x="22" y="26" text-anchor="middle" class="muted">✓</text><text x="44" y="27" class="nav">Emotions</text></g>
+    <g transform="translate(12 266)"><circle cx="22" cy="22" r="11" fill="#3a3d35"/><text x="22" y="26" text-anchor="middle" class="muted">✓</text><text x="44" y="27" class="nav">Structure</text></g>
+    <g transform="translate(12 316)"><rect width="184" height="44" rx="10" fill="#333027"/><circle cx="22" cy="22" r="11" fill="#d8a45e"/><text x="22" y="26" text-anchor="middle" font-size="11" font-weight="700" fill="#211a10">5</text><text x="44" y="27" class="nav" fill="#f4f1e9">Compose</text></g>
+    <g transform="translate(12 366)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">6</text><text x="44" y="27" class="nav">Arrange</text></g>
+    <line x1="24" y1="436" x2="184" y2="436" stroke="#34372f"/>
+    <text x="24" y="472" class="section">SECTIONS</text>
+    <g transform="translate(12 488)">
+      <text x="12" y="24" class="nav">Intro</text><text x="168" y="24" text-anchor="end" class="muted">2</text>
+      <rect x="0" y="36" width="184" height="40" rx="9" fill="#2d3441"/><circle cx="16" cy="56" r="6" fill="#6687bd"/><text x="32" y="61" class="nav" fill="#f4f1e9">Verse 1</text><text x="168" y="61" text-anchor="end" class="muted">4</text>
+      <text x="12" y="104" class="nav">Pre-chorus</text><text x="168" y="104" text-anchor="end" class="muted">2</text>
+      <text x="12" y="144" class="nav">Chorus</text><text x="168" y="144" text-anchor="end" class="muted">4</text>
+      <text x="12" y="184" class="nav">Verse 2</text><text x="168" y="184" text-anchor="end" class="muted">4</text>
+      <text x="12" y="224" class="nav">Bridge</text><text x="168" y="224" text-anchor="end" class="muted">3</text>
+      <text x="12" y="264" class="nav">Final chorus</text><text x="168" y="264" text-anchor="end" class="muted">4</text>
+    </g>
+    <rect x="20" y="812" width="168" height="118" rx="14" fill="#242620" stroke="#34372f"/>
+    <text x="36" y="838" class="section">VERSE 1 INTENT</text>
+    <text x="36" y="866" class="body">Hope still feels possible.</text>
+    <circle cx="38" cy="894" r="6" fill="#6687bd"/><text x="54" y="899" class="muted">Melancholy 44%</text>
+    <circle cx="38" cy="918" r="6" fill="#d46f80"/><text x="54" y="923" class="muted">Longing 52%</text>
+
+    <rect x="208" y="64" width="946" height="896" fill="#292b26"/>
+    <text x="244" y="102" class="section">COMPOSE · VERSE 1</text>
+    <text x="244" y="133" class="title">Build the song one phrase at a time.</text>
+    <rect x="878" y="92" width="112" height="36" rx="10" fill="#363930" stroke="#4b4f45"/><text x="934" y="115" text-anchor="middle" class="btn" fill="#d6d7d0">Timeline</text>
+    <rect x="998" y="92" width="128" height="36" rx="10" fill="#d8a45e"/><text x="1062" y="115" text-anchor="middle" class="btn" fill="#211a10">+ New phrase</text>
+
+    <rect x="242" y="154" width="878" height="102" rx="16" fill="#20221e" stroke="#3b3e36"/>
+    <text x="264" y="183" class="section">VISIBLE MUSICAL CONTEXT</text>
+    <text x="264" y="213" class="body">D minor</text><text x="352" y="213" class="muted">Key</text>
+    <text x="430" y="213" class="body">92 BPM</text><text x="500" y="213" class="muted">Tempo</text>
+    <text x="572" y="213" class="body">4/4</text><text x="610" y="213" class="muted">Meter</text>
+    <text x="676" y="213" class="body">Slow pulse</text><text x="758" y="213" class="muted">Groove</text>
+    <text x="852" y="213" class="body">Previous: Bb</text><text x="948" y="213" class="muted">Lead-in</text>
+    <text x="1094" y="213" text-anchor="end" class="muted">Deterministic</text>
+
+    <g transform="translate(242 280)">
+      <rect width="878" height="188" rx="18" fill="#eee7da" opacity=".72"/>
+      <rect width="7" height="188" rx="4" fill="#6687bd" opacity=".6"/>
+      <text x="26" y="30" class="paper-label">PHRASE 01 · 2 BARS</text><text x="850" y="30" text-anchor="end" class="paper-label">KEPT</text>
+      <text x="48" y="66" class="chord">Dm</text><text x="332" y="66" class="chord">Bb</text>
+      <text x="48" y="108" class="serif lyric">Every evening I leave the hallway light on</text>
+      <text x="48" y="142" class="paper-body">Soft piano · restrained · melancholy</text>
+      <rect x="726" y="124" width="124" height="38" rx="10" fill="#ded5c6"/><text x="788" y="148" text-anchor="middle" class="btn" fill="#55584f">▶ Play</text>
+    </g>
+
+    <g transform="translate(242 488)" filter="url(#shadow)">
+      <rect width="878" height="276" rx="18" fill="#f4efe5"/>
+      <rect width="7" height="276" rx="4" fill="#d46f80"/>
+      <text x="26" y="32" class="paper-label">PHRASE 02 · ACTIVE · 2 BARS</text>
+      <text x="850" y="32" text-anchor="end" class="paper-label">LONGING 64%</text>
+      <line x1="26" y1="50" x2="850" y2="50" stroke="#d9d1c3"/>
+
+      <g transform="translate(46 70)">
+        <rect x="0" y="0" width="72" height="34" rx="10" fill="#eadfce" stroke="#c69b60"/>
+        <text x="36" y="22" text-anchor="middle" class="chord">Dm</text>
+        <path d="M36 34 V56" stroke="#c69b60" stroke-width="2"/>
+        <rect x="350" y="0" width="72" height="34" rx="10" fill="#eadfce" stroke="#c69b60"/>
+        <text x="386" y="22" text-anchor="middle" class="chord">Bb</text>
+        <path d="M386 34 V56" stroke="#c69b60" stroke-width="2"/>
+        <rect x="650" y="0" width="72" height="34" rx="10" fill="#eadfce" stroke="#c69b60"/>
+        <text x="686" y="22" text-anchor="middle" class="chord">A7</text>
+        <path d="M686 34 V56" stroke="#c69b60" stroke-width="2"/>
+        <text x="0" y="92" class="serif lyric">I still set the table like you might come home</text>
+        <line x1="0" y1="106" x2="770" y2="106" stroke="#d9d1c3"/>
+        <g stroke="#d2c9ba"><line x1="0" y1="116" x2="0" y2="132"/><line x1="96" y1="116" x2="96" y2="126"/><line x1="192" y1="116" x2="192" y2="126"/><line x1="288" y1="116" x2="288" y2="126"/><line x1="384" y1="116" x2="384" y2="132"/><line x1="480" y1="116" x2="480" y2="126"/><line x1="576" y1="116" x2="576" y2="126"/><line x1="672" y1="116" x2="672" y2="126"/><line x1="770" y1="116" x2="770" y2="132"/></g>
+      </g>
+
+      <rect x="26" y="222" width="132" height="40" rx="10" fill="#302a20"/><text x="92" y="247" text-anchor="middle" class="btn" fill="#f4efe5">▶ Play phrase</text>
+      <rect x="168" y="222" width="118" height="40" rx="10" fill="#e5dccd"/><text x="227" y="247" text-anchor="middle" class="btn" fill="#50534b">↩ With lead-in</text>
+      <rect x="296" y="222" width="82" height="40" rx="10" fill="#e5dccd"/><text x="337" y="247" text-anchor="middle" class="btn" fill="#50534b">Loop</text>
+      <rect x="388" y="222" width="112" height="40" rx="10" fill="#e5dccd"/><text x="444" y="247" text-anchor="middle" class="btn" fill="#50534b">Alternative</text>
+      <text x="850" y="247" text-anchor="end" class="paper-label">SHIFT + ENTER · PLAY &amp; NEXT</text>
+    </g>
+
+    <g transform="translate(242 784)">
+      <rect width="878" height="118" rx="18" fill="#eee7da" opacity=".48"/>
+      <text x="26" y="32" class="paper-label">PHRASE 03 · EMPTY</text>
+      <text x="26" y="70" class="serif" font-size="20" fill="#8e8a80">Continue the thought…</text>
+      <rect x="728" y="48" width="122" height="38" rx="10" fill="#ded5c6" opacity=".8"/><text x="789" y="72" text-anchor="middle" class="btn" fill="#666a61">+ Instrumental</text>
+    </g>
+
+    <rect x="1154" y="64" width="286" height="896" fill="#20221e"/>
+    <text x="1182" y="106" class="section">ACTIVE PHRASE</text><text x="1182" y="138" class="title">Phrase 02</text>
+    <line x1="1182" y1="158" x2="1412" y2="158" stroke="#34372f"/>
+    <text x="1182" y="192" class="muted">Harmonic movement</text>
+    <g transform="translate(1182 214)">
+      <rect width="58" height="42" rx="10" fill="#2e302a"/><text x="29" y="26" text-anchor="middle" class="body">Dm</text>
+      <path d="M64 21 H84" stroke="#72776c"/><rect x="90" width="58" height="42" rx="10" fill="#2e302a"/><text x="119" y="26" text-anchor="middle" class="body">Bb</text>
+      <path d="M154 21 H174" stroke="#72776c"/><rect x="180" width="58" height="42" rx="10" fill="#3d3025" stroke="#8e6a43"/><text x="209" y="26" text-anchor="middle" class="body">A7</text>
+      <text x="0" y="70" class="muted">home → departure → tension</text>
+    </g>
+    <rect x="1182" y="316" width="230" height="118" rx="14" fill="#292b26" stroke="#3c4037"/>
+    <text x="1198" y="344" class="section">CURRENT READING</text>
+    <text x="1198" y="372" class="body">The phrase ends with a strong</text><text x="1198" y="394" class="body">pull back toward D minor.</text>
+    <text x="1198" y="418" class="muted">No change is made automatically.</text>
+    <rect x="1182" y="452" width="230" height="42" rx="10" fill="#d8a45e"/><text x="1297" y="478" text-anchor="middle" class="btn" fill="#211a10">Show chord possibilities</text>
+    <text x="1182" y="538" class="section">PHRASE SETTINGS</text>
+    <text x="1182" y="570" class="muted">Bars</text><text x="1398" y="570" text-anchor="end" class="body">2</text><line x1="1182" y1="584" x2="1412" y2="584" stroke="#34372f"/>
+    <text x="1182" y="614" class="muted">Rhythm</text><text x="1398" y="614" text-anchor="end" class="body">Slow pulse</text><line x1="1182" y1="628" x2="1412" y2="628" stroke="#34372f"/>
+    <text x="1182" y="658" class="muted">Dynamics</text><text x="1398" y="658" text-anchor="end" class="body">Growing</text><line x1="1182" y1="672" x2="1412" y2="672" stroke="#34372f"/>
+    <text x="1182" y="702" class="muted">Primary emotion</text><text x="1398" y="702" text-anchor="end" class="body">Longing</text>
+
+    <text x="1182" y="756" class="section">PLAYBACK</text>
+    <rect x="1182" y="776" width="110" height="40" rx="10" fill="#2b2e28" stroke="#44483f"/><text x="1237" y="801" text-anchor="middle" class="btn" fill="#d6d7d0">Play section</text>
+    <rect x="1302" y="776" width="110" height="40" rx="10" fill="#2b2e28" stroke="#44483f"/><text x="1357" y="801" text-anchor="middle" class="btn" fill="#d6d7d0">Play song</text>
+    <text x="1182" y="858" class="muted">Phrase playback includes visible</text><text x="1182" y="879" class="muted">tempo, key, rhythm, and lead-in.</text>
+
+    <rect x="0" y="960" width="1440" height="64" fill="#20221e"/>
+    <rect x="592" y="974" width="36" height="36" rx="18" fill="#2d3029"/><text x="610" y="998" text-anchor="middle" font-size="15" fill="#d6d7d0">■</text>
+    <rect x="640" y="974" width="36" height="36" rx="18" fill="#d8a45e"/><text x="658" y="998" text-anchor="middle" font-size="15" fill="#211a10">▶</text>
+    <text x="708" y="997" class="body">92 BPM</text><text x="784" y="997" class="muted">4/4</text><text x="840" y="997" class="muted">D minor</text>
+    <line x1="940" y1="992" x2="1240" y2="992" stroke="#43473e" stroke-width="5" stroke-linecap="round"/><line x1="940" y1="992" x2="1034" y2="992" stroke="#d8a45e" stroke-width="5" stroke-linecap="round"/><circle cx="1034" cy="992" r="6" fill="#d8a45e"/>
+    <text x="1388" y="997" text-anchor="end" class="muted">Verse 1 · Phrase 02 · bar 3</text>
+  </g>
+</svg>

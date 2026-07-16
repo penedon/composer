@@ -1,0 +1,4 @@
+.workspace-loading, .workspace-error { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 2rem; }
+.workspace-error { color: #ffaaa4; }
+.inspector h2 { color: var(--text-strong); font-size: 1.3rem; margin: 0; }.inspector > p { color: var(--text-soft); font-size: .85rem; line-height: 1.55; }
+.inspector hr { border: 0; border-top: 1px solid var(--border); margin: 1.8rem 0; }.inspector ul { display: grid; gap: .8rem; list-style: none; padding: 0; }.inspector li { align-items: center; display: flex; font-size: .85rem; gap: .65rem; }.inspector li span { border-radius: 50%; height: .65rem; width: .65rem; }.inspector__note { color: var(--text-muted) !important; font-size: .75rem !important; }

@@ -1,0 +1,14 @@
+.example-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); display: grid; grid-template-columns: minmax(12rem, .7fr) minmax(24rem, 1.3fr); min-height: 27rem; overflow: hidden; }
+.example-card__art { background: linear-gradient(180deg, #3d5261 0%, #80705e 53%, #292c29 54%); min-height: 100%; overflow: hidden; position: relative; }
+.example-card__art::before, .example-card__art::after { background: #252a29; bottom: 30%; content: ''; height: 45%; position: absolute; transform: rotate(45deg); width: 70%; }.example-card__art::before { left: -34%; }.example-card__art::after { right: -38%; }
+.example-card__road { background: linear-gradient(90deg, #242623 0 44%, #d4b676 45% 47%, #242623 48% 100%); bottom: -25%; height: 75%; left: 25%; position: absolute; transform: perspective(15rem) rotateX(52deg); width: 50%; z-index: 2; }
+.example-card__sun { background: var(--action); border-radius: 50%; box-shadow: 0 0 3rem color-mix(in srgb, var(--action) 60%, transparent); height: 3.5rem; position: absolute; right: 18%; top: 18%; width: 3.5rem; }
+.example-card__content { display: flex; flex-direction: column; padding: clamp(1.5rem, 3vw, 2.4rem); }
+.example-card h3 { color: var(--text-strong); font-family: Georgia, serif; font-size: clamp(2rem, 3vw, 3.2rem); line-height: 1; margin: 0; }
+.example-card__theme { color: var(--action); font-size: .8rem; font-weight: 750; letter-spacing: .04em; margin: .8rem 0; text-transform: uppercase; }
+.example-card__summary { color: var(--text-soft); line-height: 1.55; margin: 0; max-width: 44rem; }
+.example-card dl { display: grid; gap: .5rem; grid-template-columns: repeat(4, 1fr); margin: 1.25rem 0; }
+.example-card dl div { background: var(--surface-raised); border-radius: .55rem; display: grid; padding: .65rem; }.example-card dt { color: var(--text-muted); font-size: .61rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }.example-card dd { color: var(--text-strong); font-size: 1rem; font-weight: 750; margin: .2rem 0 0; }
+.example-card__steps { display: flex; flex-wrap: wrap; gap: .45rem; list-style: none; margin: 0 0 1.25rem; padding: 0; }.example-card__steps li { align-items: center; border: 1px solid var(--border); border-radius: 2rem; color: var(--text-soft); display: flex; font-size: .7rem; gap: .4rem; padding: .32rem .55rem .32rem .35rem; }.example-card__steps span { background: var(--action); border-radius: 50%; color: var(--action-ink); display: grid; font-size: .58rem; height: 1.15rem; place-items: center; width: 1.15rem; }
+.example-card .app-button { align-self: flex-start; margin-top: auto; }
+@media(max-width:800px){.example-card{grid-template-columns:1fr}.example-card__art{min-height:12rem}.example-card dl{grid-template-columns:repeat(2,1fr)}}

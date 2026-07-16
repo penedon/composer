@@ -1,0 +1,10 @@
+.phase-rail { background: var(--surface-deep); border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: .25rem; height: 100%; min-height: 0; min-width: 0; overflow: auto; padding: 1.5rem .75rem; width: 100%; }
+.phase-rail__eyebrow { color: var(--text-muted); font-size: .66rem; font-weight: 800; letter-spacing: .11em; margin: 0 .75rem .65rem; }
+.phase-rail__link { align-items: center; border-radius: var(--radius-sm); color: var(--text-soft); display: flex; font-size: .82rem; font-weight: 650; gap: .75rem; padding: .65rem .75rem; text-decoration: none; }
+.phase-rail__link span { align-items: center; background: var(--surface-raised); border-radius: 50%; color: var(--text-muted); display: flex; height: 1.45rem; justify-content: center; width: 1.45rem; }
+.phase-rail__link--active { background: color-mix(in srgb, var(--action) 16%, var(--surface-raised)); color: var(--text-strong); }
+.phase-rail__link--active span { background: var(--action); color: var(--action-ink); }
+.phase-rail__compass { border: 1px solid var(--border); border-radius: var(--radius-md); margin: auto .5rem 0; padding: 1rem; }
+.phase-rail__compass .phase-rail__eyebrow { margin: 0 0 .75rem; }
+.phase-rail__compass strong { display: block; font-size: .9rem; text-transform: capitalize; }
+.phase-rail__compass small { color: var(--text-muted); display: block; font-size: .68rem; line-height: 1.5; margin-top: .5rem; }

@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1024" viewBox="0 0 1440 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Composer Studio Notebook design system</title>
+  <desc id="desc">A visual design system showing typography, surfaces, controls, emotion encoding, music tracks, phrase blocks, and tension visualization.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#000000" flood-opacity="0.16"/>
+    </filter>
+    <style>
+      .ui { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .display { font-family: Georgia, "Times New Roman", serif; }
+      .h1 { font-size: 34px; font-weight: 600; fill: #f4f1e9; }
+      .h2 { font-size: 20px; font-weight: 600; fill: #f4f1e9; }
+      .h3 { font-size: 14px; font-weight: 600; fill: #f4f1e9; letter-spacing: .08em; }
+      .body { font-size: 15px; font-weight: 400; fill: #d8d8d0; }
+      .small { font-size: 12px; font-weight: 500; fill: #92968d; letter-spacing: .03em; }
+      .paper-title { font-size: 24px; font-weight: 600; fill: #272821; }
+      .paper-body { font-size: 15px; font-weight: 400; fill: #44473f; }
+      .paper-small { font-size: 12px; font-weight: 600; fill: #72766d; letter-spacing: .04em; }
+      .label { font-size: 13px; font-weight: 600; fill: #d8d8d0; }
+      .button { font-size: 13px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="1024" fill="#171916"/>
+  <rect x="40" y="32" width="1360" height="76" rx="20" fill="#20221e" stroke="#34372f"/>
+  <g class="ui">
+    <text x="72" y="66" class="small">COMPOSER · VISUAL LANGUAGE</text>
+    <text x="72" y="94" class="h1">Studio Notebook</text>
+    <text x="1368" y="77" text-anchor="end" class="body">Intent stays visible while music takes shape.</text>
+  </g>
+
+  <g transform="translate(40 138)">
+    <text class="ui h3" x="0" y="0">FOUNDATION COLORS</text>
+    <g transform="translate(0 24)" class="ui">
+      <rect width="214" height="116" rx="16" fill="#20221e" stroke="#34372f"/>
+      <circle cx="32" cy="32" r="15" fill="#171916" stroke="#4a4e44"/>
+      <text x="58" y="28" class="label">Night shell</text>
+      <text x="58" y="48" class="small">#171916</text>
+      <rect x="20" y="72" width="174" height="24" rx="8" fill="#292b26"/>
+    </g>
+    <g transform="translate(230 24)" class="ui">
+      <rect width="214" height="116" rx="16" fill="#f4efe5"/>
+      <circle cx="32" cy="32" r="15" fill="#f4efe5" stroke="#cfc7b8"/>
+      <text x="58" y="28" class="paper-small">Writing paper</text>
+      <text x="58" y="48" class="paper-small" opacity=".7">#F4EFE5</text>
+      <rect x="20" y="72" width="174" height="24" rx="8" fill="#e7decd"/>
+    </g>
+    <g transform="translate(460 24)" class="ui">
+      <rect width="214" height="116" rx="16" fill="#20221e" stroke="#34372f"/>
+      <circle cx="32" cy="32" r="15" fill="#d8a45e"/>
+      <text x="58" y="28" class="label">Warm action</text>
+      <text x="58" y="48" class="small">#D8A45E</text>
+      <rect x="20" y="72" width="174" height="24" rx="8" fill="#d8a45e" opacity=".22"/>
+    </g>
+  </g>
+
+  <g transform="translate(760 138)">
+    <text class="ui h3" x="0" y="0">EMOTION FAMILIES</text>
+    <g class="ui" transform="translate(0 24)">
+      <g transform="translate(0 0)"><circle cx="16" cy="16" r="16" fill="#e2b84f"/><text x="42" y="21" class="label">Joy</text></g>
+      <g transform="translate(148 0)"><circle cx="16" cy="16" r="16" fill="#d46f80"/><text x="42" y="21" class="label">Love</text></g>
+      <g transform="translate(296 0)"><circle cx="16" cy="16" r="16" fill="#6687bd"/><text x="42" y="21" class="label">Sadness</text></g>
+      <g transform="translate(444 0)"><circle cx="16" cy="16" r="16" fill="#8274ae"/><text x="42" y="21" class="label">Fear</text></g>
+      <g transform="translate(0 56)"><circle cx="16" cy="16" r="16" fill="#ca6252"/><text x="42" y="21" class="label">Anger</text></g>
+      <g transform="translate(148 56)"><circle cx="16" cy="16" r="16" fill="#79936a"/><text x="42" y="21" class="label">Rejection</text></g>
+      <g transform="translate(296 56)"><circle cx="16" cy="16" r="16" fill="#55a3a3"/><text x="42" y="21" class="label">Wonder</text></g>
+      <g transform="translate(444 56)"><circle cx="16" cy="16" r="16" fill="#c68b50"/><text x="42" y="21" class="label">Desire</text></g>
+    </g>
+  </g>
+
+  <line x1="40" y1="300" x2="1400" y2="300" stroke="#34372f"/>
+
+  <g transform="translate(40 338)">
+    <text class="ui h3" x="0" y="0">TYPE &amp; CONTROLS</text>
+    <g transform="translate(0 34)">
+      <text class="display" x="0" y="28" font-size="34" font-weight="600" fill="#f4f1e9">The doorway stayed lit.</text>
+      <text class="ui body" x="0" y="62">Expressive writing uses a literary face;</text>
+      <text class="ui body" x="0" y="83">interface language stays quiet and direct.</text>
+      <text class="ui small" x="0" y="112">SECTION · VERSE 1 · PHRASE 03</text>
+    </g>
+    <g transform="translate(0 164)" class="ui">
+      <rect width="116" height="40" rx="10" fill="#d8a45e"/>
+      <text x="58" y="25" text-anchor="middle" class="button" fill="#211a10">Play phrase</text>
+      <rect x="130" width="116" height="40" rx="10" fill="#292b26" stroke="#44483f"/>
+      <text x="188" y="25" text-anchor="middle" class="button" fill="#f4f1e9">Add chord</text>
+      <rect x="260" width="116" height="40" rx="10" fill="none"/>
+      <text x="318" y="25" text-anchor="middle" class="button" fill="#aeb1a7">More</text>
+    </g>
+    <g transform="translate(0 224)" class="ui">
+      <rect width="380" height="52" rx="12" fill="#f4efe5"/>
+      <text x="18" y="20" class="paper-small">LYRIC OR NOTE</text>
+      <text x="18" y="41" class="paper-body">Start writing here…</text>
+    </g>
+  </g>
+
+  <g transform="translate(520 338)">
+    <text class="ui h3" x="0" y="0">MUSICAL MARKS</text>
+    <g transform="translate(0 32)" class="ui">
+      <rect width="168" height="74" rx="14" fill="#2a2d27" stroke="#4a4e44"/>
+      <text x="16" y="22" class="small">HOME · STABLE</text>
+      <text x="16" y="54" class="h2">Dm</text>
+      <text x="148" y="54" text-anchor="end" class="small">i</text>
+    </g>
+    <g transform="translate(184 32)" class="ui">
+      <rect width="168" height="74" rx="14" fill="#342b24" stroke="#8d6844"/>
+      <text x="16" y="22" class="small">PULL · TENSION</text>
+      <text x="16" y="54" class="h2">A7</text>
+      <text x="148" y="54" text-anchor="end" class="small">V7</text>
+    </g>
+    <g transform="translate(0 130)" class="ui">
+      <text x="0" y="0" class="small">TENSION PATH</text>
+      <path d="M0 90 C58 86 72 40 132 52 S220 104 274 38 S328 18 352 22" fill="none" stroke="#d8a45e" stroke-width="4" stroke-linecap="round"/>
+      <line x1="0" y1="100" x2="352" y2="100" stroke="#44483f"/>
+      <circle cx="0" cy="90" r="5" fill="#f4efe5"/>
+      <circle cx="132" cy="52" r="5" fill="#f4efe5"/>
+      <circle cx="274" cy="38" r="5" fill="#f4efe5"/>
+      <circle cx="352" cy="22" r="6" fill="#d8a45e"/>
+      <text x="0" y="122" class="small">settled</text>
+      <text x="352" y="122" text-anchor="end" class="small">unresolved</text>
+    </g>
+  </g>
+
+  <g transform="translate(936 338)">
+    <text class="ui h3" x="0" y="0">TRACK LANGUAGE</text>
+    <g class="ui" transform="translate(0 34)">
+      <rect width="424" height="46" rx="10" fill="#232520"/>
+      <circle cx="22" cy="23" r="6" fill="#d8a45e"/>
+      <text x="42" y="28" class="label">Harmony · Soft piano</text>
+      <text x="396" y="28" text-anchor="end" class="small">M  S</text>
+      <rect x="0" y="58" width="424" height="46" rx="10" fill="#232520"/>
+      <circle cx="22" cy="81" r="6" fill="#6687bd"/>
+      <text x="42" y="86" class="label">Bass · Upright</text>
+      <text x="396" y="86" text-anchor="end" class="small">M  S</text>
+      <rect x="0" y="116" width="424" height="46" rx="10" fill="#232520"/>
+      <circle cx="22" cy="139" r="6" fill="#55a3a3"/>
+      <text x="42" y="144" class="label">Rhythm · Brushes</text>
+      <text x="396" y="144" text-anchor="end" class="small">M  S</text>
+    </g>
+  </g>
+
+  <g transform="translate(40 686)">
+    <text class="ui h3" x="0" y="0">PHRASE BLOCK</text>
+    <rect x="0" y="26" width="880" height="268" rx="20" fill="#f4efe5" filter="url(#shadow)"/>
+    <rect x="0" y="26" width="8" height="268" rx="4" fill="#6687bd"/>
+    <g class="ui">
+      <text x="28" y="62" class="paper-small">VERSE 1 · PHRASE 03</text>
+      <text x="846" y="62" text-anchor="end" class="paper-small">2 BARS · LONGING 72%</text>
+      <line x1="28" y1="82" x2="852" y2="82" stroke="#d5cdbf"/>
+      <text x="50" y="117" font-size="14" font-weight="600" fill="#7a5d35">Dm</text>
+      <text x="410" y="117" font-size="14" font-weight="600" fill="#7a5d35">Bb</text>
+      <text x="50" y="158" class="display" font-size="28" fill="#272821">I left the light beside the doorway</text>
+      <line x1="50" y1="178" x2="824" y2="178" stroke="#ded6c8"/>
+      <text x="28" y="214" class="paper-small">RHYTHM</text>
+      <text x="102" y="214" class="paper-body">slow pulse</text>
+      <text x="228" y="214" class="paper-small">DYNAMIC</text>
+      <text x="310" y="214" class="paper-body">restrained</text>
+      <rect x="28" y="236" width="120" height="38" rx="10" fill="#302a20"/>
+      <text x="88" y="260" text-anchor="middle" class="button" fill="#f4efe5">▶ Play phrase</text>
+      <rect x="160" y="236" width="114" height="38" rx="10" fill="#e5dccd"/>
+      <text x="217" y="260" text-anchor="middle" class="button" fill="#44473f">Loop</text>
+      <text x="842" y="260" text-anchor="end" class="paper-small">SHIFT + ENTER · PLAY &amp; NEXT</text>
+    </g>
+  </g>
+
+  <g transform="translate(952 686)" class="ui">
+    <text class="h3" x="0" y="0">PRINCIPLES</text>
+    <g transform="translate(0 34)">
+      <circle cx="8" cy="8" r="8" fill="#d8a45e"/>
+      <text x="28" y="13" class="body">Intent before terminology</text>
+      <circle cx="8" cy="56" r="8" fill="#d8a45e"/>
+      <text x="28" y="61" class="body">Ask before suggesting</text>
+      <circle cx="8" cy="104" r="8" fill="#d8a45e"/>
+      <text x="28" y="109" class="body">Audition every decision</text>
+      <circle cx="8" cy="152" r="8" fill="#d8a45e"/>
+      <text x="28" y="157" class="body">Never hide musical state</text>
+      <circle cx="8" cy="200" r="8" fill="#d8a45e"/>
+      <text x="28" y="205" class="body">Preserve the artist’s work</text>
+    </g>
+  </g>
+</svg>

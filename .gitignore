@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+src-tauri/target/
+src-tauri/gen/
+test-assets/licensed-reference-songs/**/*.txt
+test-assets/licensed-reference-songs/**/*.mid
+test-assets/licensed-reference-songs/**/*.midi
+*.log
+*.tsbuildinfo
+.DS_Store
