@@ -6,7 +6,7 @@ Build a local-first Vue 3 application that guides an amateur songwriter from sto
 
 This plan supersedes the implementation sequence in the original CLI/Renardo-centered plan. The original document remains useful historical context, but the web experience and Phrase Workspace now define the MVP.
 
-## Implementation status — 2026-07-15
+## Implementation status — 2026-07-16
 
 All implementation phases are represented in the codebase. The browser MVP and Tauri v2 desktop shell share the same domain/application core and platform ports.
 
@@ -14,8 +14,8 @@ Verified locally:
 
 - strict production and test typechecking;
 - ESLint, including generated-output exclusions;
-- 33 Vitest unit/integration assertions across 14 suites;
-- 10 Playwright journeys across Chromium and WebKit;
+- 40 Vitest unit/integration assertions across 16 suites;
+- 12 Playwright journeys across Chromium and WebKit;
 - 16 reviewed visual baselines across `1440 × 1024` and `1280 × 800`;
 - automated accessibility audit with no violations in the export journey;
 - production Vite build;

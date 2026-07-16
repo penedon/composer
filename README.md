@@ -4,6 +4,8 @@ Composer is a local-first songwriting workspace that helps an amateur composer t
 
 The starting page includes complete song examples. `The Long Road Within` explores knowing yourself after a long, lonely trip and can be opened to inspect every composition phase, audition the arrangement, or export its MIDI.
 
+The Structure workspace includes nine editable forms: story arc, direct pop, AABA, folk ballad, classic rock, 12-bar blues, build-and-drop, through-composed, and a blank canvas. Applying a form preserves existing phrases and emotional-arc intent and can be undone as one operation.
+
 ## Run the web application
 
 ```sh

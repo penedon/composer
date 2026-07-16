@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="360" viewBox="0 0 1440 360" role="img" aria-labelledby="title desc">
+  <title id="title">Composer footer music tracker draft</title>
+  <desc id="desc">A compact segmented song-position tracker positioned immediately above the persistent footer. Colored sections show Intro, Verse, Pre-chorus, Chorus, Bridge and Final chorus, with Chorus active and a precise playhead at 48 seconds.</desc>
+  <defs>
+    <filter id="footer-shadow" x="-10%" y="-80%" width="120%" height="220%">
+      <feDropShadow dx="0" dy="-8" stdDeviation="16" flood-color="#000000" flood-opacity="0.22"/>
+    </filter>
+    <filter id="playhead-shadow" x="-100%" y="-50%" width="300%" height="200%">
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+    <clipPath id="timeline-clip">
+      <rect x="172" y="260" width="1096" height="22" rx="6"/>
+    </clipPath>
+    <style>
+      .ui { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .eyebrow { font-size: 10px; font-weight: 800; letter-spacing: .09em; fill: #8f9489; }
+      .section-name { font-size: 10px; font-weight: 700; fill: #e4e5de; }
+      .section-name-active { font-size: 10px; font-weight: 800; fill: #fffaf0; }
+      .body { font-size: 13px; fill: #d6d7d0; }
+      .strong { font-size: 13px; font-weight: 700; fill: #f4f1e9; }
+      .muted { font-size: 11px; fill: #8f9489; }
+      .button { font-size: 12px; font-weight: 800; fill: #211a10; }
+    </style>
+  </defs>
+
+  <!-- A small slice of the workspace keeps the footer treatment in context. -->
+  <rect width="1440" height="360" fill="#171916"/>
+  <g opacity="0.82">
+    <rect x="0" y="0" width="208" height="244" fill="#1d1f1b"/>
+    <rect x="208" y="0" width="946" height="244" fill="#292b26"/>
+    <rect x="1154" y="0" width="286" height="244" fill="#20221e"/>
+    <rect x="242" y="28" width="878" height="184" rx="18" fill="#20221e" stroke="#3b3e36"/>
+    <text x="264" y="61" class="ui eyebrow">COMPOSE · VERSE 1</text>
+    <rect x="264" y="82" width="834" height="102" rx="14" fill="#f4efe5"/>
+    <rect x="264" y="82" width="6" height="102" rx="3" fill="#6687bd"/>
+    <rect x="288" y="106" width="122" height="7" rx="3.5" fill="#bcb4a6"/>
+    <rect x="288" y="132" width="540" height="10" rx="5" fill="#d4ccbf"/>
+    <rect x="288" y="154" width="472" height="8" rx="4" fill="#ded6ca"/>
+    <text x="1182" y="38" class="ui eyebrow">NOW PLAYING</text>
+    <text x="1182" y="70" class="ui strong">Chorus · Phrase 02</text>
+    <text x="1182" y="94" class="ui muted">Bar 6 of 8</text>
+  </g>
+
+  <!-- Compact song tracker: 52px high and anchored directly above the footer. -->
+  <g filter="url(#footer-shadow)">
+    <rect x="0" y="244" width="1440" height="52" fill="#1b1d19"/>
+    <line x1="0" y1="244.5" x2="1440" y2="244.5" stroke="#34372f"/>
+
+    <text x="24" y="265" class="ui eyebrow">SONG POSITION</text>
+    <text x="24" y="283" class="ui strong">00:48</text>
+    <text x="66" y="283" class="ui muted">/ 03:18</text>
+
+    <!-- Segment widths communicate relative musical duration. -->
+    <g clip-path="url(#timeline-clip)">
+      <rect x="172" y="260" width="102" height="22" fill="#3b3c35"/>
+      <rect x="274" y="260" width="176" height="22" fill="#384252"/>
+      <rect x="450" y="260" width="98" height="22" fill="#4a3f35"/>
+      <rect x="548" y="260" width="190" height="22" fill="#5a3941"/>
+      <rect x="738" y="260" width="176" height="22" fill="#384252"/>
+      <rect x="914" y="260" width="126" height="22" fill="#4b4057"/>
+      <rect x="1040" y="260" width="228" height="22" fill="#5a3941"/>
+
+      <!-- Played portion subtly warms the timeline without hiding section colors. -->
+      <rect x="172" y="260" width="468" height="22" fill="#dca65c" opacity="0.16"/>
+
+      <g stroke="#20221e" stroke-width="2">
+        <line x1="274" y1="260" x2="274" y2="282"/>
+        <line x1="450" y1="260" x2="450" y2="282"/>
+        <line x1="548" y1="260" x2="548" y2="282"/>
+        <line x1="738" y1="260" x2="738" y2="282"/>
+        <line x1="914" y1="260" x2="914" y2="282"/>
+        <line x1="1040" y1="260" x2="1040" y2="282"/>
+      </g>
+
+      <text x="223" y="275" text-anchor="middle" class="ui section-name">Intro</text>
+      <text x="362" y="275" text-anchor="middle" class="ui section-name">Verse 1</text>
+      <text x="499" y="275" text-anchor="middle" class="ui section-name">Pre</text>
+      <text x="643" y="275" text-anchor="middle" class="ui section-name-active">Chorus</text>
+      <text x="826" y="275" text-anchor="middle" class="ui section-name">Verse 2</text>
+      <text x="977" y="275" text-anchor="middle" class="ui section-name">Bridge</text>
+      <text x="1154" y="275" text-anchor="middle" class="ui section-name">Final chorus</text>
+    </g>
+
+    <!-- The line is exact position; the small cap remains visible over every color. -->
+    <g filter="url(#playhead-shadow)">
+      <path d="M640 255 L646 255 L643 259 Z" fill="#fffaf0"/>
+      <line x1="643" y1="258" x2="643" y2="285" stroke="#fffaf0" stroke-width="2"/>
+      <circle cx="643" cy="271" r="3" fill="#fffaf0"/>
+    </g>
+
+    <text x="1290" y="265" class="ui eyebrow">CURRENT SECTION</text>
+    <circle cx="1294" cy="279" r="4" fill="#d46f80"/>
+    <text x="1304" y="283" class="ui strong">Chorus</text>
+    <text x="1388" y="283" text-anchor="end" class="ui muted">bar 6 / 8</text>
+  </g>
+
+  <!-- Existing transport footer, lightly reorganized around the tracker. -->
+  <rect x="0" y="296" width="1440" height="64" fill="#20221e"/>
+  <line x1="0" y1="296.5" x2="1440" y2="296.5" stroke="#34372f"/>
+  <text x="24" y="334" class="ui muted">Playing song</text>
+
+  <g transform="translate(526 310)">
+    <rect width="110" height="36" rx="10" fill="#dca65c"/>
+    <rect x="22" y="12" width="11" height="11" rx="1" fill="#211a10"/>
+    <text x="70" y="23" text-anchor="middle" class="ui button">Stop</text>
+    <text x="134" y="23" class="ui strong">92</text>
+    <text x="156" y="23" class="ui muted">BPM</text>
+    <text x="212" y="23" class="ui body">4/4</text>
+    <text x="264" y="23" class="ui body">D minor</text>
+  </g>
+
+  <text x="1416" y="334" text-anchor="end" class="ui muted">The Doorway</text>
+</svg>

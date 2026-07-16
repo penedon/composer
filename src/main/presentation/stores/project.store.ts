@@ -2,6 +2,7 @@ import { computed, ref, shallowRef } from 'vue'
 import { defineStore } from 'pinia'
 
 import { composerApplication } from '@main/application'
+import { buildSongPreview } from '@domain/playback/songPreview'
 import type { CompositionProject, Phrase, ProjectSummary } from '@domain/project/project.types'
 import type { PhrasePlaybackRequest } from '@application/ports/ports'
 
@@ -13,12 +14,16 @@ export const useProjectStore = defineStore('project', () => {
   const lastSavedAt = ref<string | null>(null)
   const error = ref<string | null>(null)
   const playingPhraseId = ref<string | null>(null)
+  const phrasePlaybackPositionBeats = ref(0)
   const playingSong = ref(false)
+  const songPlaybackPositionSeconds = ref(0)
+  const songPlaybackDurationSeconds = ref(0)
   const playbackError = ref<string | null>(null)
   const selectedPhraseId = ref<string | null>(null)
   const selectedSectionId = ref<string>('verse-1')
   const revision = ref(0)
   let playbackTimer: ReturnType<typeof setTimeout> | null = null
+  let playbackPositionTimer: ReturnType<typeof setInterval> | null = null
 
   const canUndo = computed(() => revision.value >= 0 && composerApplication.canUndo)
   const canRedo = computed(() => revision.value >= 0 && composerApplication.canRedo)
@@ -28,6 +33,7 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   async function load(id: string): Promise<void> {
+    resetSongPlayback()
     loading.value = true
     error.value = null
     try {
@@ -43,18 +49,21 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   async function create(title: string): Promise<CompositionProject> {
+    resetSongPlayback()
     project.value = await composerApplication.create(title)
     await refreshLibrary()
     return project.value
   }
 
   async function importProject(text: string): Promise<CompositionProject> {
+    resetSongPlayback()
     project.value = await composerApplication.importProject(text)
     await refreshLibrary()
     return project.value
   }
 
   async function openExample(seed: CompositionProject): Promise<CompositionProject> {
+    resetSongPlayback()
     project.value = await composerApplication.openExample(seed)
     selectedSectionId.value = project.value.sections[0]?.id ?? ''
     selectedPhraseId.value = project.value.phrases.find((phrase) => phrase.sectionId === selectedSectionId.value)?.id ?? null
@@ -65,6 +74,7 @@ export const useProjectStore = defineStore('project', () => {
   async function selectNativeProject(): Promise<CompositionProject | null> {
     const selected = await composerApplication.portable.selectProject?.() ?? null
     if (!selected) return null
+    resetSongPlayback()
     project.value = await composerApplication.importProject(JSON.stringify(selected))
     await refreshLibrary()
     return project.value
@@ -102,7 +112,9 @@ export const useProjectStore = defineStore('project', () => {
   async function playPhrase(phrase: Phrase, leadIn = false, loop = false): Promise<void> {
     if (!project.value) return
     clearPlaybackTimer()
+    resetSongPlayback()
     playingSong.value = false
+    phrasePlaybackPositionBeats.value = 0
     playbackError.value = null
     const ordered = project.value.phrases
       .filter((item) => item.sectionId === phrase.sectionId)
@@ -119,38 +131,98 @@ export const useProjectStore = defineStore('project', () => {
     }
     playingPhraseId.value = phrase.id
     await composerApplication.playback.playPhrase(request)
+    const totalBeats = phrase.bars * 4
+    const tempo = request.tempo
+    const startedAt = performance.now()
+    playbackPositionTimer = setInterval(() => {
+      const elapsedBeats = (performance.now() - startedAt) / 1000 * tempo / 60
+      phrasePlaybackPositionBeats.value = loop ? elapsedBeats % totalBeats : Math.min(totalBeats, elapsedBeats)
+    }, 50)
     if (!loop) {
-      playbackTimer = setTimeout(() => { playingPhraseId.value = null }, phrase.bars * 4 * (60 / project.value!.frame.tempo) * 1000)
+      playbackTimer = setTimeout(() => {
+        clearPlaybackTimer()
+        phrasePlaybackPositionBeats.value = totalBeats
+        playingPhraseId.value = null
+      }, totalBeats * (60 / tempo) * 1000)
     }
   }
 
   function clearPlaybackTimer(): void {
     if (playbackTimer) clearTimeout(playbackTimer)
     playbackTimer = null
+    if (playbackPositionTimer) clearInterval(playbackPositionTimer)
+    playbackPositionTimer = null
   }
 
-  async function playSong(): Promise<void> {
-    if (!project.value) return
+  function resetSongPlayback(): void {
     clearPlaybackTimer()
     playingPhraseId.value = null
+    phrasePlaybackPositionBeats.value = 0
+    playingSong.value = false
+    songPlaybackPositionSeconds.value = 0
+    songPlaybackDurationSeconds.value = 0
+  }
+
+  async function playSong(startBeat?: number): Promise<void> {
+    if (!project.value) return
+    clearPlaybackTimer()
+    const secondsPerBeat = 60 / project.value.frame.tempo
+    const resumeBeat = songPlaybackPositionSeconds.value > 0 && songPlaybackPositionSeconds.value < songPlaybackDurationSeconds.value
+      ? songPlaybackPositionSeconds.value / secondsPerBeat
+      : 0
+    const requestedStartBeat = startBeat ?? resumeBeat
+    const startSeconds = requestedStartBeat * secondsPerBeat
+    songPlaybackPositionSeconds.value = startSeconds
+    playingPhraseId.value = null
+    phrasePlaybackPositionBeats.value = 0
     playbackError.value = null
     playingSong.value = true
     try {
-      const duration = await composerApplication.playback.playSong(project.value)
+      const duration = await composerApplication.playback.playSong(project.value, requestedStartBeat)
       if (duration <= 0) {
         playingSong.value = false
         playbackError.value = project.value.phrases.length ? 'Audio playback is unavailable in this environment.' : 'Add a phrase before playing the song.'
         return
       }
-      playbackTimer = setTimeout(() => { playingSong.value = false }, duration * 1000)
+      songPlaybackDurationSeconds.value = duration
+      const remainingDuration = Math.max(0, duration - startSeconds)
+      if (remainingDuration <= 0) {
+        playingSong.value = false
+        songPlaybackPositionSeconds.value = duration
+        return
+      }
+      const startedAt = performance.now()
+      playbackPositionTimer = setInterval(() => {
+        songPlaybackPositionSeconds.value = Math.min(duration, startSeconds + (performance.now() - startedAt) / 1000)
+      }, 100)
+      playbackTimer = setTimeout(() => {
+        clearPlaybackTimer()
+        songPlaybackPositionSeconds.value = duration
+        playingSong.value = false
+      }, remainingDuration * 1000)
     } catch (cause) {
       playingSong.value = false
       playbackError.value = cause instanceof Error ? cause.message : 'Unable to start playback.'
     }
   }
 
-  async function stop(): Promise<void> {
+  async function seekSong(beat: number): Promise<void> {
+    if (!project.value) return
+    const preview = buildSongPreview(project.value)
+    const safeBeat = Math.max(0, Math.min(beat, preview.totalBeats))
     clearPlaybackTimer()
+    await composerApplication.playback.stop()
+    playingPhraseId.value = null
+    phrasePlaybackPositionBeats.value = 0
+    playingSong.value = false
+    playbackError.value = null
+    songPlaybackDurationSeconds.value = preview.totalBeats * (60 / project.value.frame.tempo)
+    songPlaybackPositionSeconds.value = safeBeat * (60 / project.value.frame.tempo)
+    if (safeBeat < preview.totalBeats) await playSong(safeBeat)
+  }
+
+  async function stop(): Promise<void> {
+    resetSongPlayback()
     await composerApplication.playback.stop()
     playingPhraseId.value = null
     playingSong.value = false
@@ -171,8 +243,8 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   return {
-    project, projects, loading, saving, lastSavedAt, error, playingPhraseId, playingSong, playbackError, selectedPhraseId, selectedSectionId,
+    project, projects, loading, saving, lastSavedAt, error, playingPhraseId, phrasePlaybackPositionBeats, playingSong, songPlaybackPositionSeconds, songPlaybackDurationSeconds, playbackError, selectedPhraseId, selectedSectionId,
     canUndo, canRedo, refreshLibrary, load, create, importProject, openExample, selectNativeProject, mutate, undo, redo, save, playPhrase, stop,
-    playSong, downloadProject, downloadMidi, auditionChord,
+    playSong, seekSong, downloadProject, downloadMidi, auditionChord,
   }
 })

@@ -1,0 +1,232 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050" role="img" aria-labelledby="title desc">
+  <title id="title">Composer emotion picker before and after</title>
+  <desc id="desc">A side-by-side comparison of the current select-menu emotion picker and a proposed family-orbit picker. The proposed picker groups eight emotion families in a stable circular map, reveals readable emotion nuances beside the map, and preserves the Composer Studio Notebook visual language.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="#000000" flood-opacity=".24"/>
+    </filter>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity=".16"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#d8a45e"/>
+    </marker>
+    <style>
+      .ui { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .display { font-family: Georgia, "Times New Roman", serif; }
+      .board-title { font-size: 30px; font-weight: 650; fill: #f4f1e9; }
+      .board-copy { font-size: 14px; fill: #aeb2a8; }
+      .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .11em; fill: #8f9489; }
+      .eyebrow-warm { font-size: 11px; font-weight: 800; letter-spacing: .11em; fill: #d8a45e; }
+      .panel-title { font-size: 21px; font-weight: 650; fill: #f4f1e9; }
+      .heading { font-size: 20px; font-weight: 650; fill: #f4f1e9; }
+      .body { font-size: 13px; fill: #d6d7d0; }
+      .body-strong { font-size: 13px; font-weight: 650; fill: #f4f1e9; }
+      .muted { font-size: 11px; fill: #8f9489; }
+      .label { font-size: 11px; font-weight: 750; letter-spacing: .04em; fill: #b8bbb1; }
+      .button { font-size: 12px; font-weight: 700; }
+      .paper-title { font-size: 17px; font-weight: 650; fill: #292b25; }
+      .paper-body { font-size: 12px; fill: #55594f; }
+      .paper-muted { font-size: 10px; font-weight: 650; letter-spacing: .04em; fill: #73776d; }
+      .wheel-label { font-size: 10px; font-weight: 750; fill: #f8f5ee; }
+      .wheel-label-dark { font-size: 10px; font-weight: 750; fill: #252720; }
+      .number { font-size: 11px; font-weight: 800; fill: #211a10; }
+      .callout-title { font-size: 12px; font-weight: 700; fill: #f4f1e9; }
+      .callout-copy { font-size: 11px; fill: #969b91; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1050" fill="#171916"/>
+  <g class="ui">
+    <text x="52" y="48" class="eyebrow-warm">COMPOSER · INTERACTION REVISION · 09</text>
+    <text x="52" y="86" class="board-title">Emotion selection, from hidden taxonomy to visible map</text>
+    <text x="52" y="114" class="board-copy">Keep the wheel’s family → nuance model; remove the tiny wedges, rotated labels, and color-only meaning.</text>
+    <g transform="translate(1264 38)">
+      <rect width="284" height="76" rx="16" fill="#20221e" stroke="#34372f"/>
+      <circle cx="24" cy="26" r="6" fill="#d8a45e"/>
+      <text x="40" y="30" class="body-strong">Studio Notebook pattern</text>
+      <text x="24" y="55" class="muted">Dark shell · warm action · labeled color</text>
+    </g>
+
+    <!-- Current state -->
+    <g transform="translate(52 152)">
+      <rect width="498" height="838" rx="22" fill="#20221e" stroke="#34372f"/>
+      <text x="28" y="38" class="eyebrow">BEFORE · CURRENT</text>
+      <text x="28" y="70" class="panel-title">Select menus hide the model</text>
+      <text x="28" y="94" class="muted">Functional, but the relationship between family and nuance is invisible.</text>
+
+      <g transform="translate(22 122)">
+        <rect width="454" height="508" rx="18" fill="#292b26" stroke="#3b3e36" filter="url(#soft-shadow)"/>
+        <text x="24" y="34" class="eyebrow">EMOTIONAL ARC</text>
+        <text x="24" y="68" class="heading">Shape what the listener feels</text>
+        <text x="24" y="91" class="body">Choose a center, then three emotions that can</text>
+        <text x="24" y="111" class="body">rise, overlap, and contradict each other.</text>
+
+        <text x="24" y="148" class="label">DOMINANT EMOTION FAMILY</text>
+        <rect x="24" y="160" width="252" height="48" rx="11" fill="#2b2e28" stroke="#4a4f44"/>
+        <text x="40" y="190" class="body-strong">sadness</text>
+        <path d="M246 180 l7 7 7-7" fill="none" stroke="#aeb2a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <text x="24" y="244" class="label">FEATURED EMOTIONS</text>
+        <g transform="translate(24 260)">
+          <rect width="406" height="62" rx="13" fill="#20221e" stroke="#34372f"/>
+          <circle cx="20" cy="31" r="7" fill="#d46f80"/>
+          <text x="38" y="27" class="body-strong">Longing</text><text x="38" y="44" class="muted">love · sadness · desire</text>
+          <rect x="272" y="11" width="118" height="40" rx="9" fill="#2b2e28" stroke="#4a4f44"/>
+          <text x="286" y="36" class="body">Longing</text><path d="M370 27 l6 6 6-6" fill="none" stroke="#aeb2a8" stroke-width="1.8"/>
+        </g>
+        <g transform="translate(24 330)">
+          <rect width="406" height="62" rx="13" fill="#20221e" stroke="#34372f"/>
+          <circle cx="20" cy="31" r="7" fill="#6687bd"/>
+          <text x="38" y="27" class="body-strong">Melancholy</text><text x="38" y="44" class="muted">sadness · love</text>
+          <rect x="272" y="11" width="118" height="40" rx="9" fill="#2b2e28" stroke="#4a4f44"/>
+          <text x="286" y="36" class="body">Melancholy</text><path d="M370 27 l6 6 6-6" fill="none" stroke="#aeb2a8" stroke-width="1.8"/>
+        </g>
+        <g transform="translate(24 400)">
+          <rect width="406" height="62" rx="13" fill="#20221e" stroke="#34372f"/>
+          <circle cx="20" cy="31" r="7" fill="#c68b50"/>
+          <text x="38" y="27" class="body-strong">Despair</text><text x="38" y="44" class="muted">sadness · fear</text>
+          <rect x="272" y="11" width="118" height="40" rx="9" fill="#2b2e28" stroke="#4a4f44"/>
+          <text x="286" y="36" class="body">Despair</text><path d="M370 27 l6 6 6-6" fill="none" stroke="#aeb2a8" stroke-width="1.8"/>
+        </g>
+      </g>
+
+      <g transform="translate(28 666)">
+        <g><circle cx="12" cy="12" r="12" fill="#34372f"/><text x="12" y="16" text-anchor="middle" class="number" fill="#d6d7d0">1</text><text x="34" y="10" class="callout-title">No overview</text><text x="34" y="29" class="callout-copy">18 options appear as one flat alphabetical list.</text></g>
+        <g transform="translate(0 58)"><circle cx="12" cy="12" r="12" fill="#34372f"/><text x="12" y="16" text-anchor="middle" class="number" fill="#d6d7d0">2</text><text x="34" y="10" class="callout-title">Family is disconnected</text><text x="34" y="29" class="callout-copy">Changing “sadness” does not explain which nuances belong.</text></g>
+        <g transform="translate(0 116)"><circle cx="12" cy="12" r="12" fill="#34372f"/><text x="12" y="16" text-anchor="middle" class="number" fill="#d6d7d0">3</text><text x="34" y="10" class="callout-title">Comparison costs clicks</text><text x="34" y="29" class="callout-copy">Every candidate must be opened, found, and remembered.</text></g>
+      </g>
+    </g>
+
+    <!-- Transition -->
+    <g transform="translate(570 542)">
+      <line x1="0" y1="0" x2="56" y2="0" stroke="#d8a45e" stroke-width="3" marker-end="url(#arrow)"/>
+      <text x="28" y="-18" text-anchor="middle" class="eyebrow-warm">REVEAL</text>
+      <text x="28" y="28" text-anchor="middle" class="muted">the model</text>
+    </g>
+
+    <!-- Proposed state -->
+    <g transform="translate(650 152)">
+      <rect width="898" height="838" rx="22" fill="#20221e" stroke="#4a4f44" filter="url(#shadow)"/>
+      <text x="28" y="38" class="eyebrow-warm">AFTER · PROPOSED</text>
+      <text x="28" y="70" class="panel-title">Family orbit + readable nuances</text>
+      <text x="28" y="94" class="muted">Spatial for recognition, linear for comparison, explicit for selection.</text>
+
+      <g transform="translate(22 122)">
+        <rect width="854" height="670" rx="18" fill="#292b26" stroke="#3b3e36"/>
+        <g transform="translate(24 22)">
+          <text x="0" y="16" class="eyebrow">REPLACE FEATURED EMOTION 2</text>
+          <text x="0" y="48" class="heading">Choose the feeling behind this song</text>
+          <text x="0" y="72" class="body">Start with a family, then choose the precise shade.</text>
+          <g transform="translate(611 4)">
+            <rect width="195" height="44" rx="12" fill="#20221e" stroke="#3b3e36"/>
+            <circle cx="18" cy="22" r="6" fill="#d46f80"/><circle cx="38" cy="22" r="6" fill="#6687bd"/><circle cx="58" cy="22" r="6" fill="#c68b50"/>
+            <text x="76" y="26" class="body-strong">3 featured</text><text x="176" y="26" text-anchor="end" class="muted">2 / 3</text>
+          </g>
+        </g>
+        <line x1="24" y1="112" x2="830" y2="112" stroke="#3b3e36"/>
+
+        <!-- Family orbit -->
+        <g transform="translate(0 0)">
+          <text x="42" y="148" class="label">1 · CHOOSE A FAMILY</text>
+          <text x="408" y="148" text-anchor="end" class="muted">Arrow keys move around the orbit</text>
+
+          <path d="M 212.2,291.1 A 172 172 0 0 1 343.8,291.1 L 307.8,377.9 A 78 78 0 0 0 248.2,377.9 Z" fill="#e2b84f" opacity=".82" stroke="#292b26" stroke-width="6"/>
+          <path d="M 343.8,291.1 A 172 172 0 0 1 436.9,384.2 L 350.1,420.2 A 78 78 0 0 0 307.8,377.9 Z" fill="#d46f80" opacity=".82" stroke="#292b26" stroke-width="6"/>
+          <path d="M 436.9,384.2 A 172 172 0 0 1 436.9,515.8 L 350.1,479.8 A 78 78 0 0 0 350.1,420.2 Z" fill="#6687bd" stroke="#f4efe5" stroke-width="6"/>
+          <path d="M 436.9,515.8 A 172 172 0 0 1 343.8,608.9 L 307.8,522.1 A 78 78 0 0 0 350.1,479.8 Z" fill="#8274ae" opacity=".82" stroke="#292b26" stroke-width="6"/>
+          <path d="M 343.8,608.9 A 172 172 0 0 1 212.2,608.9 L 248.2,522.1 A 78 78 0 0 0 307.8,522.1 Z" fill="#ca6252" opacity=".82" stroke="#292b26" stroke-width="6"/>
+          <path d="M 212.2,608.9 A 172 172 0 0 1 119.1,515.8 L 205.9,479.8 A 78 78 0 0 0 248.2,522.1 Z" fill="#79936a" opacity=".82" stroke="#292b26" stroke-width="6"/>
+          <path d="M 119.1,515.8 A 172 172 0 0 1 119.1,384.2 L 205.9,420.2 A 78 78 0 0 0 205.9,479.8 Z" fill="#55a3a3" opacity=".82" stroke="#292b26" stroke-width="6"/>
+          <path d="M 119.1,384.2 A 172 172 0 0 1 212.2,291.1 L 248.2,377.9 A 78 78 0 0 0 205.9,420.2 Z" fill="#c68b50" opacity=".82" stroke="#292b26" stroke-width="6"/>
+
+          <circle cx="278" cy="450" r="69" fill="#20221e" stroke="#3f433a" stroke-width="2"/>
+          <circle cx="278" cy="432" r="8" fill="#6687bd"/>
+          <text x="278" y="458" text-anchor="middle" class="body-strong">Sadness</text>
+          <text x="278" y="477" text-anchor="middle" class="muted">selected family</text>
+
+          <text x="278" y="324" text-anchor="middle" class="wheel-label-dark">JOY</text>
+          <text x="380" y="354" text-anchor="middle" class="wheel-label">LOVE</text>
+          <text x="407" y="453" text-anchor="middle" class="wheel-label">SADNESS</text>
+          <text x="379" y="554" text-anchor="middle" class="wheel-label">FEAR</text>
+          <text x="278" y="584" text-anchor="middle" class="wheel-label">ANGER</text>
+          <text x="175" y="554" text-anchor="middle" class="wheel-label">REJECTION</text>
+          <text x="147" y="453" text-anchor="middle" class="wheel-label">WONDER</text>
+          <text x="176" y="354" text-anchor="middle" class="wheel-label">DESIRE</text>
+
+          <circle cx="442" cy="450" r="11" fill="#d8a45e"/><text x="442" y="454" text-anchor="middle" class="number">1</text>
+          <line x1="452" y1="450" x2="474" y2="450" stroke="#d8a45e" stroke-width="2"/>
+        </g>
+
+        <!-- Nuance panel -->
+        <g transform="translate(480 134)">
+          <rect width="350" height="434" rx="16" fill="#20221e" stroke="#3b3e36"/>
+          <text x="20" y="32" class="label">2 · CHOOSE A SHADE OF SADNESS</text>
+          <text x="20" y="56" class="muted">Pure family first · blends below</text>
+          <circle cx="326" cy="28" r="11" fill="#d8a45e"/><text x="326" y="32" text-anchor="middle" class="number">2</text>
+
+          <g transform="translate(16 78)">
+            <rect width="318" height="68" rx="12" fill="#2d3441" stroke="#8aa4d1" stroke-width="2"/>
+            <circle cx="22" cy="24" r="8" fill="#6687bd"/>
+            <text x="40" y="28" class="body-strong">Melancholy</text>
+            <text x="40" y="48" class="muted">quiet · reflective · lingering</text>
+            <rect x="244" y="17" width="58" height="26" rx="13" fill="#6687bd" opacity=".22"/>
+            <text x="273" y="34" text-anchor="middle" font-size="10" font-weight="750" fill="#adc0df">PURE</text>
+            <path d="M290 52 l5 5 10-11" fill="none" stroke="#f4f1e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g transform="translate(16 154)">
+            <rect width="318" height="60" rx="12" fill="#292b26" stroke="#3b3e36"/>
+            <circle cx="22" cy="22" r="8" fill="#536d99"/>
+            <text x="40" y="26" class="body-strong">Grief</text><text x="40" y="45" class="muted">deep · direct · loss</text>
+            <text x="298" y="34" text-anchor="end" class="paper-muted" fill="#8f9489">SADNESS</text>
+          </g>
+          <g transform="translate(16 222)">
+            <rect width="318" height="60" rx="12" fill="#292b26" stroke="#3b3e36"/>
+            <circle cx="22" cy="22" r="8" fill="#c68b50"/>
+            <text x="40" y="26" class="body-strong">Despair</text><text x="40" y="45" class="muted">heavy · final · powerless</text>
+            <g transform="translate(228 18)"><circle cx="8" cy="8" r="6" fill="#6687bd"/><circle cx="20" cy="8" r="6" fill="#8274ae"/><text x="38" y="12" class="muted">blend</text></g>
+          </g>
+          <text x="16" y="310" class="label">BLENDED SHADES</text>
+          <g transform="translate(16 326)">
+            <rect width="154" height="72" rx="12" fill="#292b26" stroke="#3b3e36"/>
+            <circle cx="18" cy="20" r="7" fill="#d46f80"/><text x="34" y="24" class="body-strong">Longing</text>
+            <text x="16" y="47" class="muted">love + sadness</text><text x="16" y="63" class="muted">+ desire</text>
+          </g>
+          <g transform="translate(180 326)">
+            <rect width="154" height="72" rx="12" fill="#292b26" stroke="#3b3e36"/>
+            <circle cx="18" cy="20" r="7" fill="#65736c"/><text x="34" y="24" class="body-strong">Alienation</text>
+            <text x="16" y="47" class="muted">rejection + sadness</text><text x="16" y="63" class="muted">distant</text>
+          </g>
+          <line x1="-16" y1="448" x2="350" y2="448" stroke="#3b3e36"/>
+        </g>
+
+        <!-- Selection preview and actions -->
+        <g transform="translate(24 590)">
+          <rect width="806" height="58" rx="13" fill="#f4efe5"/>
+          <rect width="7" height="58" rx="3.5" fill="#6687bd"/>
+          <circle cx="28" cy="29" r="8" fill="#6687bd"/>
+          <text x="46" y="25" class="paper-title">Melancholy</text>
+          <text x="46" y="43" class="paper-body">Sadness with a quiet, reflective weight</text>
+          <text x="572" y="34" text-anchor="end" class="paper-muted">REPLACES SLOT 2</text>
+          <rect x="591" y="10" width="82" height="38" rx="10" fill="#e5dccd"/>
+          <text x="632" y="34" text-anchor="middle" class="button" fill="#55594f">Cancel</text>
+          <rect x="683" y="10" width="111" height="38" rx="10" fill="#d8a45e"/>
+          <text x="738.5" y="34" text-anchor="middle" class="button" fill="#211a10">Use emotion</text>
+          <circle cx="788" cy="4" r="11" fill="#d8a45e"/><text x="788" y="8" text-anchor="middle" class="number">3</text>
+        </g>
+      </g>
+
+      <g transform="translate(28 816)">
+        <circle cx="6" cy="6" r="6" fill="#6687bd"/>
+        <text x="20" y="10" class="muted">Color is paired with family names, selection borders, blend labels, and a persistent preview.</text>
+      </g>
+    </g>
+
+    <!-- Footer rationale -->
+    <g transform="translate(650 1008)">
+      <text x="0" y="0" class="eyebrow-warm">INTERACTION</text>
+      <text x="96" y="0" class="body">Family orbit → nuance list → explicit confirmation</text>
+      <text x="898" y="0" text-anchor="end" class="muted">Esc closes · arrows move · Enter selects · no hover-only content</text>
+    </g>
+  </g>
+</svg>

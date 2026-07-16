@@ -7,6 +7,7 @@ export interface PhraseBlockProps {
   emotionColor: string
   active: boolean
   playing: boolean
+  playbackBeat: number | null
   keySignature: string
 }
 

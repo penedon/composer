@@ -52,7 +52,7 @@ export class WebAudioPlaybackEngine implements PlaybackEngine {
     }
   }
 
-  async playSong(project: CompositionProject): Promise<number> {
+  async playSong(project: CompositionProject, startBeat = 0): Promise<number> {
     await this.stop()
     const context = await this.audioContext()
     if (!context) return 0
@@ -60,11 +60,17 @@ export class WebAudioPlaybackEngine implements PlaybackEngine {
     if (!preview.events.length || preview.totalBeats <= 0) return 0
     const secondsPerBeat = 60 / project.frame.tempo
     const start = context.currentTime + .04
+    const safeStartBeat = Math.max(0, Math.min(startBeat, preview.totalBeats))
 
     for (const event of preview.events) {
+      const eventEndBeat = event.beat + event.duration
+      if (eventEndBeat <= safeStartBeat) continue
+      const skippedBeats = Math.max(0, safeStartBeat - event.beat)
+      const remainingBeats = Math.max(0, event.duration - skippedBeats)
+      const relativeStartBeat = Math.max(0, event.beat - safeStartBeat)
       for (const midiNote of event.midiNotes) {
-        const seconds = event.role === 'rhythm' ? Math.min(.11, secondsPerBeat * .2) : event.duration * secondsPerBeat * .92
-        this.scheduleNote(midiNote, start + event.beat * secondsPerBeat, seconds, event.role, event.volume)
+        const seconds = event.role === 'rhythm' ? Math.min(.11, secondsPerBeat * .2) : remainingBeats * secondsPerBeat * .92
+        this.scheduleNote(midiNote, start + relativeStartBeat * secondsPerBeat, seconds, event.role, event.volume)
       }
     }
     return preview.totalBeats * secondsPerBeat

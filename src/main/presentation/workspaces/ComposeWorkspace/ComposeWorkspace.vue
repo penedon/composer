@@ -1,20 +1,37 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 
 import { AppButton } from '@presentation/components/base/AppButton'
 import PhraseBlock from '@presentation/components/composition/PhraseBlock/PhraseBlock.vue'
 import { useProjectStore } from '@presentation/stores/project.store'
 import { addChord, addPhrase, createPhraseAlternative, mergePhraseWithNext, movePhrase, removePhrase, restorePhraseAlternative, splitPhrase, updatePhrase } from '@domain/project/project.operations'
 import type { Phrase } from '@domain/project/project.types'
+import { projectSongPhrasePlayback } from '@domain/playback/songPosition'
 
 const store = useProjectStore()
 const selectedSection = computed(() => store.project?.sections.find((section) => section.id === store.selectedSectionId))
 const phrases = computed(() => store.project?.phrases
   .filter((phrase) => phrase.sectionId === store.selectedSectionId)
   .sort((a, b) => a.order - b.order) ?? [])
+const songPhrasePlayback = computed(() => {
+  if (!store.project || !store.playingSong) return null
+  const songBeat = store.songPlaybackPositionSeconds * store.project.frame.tempo / 60
+  return projectSongPhrasePlayback(store.project, songBeat)
+})
+
+watch(songPhrasePlayback, (playback) => {
+  if (!playback) return
+  store.selectedSectionId = playback.sectionId
+  store.selectedPhraseId = playback.phraseId
+})
 
 function emotionFor(phrase: Phrase) {
   return store.project?.emotionPlan.featured.find((emotion) => emotion.id === phrase.emotionId)
+}
+
+function playbackBeatFor(phrase: Phrase): number | null {
+  if (store.playingPhraseId === phrase.id) return store.phrasePlaybackPositionBeats
+  return songPhrasePlayback.value?.phraseId === phrase.id ? songPhrasePlayback.value.beat : null
 }
 
 function playAndSelectNext(phrase: Phrase): void {
@@ -55,7 +72,8 @@ function createPhrase(instrumental = false): void {
         :key="phrase.id"
         :phrase="phrase"
         :active="phrase.id === store.selectedPhraseId"
-        :playing="phrase.id === store.playingPhraseId"
+        :playing="playbackBeatFor(phrase) !== null"
+        :playback-beat="playbackBeatFor(phrase)"
         :emotion-name="emotionFor(phrase)?.name ?? 'Unassigned'"
         :emotion-color="emotionFor(phrase)?.color ?? '#8f9489'"
         :key-signature="store.project.frame.key"

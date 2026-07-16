@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1024" viewBox="0 0 1440 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Composer piano sequencer for a melody track</title>
+  <desc id="desc">A Studio Notebook Arrange screen editing the Voice track in Verse 1. The selected eight-bar section stays visible above a piano-roll grid with scale highlighting, note blocks, a velocity lane, transport controls, and a plain-language inspector.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="7" stdDeviation="12" flood-color="#000000" flood-opacity=".18"/></filter>
+    <style>
+      .ui { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .brand { font-size: 22px; font-weight: 700; fill: #f4f1e9; }
+      .title { font-size: 25px; font-weight: 650; fill: #f4f1e9; }
+      .eyebrow { font-size: 10px; font-weight: 800; letter-spacing: .09em; fill: #8f9489; }
+      .body { font-size: 13px; fill: #b8bbb1; }
+      .label { font-size: 12px; font-weight: 700; fill: #d6d7d0; }
+      .muted { font-size: 11px; fill: #8f9489; }
+      .tiny { font-size: 9px; fill: #777c72; }
+      .nav { font-size: 13px; font-weight: 650; fill: #b8bbb1; }
+      .button { font-size: 11px; font-weight: 750; }
+      .inspector-title { font-size: 17px; font-weight: 650; fill: #f4f1e9; }
+      .value { font-size: 13px; fill: #d6d7d0; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="1024" fill="#171916"/>
+  <g class="ui">
+    <!-- Project bar -->
+    <rect width="1440" height="64" fill="#20221e"/>
+    <circle cx="24" cy="32" r="9" fill="#dca65c"/><text x="42" y="39" class="brand">Composer</text>
+    <line x1="192" y1="18" x2="192" y2="46" stroke="#34372f"/>
+    <text x="212" y="27" class="eyebrow">PROJECT</text><text x="212" y="45" class="label">The Doorway</text>
+    <text x="1170" y="38" class="muted">↶ Undo</text><text x="1252" y="38" class="muted">↷ Redo</text>
+    <circle cx="1351" cy="32" r="4" fill="#79936a"/><text x="1362" y="36" class="muted">Saved</text>
+
+    <!-- Rail -->
+    <rect x="0" y="64" width="208" height="896" fill="#1b1d19"/>
+    <text x="24" y="98" class="eyebrow">CREATE</text>
+    <g transform="translate(12 116)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">1</text><text x="48" y="27" class="nav">Story</text></g>
+    <g transform="translate(12 166)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">2</text><text x="48" y="27" class="nav">Frame</text></g>
+    <g transform="translate(12 216)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">3</text><text x="48" y="27" class="nav">Emotions</text></g>
+    <g transform="translate(12 266)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">4</text><text x="48" y="27" class="nav">Structure</text></g>
+    <g transform="translate(12 316)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">5</text><text x="48" y="27" class="nav">Compose</text></g>
+    <g transform="translate(12 366)"><rect width="184" height="44" rx="10" fill="#4b4332"/><circle cx="22" cy="22" r="11" fill="#dca65c"/><text x="22" y="26" text-anchor="middle" font-size="11" font-weight="800" fill="#211a10">6</text><text x="48" y="27" class="nav" fill="#f4f1e9">Arrange</text></g>
+    <g transform="translate(12 416)"><circle cx="22" cy="22" r="11" fill="#2b2e28"/><text x="22" y="26" text-anchor="middle" class="muted">7</text><text x="48" y="27" class="nav">Export</text></g>
+    <g transform="translate(20 776)"><rect width="168" height="152" rx="14" fill="#20221e" stroke="#34372f"/><text x="16" y="28" class="eyebrow">EDITING</text><text x="16" y="58" class="label">Melody · Voice</text><text x="16" y="80" class="muted">Verse 1 · 8 bars</text><line x1="16" y1="98" x2="152" y2="98" stroke="#34372f"/><text x="16" y="120" class="muted">D minor · 92 BPM</text><text x="16" y="139" class="muted">Loop section on</text></g>
+
+    <!-- Main canvas -->
+    <rect x="208" y="64" width="946" height="896" fill="#171916"/>
+    <g transform="translate(240 92)">
+      <text x="0" y="10" class="eyebrow">ARRANGE / MELODY / VERSE 1</text>
+      <text x="0" y="47" class="title">Write the line the voice will carry.</text>
+      <text x="0" y="74" class="body">Draw notes into this section while the rest of the arrangement stays in reach.</text>
+      <rect x="728" y="11" width="154" height="38" rx="10" fill="#2b2e28" stroke="#4a4f44"/><text x="805" y="35" text-anchor="middle" class="button" fill="#d6d7d0">← Back to arrangement</text>
+    </g>
+
+    <!-- Section strip -->
+    <g transform="translate(240 190)">
+      <rect width="882" height="70" rx="14" fill="#20221e" stroke="#34372f"/>
+      <text x="16" y="21" class="eyebrow">SONG SECTIONS</text>
+      <g transform="translate(16 31)">
+        <rect width="76" height="27" rx="7" fill="#33362f"/><text x="38" y="18" text-anchor="middle" class="muted">Intro · 4</text>
+        <rect x="82" width="114" height="27" rx="7" fill="#4b4031" stroke="#dca65c"/><text x="139" y="18" text-anchor="middle" class="label">Verse 1 · 8</text>
+        <rect x="202" width="84" height="27" rx="7" fill="#3c3b31"/><text x="244" y="18" text-anchor="middle" class="muted">Pre · 4</text>
+        <rect x="292" width="112" height="27" rx="7" fill="#443336"/><text x="348" y="18" text-anchor="middle" class="muted">Chorus · 8</text>
+        <rect x="410" width="112" height="27" rx="7" fill="#323b43"/><text x="466" y="18" text-anchor="middle" class="muted">Verse 2 · 8</text>
+        <rect x="528" width="82" height="27" rx="7" fill="#3b3741"/><text x="569" y="18" text-anchor="middle" class="muted">Bridge · 4</text>
+        <rect x="616" width="130" height="27" rx="7" fill="#443336"/><text x="681" y="18" text-anchor="middle" class="muted">Final chorus · 8</text>
+        <rect x="752" width="98" height="27" rx="7" fill="#33362f"/><text x="801" y="18" text-anchor="middle" class="muted">Outro · 4</text>
+      </g>
+    </g>
+
+    <!-- Toolbar -->
+    <g transform="translate(240 276)">
+      <rect width="882" height="52" rx="12" fill="#20221e" stroke="#34372f"/>
+      <g aria-label="Loop section">
+        <title>Loop section</title>
+        <rect x="10" y="8" width="36" height="36" rx="9" fill="#dca65c"/>
+        <path d="M20 18.5 A8 8 0 0 1 35 22 M35 22 L31 19 M35 22 L32 25 M36 27.5 A8 8 0 0 1 21 24 M21 24 L25 27 M21 24 L24 21" fill="none" stroke="#211a10" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M26 19 L26 27 L32 23 Z" fill="#211a10"/>
+      </g>
+      <line x1="58" y1="10" x2="58" y2="42" stroke="#34372f"/>
+      <rect x="70" y="8" width="64" height="36" rx="9" fill="#2b2e28"/><text x="102" y="31" text-anchor="middle" class="button" fill="#d6d7d0">Select</text>
+      <rect x="138" y="8" width="58" height="36" rx="9" fill="#4b4332" stroke="#dca65c"/><text x="167" y="31" text-anchor="middle" class="button" fill="#f4f1e9">Draw</text>
+      <rect x="200" y="8" width="58" height="36" rx="9" fill="#2b2e28"/><text x="229" y="31" text-anchor="middle" class="button" fill="#d6d7d0">Erase</text>
+      <line x1="270" y1="10" x2="270" y2="42" stroke="#34372f"/>
+      <rect x="282" y="8" width="84" height="36" rx="9" fill="#2b2e28"/><text x="324" y="31" text-anchor="middle" class="button" fill="#d6d7d0">Grid · 1/16</text>
+      <rect x="374" y="8" width="108" height="36" rx="9" fill="#2b2e28"/><text x="428" y="31" text-anchor="middle" class="button" fill="#d6d7d0">In key · D minor</text>
+      <rect x="490" y="8" width="86" height="36" rx="9" fill="#2b2e28"/><text x="533" y="31" text-anchor="middle" class="button" fill="#d6d7d0">Used rows</text>
+      <text x="602" y="31" class="muted">−</text><text x="636" y="31" class="muted">Zoom</text><text x="690" y="31" class="muted">+</text>
+      <rect x="786" y="8" width="38" height="36" rx="9" fill="#2b2e28"/><text x="805" y="31" text-anchor="middle" class="button" fill="#d6d7d0">↶</text>
+      <rect x="832" y="8" width="38" height="36" rx="9" fill="#2b2e28"/><text x="851" y="31" text-anchor="middle" class="button" fill="#8f9489">↷</text>
+    </g>
+
+    <!-- Editor card -->
+    <g transform="translate(240 344)" filter="url(#shadow)">
+      <rect width="882" height="532" rx="16" fill="#20221e" stroke="#34372f"/>
+      <text x="18" y="26" class="eyebrow">VOICE · VERSE 1</text><text x="864" y="26" text-anchor="end" class="muted">Bars 1–4 of 8 · scroll →</text>
+
+      <!-- Time ruler -->
+      <g transform="translate(18 40)">
+        <rect x="112" width="734" height="28" fill="#2b2e28"/>
+        <g class="tiny"><text x="122" y="18">1</text><text x="306" y="18">2</text><text x="490" y="18">3</text><text x="674" y="18">4</text></g>
+        <path d="M158 16V28 M204 16V28 M250 16V28 M342 16V28 M388 16V28 M434 16V28 M526 16V28 M572 16V28 M618 16V28 M710 16V28 M756 16V28 M802 16V28" stroke="#63675d"/>
+        <path d="M112 0V28 M296 0V28 M480 0V28 M664 0V28 M846 0V28" stroke="#8f9489"/>
+      </g>
+
+      <!-- Piano and grid -->
+      <g transform="translate(18 68)">
+        <rect width="112" height="308" fill="#e9e1d5"/>
+        <g fill="#fffaf0" stroke="#cfc7ba">
+          <rect width="112" height="28"/><rect y="28" width="112" height="28"/><rect y="56" width="112" height="28"/><rect y="84" width="112" height="28"/><rect y="112" width="112" height="28"/><rect y="140" width="112" height="28"/><rect y="168" width="112" height="28"/><rect y="196" width="112" height="28"/><rect y="224" width="112" height="28"/><rect y="252" width="112" height="28"/><rect y="280" width="112" height="28"/>
+        </g>
+        <g fill="#454841"><rect y="20" width="67" height="16" rx="2"/><rect y="48" width="67" height="16" rx="2"/><rect y="104" width="67" height="16" rx="2"/><rect y="132" width="67" height="16" rx="2"/><rect y="160" width="67" height="16" rx="2"/><rect y="216" width="67" height="16" rx="2"/><rect y="244" width="67" height="16" rx="2"/></g>
+        <g font-size="9" fill="#73776d"><text x="84" y="19">G4</text><text x="84" y="75">E4</text><text x="84" y="103">D4</text><text x="84" y="131">C4</text><text x="84" y="187">A3</text><text x="84" y="215">G3</text><text x="84" y="271">E3</text><text x="84" y="299">D3</text></g>
+
+        <g transform="translate(112 0)">
+          <rect width="734" height="308" fill="#252822"/>
+          <!-- D minor scale rows -->
+          <g fill="#2b2f28"><rect y="0" width="734" height="28"/><rect y="56" width="734" height="28"/><rect y="84" width="734" height="28"/><rect y="112" width="734" height="28"/><rect y="168" width="734" height="28"/><rect y="196" width="734" height="28"/><rect y="252" width="734" height="28"/><rect y="280" width="734" height="28"/></g>
+          <!-- horizontal rows -->
+          <path d="M0 28H734 M0 56H734 M0 84H734 M0 112H734 M0 140H734 M0 168H734 M0 196H734 M0 224H734 M0 252H734 M0 280H734" stroke="#373a33"/>
+          <!-- sixteenth subdivisions -->
+          <path d="M11.5 0V308 M23 0V308 M34.5 0V308 M46 0V308 M57.5 0V308 M69 0V308 M80.5 0V308 M92 0V308 M103.5 0V308 M115 0V308 M126.5 0V308 M138 0V308 M149.5 0V308 M161 0V308 M172.5 0V308 M195.5 0V308 M207 0V308 M218.5 0V308 M230 0V308 M241.5 0V308 M253 0V308 M264.5 0V308 M276 0V308 M287.5 0V308 M299 0V308 M310.5 0V308 M322 0V308 M333.5 0V308 M345 0V308 M356.5 0V308 M379.5 0V308 M391 0V308 M402.5 0V308 M414 0V308 M425.5 0V308 M437 0V308 M448.5 0V308 M460 0V308 M471.5 0V308 M483 0V308 M494.5 0V308 M506 0V308 M517.5 0V308 M529 0V308 M540.5 0V308 M563.5 0V308 M575 0V308 M586.5 0V308 M598 0V308 M609.5 0V308 M621 0V308 M632.5 0V308 M644 0V308 M655.5 0V308 M667 0V308 M678.5 0V308 M690 0V308 M701.5 0V308 M713 0V308 M724.5 0V308" stroke="#30332d" stroke-width=".7"/>
+          <!-- beat / bar lines -->
+          <path d="M46 0V308 M92 0V308 M138 0V308 M230 0V308 M276 0V308 M322 0V308 M414 0V308 M460 0V308 M506 0V308 M598 0V308 M644 0V308 M690 0V308" stroke="#4b4f45"/>
+          <path d="M184 0V308 M368 0V308 M552 0V308" stroke="#73776d" stroke-width="1.4"/>
+          <!-- playhead -->
+          <rect x="284" width="2" height="308" fill="#f0c886"/><path d="M279 0H291L285 7Z" fill="#f0c886"/>
+          <!-- notes -->
+          <g fill="#c68b50" stroke="#f0c886">
+            <rect x="12" y="257" width="56" height="18" rx="5"/><rect x="74" y="229" width="42" height="18" rx="5"/>
+            <rect x="120" y="173" width="60" height="18" rx="5"/><rect x="186" y="201" width="42" height="18" rx="5"/>
+            <rect x="236" y="145" width="48" height="18" rx="5"/><rect x="292" y="117" width="70" height="18" rx="5"/>
+            <rect x="374" y="89" width="54" height="18" rx="5"/><rect x="436" y="117" width="42" height="18" rx="5"/>
+            <rect x="486" y="173" width="60" height="18" rx="5"/><rect x="558" y="201" width="74" height="18" rx="5"/>
+            <rect x="640" y="173" width="78" height="18" rx="5"/>
+          </g>
+          <!-- selected note -->
+          <rect x="292" y="117" width="70" height="18" rx="5" fill="#dca65c" stroke="#fff4df" stroke-width="2"/>
+          <rect x="292" y="121" width="4" height="10" rx="2" fill="#fff4df"/><rect x="356" y="121" width="4" height="10" rx="2" fill="#fff4df"/>
+        </g>
+      </g>
+
+      <!-- Velocity lane -->
+      <g transform="translate(18 386)">
+        <rect width="112" height="112" fill="#2b2e28"/><text x="12" y="22" class="eyebrow">VELOCITY</text><text x="12" y="43" class="muted">Selected · 96</text><text x="12" y="92" class="tiny">0</text><text x="86" y="92" class="tiny">127</text>
+        <g transform="translate(112 0)">
+          <rect width="734" height="112" fill="#22241f"/>
+          <path d="M0 28H734 M0 56H734 M0 84H734" stroke="#34372f"/>
+          <path d="M184 0V112 M368 0V112 M552 0V112" stroke="#4a4f44"/>
+          <g fill="#9e7443"><rect x="20" y="44" width="8" height="68"/><rect x="82" y="58" width="8" height="54"/><rect x="140" y="38" width="8" height="74"/><rect x="200" y="52" width="8" height="60"/><rect x="250" y="30" width="8" height="82"/><rect x="320" y="24" width="8" height="88"/><rect x="394" y="40" width="8" height="72"/><rect x="448" y="50" width="8" height="62"/><rect x="508" y="34" width="8" height="78"/><rect x="580" y="47" width="8" height="65"/><rect x="668" y="38" width="8" height="74"/></g>
+          <rect x="316" y="20" width="16" height="92" rx="3" fill="#dca65c" stroke="#fff4df"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- Inspector -->
+    <rect x="1154" y="64" width="286" height="896" fill="#20221e" stroke="#34372f"/>
+    <g transform="translate(1178 98)">
+      <text x="0" y="0" class="eyebrow">SELECTED NOTE</text>
+      <text x="0" y="34" class="inspector-title">A3</text><text x="42" y="34" class="muted">MIDI 57</text>
+      <text x="0" y="62" class="body">The fifth of D minor.</text>
+      <line x1="0" y1="86" x2="238" y2="86" stroke="#34372f"/>
+      <text x="0" y="116" class="eyebrow">POSITION</text>
+      <text x="0" y="143" class="muted">Starts</text><text x="238" y="143" text-anchor="end" class="value">Bar 2 · beat 3</text>
+      <text x="0" y="171" class="muted">Length</text><text x="238" y="171" text-anchor="end" class="value">1½ beats</text>
+      <text x="0" y="199" class="muted">Velocity</text><text x="238" y="199" text-anchor="end" class="value">96</text>
+      <line x1="0" y1="224" x2="238" y2="224" stroke="#34372f"/>
+      <text x="0" y="254" class="eyebrow">QUICK ACTIONS</text>
+      <rect x="0" y="272" width="238" height="38" rx="10" fill="#2b2e28" stroke="#4a4f44"/><text x="119" y="296" text-anchor="middle" class="button" fill="#d6d7d0">Fit to D minor</text>
+      <rect x="0" y="320" width="238" height="38" rx="10" fill="#2b2e28" stroke="#4a4f44"/><text x="119" y="344" text-anchor="middle" class="button" fill="#d6d7d0">Duplicate one beat later</text>
+      <text x="0" y="390" class="body">Drag a note to move it. Drag either</text><text x="0" y="410" class="body">edge to change how long it sounds.</text>
+      <g transform="translate(0 466)"><rect width="238" height="126" rx="14" fill="#292b26" stroke="#3b3e36"/><text x="16" y="28" class="eyebrow">SECTION CONTEXT</text><circle cx="18" cy="54" r="4" fill="#6687bd"/><text x="30" y="58" class="muted">Grief is easing</text><circle cx="18" cy="80" r="4" fill="#d46f80"/><text x="30" y="84" class="muted">Longing is rising</text><text x="16" y="110" class="muted">Verse 1 · "Hope takes shape"</text></g>
+    </g>
+
+    <!-- Transport -->
+    <rect y="960" width="1440" height="64" fill="#20221e"/>
+    <text x="24" y="998" class="muted">Editing Voice · Verse 1</text>
+    <rect x="584" y="974" width="122" height="38" rx="10" fill="#2b2e28" stroke="#4a4f44"/><text x="645" y="998" text-anchor="middle" class="button" fill="#d6d7d0">■ Stop</text>
+    <text x="738" y="998" class="label">92</text><text x="760" y="998" class="muted">BPM</text><text x="816" y="998" class="muted">4/4</text><text x="860" y="998" class="muted">D minor</text>
+    <rect x="970" y="982" width="228" height="18" rx="9" fill="#2b2e28"/><rect x="970" y="982" width="96" height="18" rx="9" fill="#4b4031"/><circle cx="1066" cy="991" r="5" fill="#dca65c"/>
+    <text x="1214" y="997" class="muted">00:18 / 00:42</text><text x="1384" y="997" text-anchor="end" class="muted">Loop Verse 1</text>
+  </g>
+</svg>

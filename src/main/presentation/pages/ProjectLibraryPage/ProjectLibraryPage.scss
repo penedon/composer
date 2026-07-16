@@ -1,4 +1,4 @@
-.library { height: calc(100vh - var(--project-bar-height) - var(--transport-bar-height)); min-height: 0; overflow: auto; padding: 5rem clamp(1.5rem, 8vw, 9rem); }
+.library { height: calc(100vh - var(--project-bar-height) - var(--transport-stack-height)); min-height: 0; overflow: auto; padding: 5rem clamp(1.5rem, 8vw, 9rem); }
 .library__hero { max-width: 62rem; }
 .library__hero h1 { color: var(--text-strong); font-family: Georgia, serif; font-size: clamp(2.6rem, 5vw, 5rem); line-height: 1.02; margin: 0; max-width: 58rem; }
 .library__hero > p:not(.eyebrow) { color: var(--text-soft); font-size: 1.1rem; line-height: 1.7; max-width: 48rem; }

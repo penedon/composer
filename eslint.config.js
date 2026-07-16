@@ -24,6 +24,8 @@ export default tseslint.config(
         Buffer: 'readonly',
         Event: 'readonly',
         FileReader: 'readonly',
+        HTMLButtonElement: 'readonly',
+        HTMLDialogElement: 'readonly',
         HTMLInputElement: 'readonly',
         HTMLSelectElement: 'readonly',
         HTMLTextAreaElement: 'readonly',

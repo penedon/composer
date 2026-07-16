@@ -18,7 +18,7 @@ export interface PhrasePlaybackRequest {
 
 export interface PlaybackEngine {
   playPhrase(request: PhrasePlaybackRequest): Promise<void>
-  playSong(project: CompositionProject): Promise<number>
+  playSong(project: CompositionProject, startBeat?: number): Promise<number>
   auditionChord(symbol: string): Promise<void>
   stop(): Promise<void>
 }

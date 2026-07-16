@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1024" viewBox="0 0 1440 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Composer Arrange sequencer user flow</title>
+  <desc id="desc">A flow board showing how an artist selects an instrument and song section in Arrange, enters either a piano or named drum sequencer, loops and edits the section, handles repeated-section links, and returns to the arrangement or exports separate MIDI tracks.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#777c72"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity=".16"/></filter>
+    <style>
+      .ui { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .eyebrow { font-size: 10px; font-weight: 800; letter-spacing: .09em; fill: #8f9489; }
+      .title { font-size: 28px; font-weight: 650; fill: #f4f1e9; }
+      .subtitle { font-size: 14px; fill: #b8bbb1; }
+      .card-title { font-size: 16px; font-weight: 700; fill: #f4f1e9; }
+      .card-copy { font-size: 12px; fill: #aeb2a8; }
+      .paper-title { font-size: 16px; font-weight: 700; fill: #292b25; }
+      .paper-copy { font-size: 12px; fill: #62665d; }
+      .label { font-size: 11px; font-weight: 700; fill: #d6d7d0; }
+      .small { font-size: 10px; fill: #8f9489; }
+      .step-number { font-size: 11px; font-weight: 800; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="1024" fill="#171916"/>
+  <g class="ui">
+    <text x="64" y="58" class="eyebrow">COMPOSER · ARRANGE FLOW</text>
+    <text x="64" y="99" class="title">One section, one instrument, the right musical grid.</text>
+    <text x="64" y="130" class="subtitle">The Arrange timeline stays the map; piano and drum editors are focused views of the same MIDI event model.</text>
+
+    <!-- Step 1: Arrange -->
+    <g transform="translate(64 184)" filter="url(#shadow)">
+      <rect width="386" height="270" rx="20" fill="#20221e" stroke="#3b3e36"/>
+      <circle cx="28" cy="28" r="14" fill="#dca65c"/><text x="28" y="32" text-anchor="middle" class="step-number" fill="#211a10">1</text>
+      <text x="54" y="33" class="card-title">Choose a track and section</text>
+      <text x="22" y="62" class="card-copy">Pattern cells align every instrument to song structure.</text>
+
+      <g transform="translate(22 84)">
+        <rect width="342" height="34" rx="8" fill="#2b2e28" stroke="#4a4f44"/>
+        <text x="12" y="22" class="label">Harmony · Electric piano</text>
+        <g transform="translate(170 7)"><rect width="38" height="20" rx="4" fill="#3e4a55"/><rect x="7" y="8" width="8" height="4" rx="2" fill="#dca65c"/><rect x="21" y="5" width="11" height="4" rx="2" fill="#dca65c"/></g>
+        <g transform="translate(212 7)"><rect width="54" height="20" rx="4" fill="#4b4031" stroke="#dca65c"/><rect x="8" y="9" width="12" height="4" rx="2" fill="#f0c886"/><rect x="30" y="5" width="16" height="4" rx="2" fill="#f0c886"/></g>
+        <g transform="translate(270 7)"><rect width="64" height="20" rx="4" fill="#40363b"/></g>
+      </g>
+      <g transform="translate(22 126)">
+        <rect width="342" height="34" rx="8" fill="#2b2e28" stroke="#4a4f44"/>
+        <text x="12" y="22" class="label">Melody · Voice</text>
+        <g transform="translate(170 7)"><rect width="38" height="20" rx="4" fill="#3e4a55"/></g>
+        <g transform="translate(212 7)"><rect width="54" height="20" rx="4" fill="#4b4031" stroke="#dca65c"/><rect x="7" y="11" width="9" height="3" rx="1.5" fill="#f0c886"/><rect x="20" y="7" width="14" height="3" rx="1.5" fill="#f0c886"/><rect x="39" y="4" width="8" height="3" rx="1.5" fill="#f0c886"/></g>
+        <g transform="translate(270 7)"><rect width="64" height="20" rx="4" fill="#40363b"/></g>
+      </g>
+      <g transform="translate(22 168)">
+        <rect width="342" height="34" rx="8" fill="#2b2e28" stroke="#4a4f44"/>
+        <text x="12" y="22" class="label">Rhythm · Brush kit</text>
+        <g transform="translate(170 7)"><rect width="38" height="20" rx="4" fill="#3e4a55"/></g>
+        <g transform="translate(212 7)"><rect width="54" height="20" rx="4" fill="#4b4031" stroke="#dca65c"/><circle cx="7" cy="10" r="2.5" fill="#f0c886"/><circle cx="18" cy="10" r="2.5" fill="#f0c886"/><circle cx="29" cy="6" r="2.5" fill="#f0c886"/><circle cx="40" cy="10" r="2.5" fill="#f0c886"/><circle cx="49" cy="6" r="2.5" fill="#f0c886"/></g>
+        <g transform="translate(270 7)"><rect width="64" height="20" rx="4" fill="#40363b"/></g>
+      </g>
+      <text x="234" y="229" text-anchor="middle" class="small">Verse 1 selected · 8 bars</text>
+      <rect x="230" y="238" width="134" height="30" rx="9" fill="#dca65c"/>
+      <text x="297" y="258" text-anchor="middle" class="label" fill="#211a10">Edit sequence →</text>
+    </g>
+
+    <path d="M450 319 H522" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="486" y="304" text-anchor="middle" class="small">role decides view</text>
+
+    <!-- Decision -->
+    <g transform="translate(528 238)">
+      <path d="M86 0 L172 81 L86 162 L0 81 Z" fill="#292b26" stroke="#4a4f44"/>
+      <text x="86" y="68" text-anchor="middle" class="eyebrow">TRACK ROLE</text>
+      <text x="86" y="91" text-anchor="middle" class="label">Rhythm?</text>
+      <text x="86" y="111" text-anchor="middle" class="small">same notes, new labels</text>
+    </g>
+
+    <path d="M700 278 C740 278 748 228 790 228" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="744" y="247" class="small">No</text>
+    <path d="M700 360 C740 360 748 411 790 411" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="744" y="393" class="small">Yes</text>
+
+    <!-- Piano editor -->
+    <g transform="translate(796 166)" filter="url(#shadow)">
+      <rect width="580" height="218" rx="20" fill="#f4efe5"/>
+      <circle cx="28" cy="28" r="14" fill="#6687bd"/><text x="28" y="32" text-anchor="middle" class="step-number" fill="#f4f1e9">2A</text>
+      <text x="54" y="33" class="paper-title">Piano sequencer</text>
+      <text x="558" y="33" text-anchor="end" class="paper-copy">D minor · 1/16 grid</text>
+      <g transform="translate(22 56)">
+        <rect width="92" height="132" rx="8" fill="#e8e0d4"/>
+        <g fill="#fffaf0" stroke="#cfc7ba"><rect y="0" width="92" height="22"/><rect y="22" width="92" height="22"/><rect y="44" width="92" height="22"/><rect y="66" width="92" height="22"/><rect y="88" width="92" height="22"/><rect y="110" width="92" height="22"/></g>
+        <g fill="#4a4c45"><rect y="15" width="55" height="14" rx="2"/><rect y="37" width="55" height="14" rx="2"/><rect y="81" width="55" height="14" rx="2"/><rect y="103" width="55" height="14" rx="2"/></g>
+        <text x="69" y="80" font-size="9" fill="#73776d">C4</text>
+        <g transform="translate(92 0)">
+          <rect width="444" height="132" fill="#fffaf0"/>
+          <g stroke="#ded6ca"><path d="M0 22H444 M0 44H444 M0 66H444 M0 88H444 M0 110H444"/><path d="M27.75 0V132 M55.5 0V132 M83.25 0V132 M111 0V132 M138.75 0V132 M166.5 0V132 M194.25 0V132 M222 0V132 M249.75 0V132 M277.5 0V132 M305.25 0V132 M333 0V132 M360.75 0V132 M388.5 0V132 M416.25 0V132"/></g>
+          <g stroke="#b9b2a8"><path d="M111 0V132 M222 0V132 M333 0V132"/></g>
+          <g fill="#c68b50"><rect x="14" y="89" width="58" height="14" rx="4"/><rect x="82" y="67" width="38" height="14" rx="4"/><rect x="126" y="45" width="70" height="14" rx="4"/><rect x="204" y="67" width="48" height="14" rx="4"/><rect x="260" y="23" width="80" height="14" rx="4"/><rect x="348" y="45" width="68" height="14" rx="4"/></g>
+        </g>
+      </g>
+      <text x="22" y="207" class="paper-copy">Draw pitch and duration · velocity below · click keys to audition</text>
+    </g>
+
+    <!-- Drum editor -->
+    <g transform="translate(796 400)" filter="url(#shadow)">
+      <rect width="580" height="218" rx="20" fill="#20221e" stroke="#3b3e36"/>
+      <circle cx="28" cy="28" r="14" fill="#dca65c"/><text x="28" y="32" text-anchor="middle" class="step-number" fill="#211a10">2B</text>
+      <text x="54" y="33" class="card-title">Drum sequencer</text>
+      <text x="558" y="33" text-anchor="end" class="card-copy">Brush kit · 1/16 grid</text>
+      <g transform="translate(22 56)">
+        <rect width="112" height="132" rx="8" fill="#2b2e28"/>
+        <g class="label"><text x="12" y="19">Ride</text><text x="12" y="41">Closed hat</text><text x="12" y="63">Snare</text><text x="12" y="85">Side stick</text><text x="12" y="107">Low tom</text><text x="12" y="129">Kick</text></g>
+        <g transform="translate(112 0)">
+          <rect width="424" height="132" fill="#252822"/>
+          <g stroke="#393c34"><path d="M0 22H424 M0 44H424 M0 66H424 M0 88H424 M0 110H424"/><path d="M26.5 0V132 M53 0V132 M79.5 0V132 M106 0V132 M132.5 0V132 M159 0V132 M185.5 0V132 M212 0V132 M238.5 0V132 M265 0V132 M291.5 0V132 M318 0V132 M344.5 0V132 M371 0V132 M397.5 0V132"/></g>
+          <g stroke="#5a5e53"><path d="M106 0V132 M212 0V132 M318 0V132"/></g>
+          <g fill="#dca65c"><circle cx="13" cy="11" r="5"/><circle cx="66" cy="11" r="4"/><circle cx="119" cy="11" r="5"/><circle cx="172" cy="11" r="4"/><circle cx="225" cy="11" r="5"/><circle cx="278" cy="11" r="4"/><circle cx="331" cy="11" r="5"/><circle cx="384" cy="11" r="4"/>
+          <circle cx="13" cy="33" r="3.5"/><circle cx="40" cy="33" r="3.5"/><circle cx="66" cy="33" r="3.5"/><circle cx="93" cy="33" r="3.5"/><circle cx="119" cy="33" r="3.5"/><circle cx="146" cy="33" r="3.5"/><circle cx="172" cy="33" r="3.5"/><circle cx="199" cy="33" r="3.5"/><circle cx="225" cy="33" r="3.5"/><circle cx="252" cy="33" r="3.5"/><circle cx="278" cy="33" r="3.5"/><circle cx="305" cy="33" r="3.5"/><circle cx="331" cy="33" r="3.5"/><circle cx="358" cy="33" r="3.5"/><circle cx="384" cy="33" r="3.5"/><circle cx="411" cy="33" r="3.5"/>
+          <circle cx="119" cy="55" r="6"/><circle cx="331" cy="55" r="6"/><circle cx="13" cy="121" r="6"/><circle cx="172" cy="121" r="5"/><circle cx="225" cy="121" r="6"/><circle cx="384" cy="121" r="5"/></g>
+        </g>
+      </g>
+      <text x="22" y="207" class="card-copy">Paint named kit pieces · hit size reflects velocity · row audition</text>
+    </g>
+
+    <!-- Shared loop/edit state -->
+    <path d="M1086 384 V392" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M1086 618 V676" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M796 275 C754 275 754 706 714 706" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <g transform="translate(430 676)">
+      <rect width="656" height="160" rx="20" fill="#292b26" stroke="#4a4f44"/>
+      <circle cx="28" cy="28" r="14" fill="#8274ae"/><text x="28" y="32" text-anchor="middle" class="step-number" fill="#f4f1e9">3</text>
+      <text x="54" y="33" class="card-title">Loop, edit, and hear the section in context</text>
+      <g transform="translate(22 58)">
+        <rect width="612" height="42" rx="10" fill="#20221e"/>
+        <g aria-label="Loop section">
+          <title>Loop section</title>
+          <rect x="10" y="8" width="26" height="26" rx="8" fill="#dca65c"/>
+          <path d="M16 17 A6 6 0 0 1 30 20 M30 20 L27 17.5 M30 20 L27.5 22.5 M31 25 A6 6 0 0 1 17 22 M17 22 L20 24.5 M17 22 L19.5 19.5" fill="none" stroke="#211a10" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21.5 17.5 L21.5 24.5 L27 21 Z" fill="#211a10"/>
+        </g>
+        <text x="62" y="25" class="label">Select</text><text x="124" y="25" class="label">Draw</text><text x="174" y="25" class="label">Erase</text>
+        <text x="250" y="25" class="small">Grid 1/16</text><text x="334" y="25" class="small">Velocity</text><text x="416" y="25" class="small">Undo</text><text x="472" y="25" class="small">Redo</text>
+      </g>
+      <text x="22" y="126" class="card-copy">Every change is canonical, locally saved, undoable, and routed through the selected track.</text>
+      <text x="22" y="146" class="card-copy">Back to Arrange keeps the section selected; next/previous moves without closing the editor.</text>
+    </g>
+
+    <!-- Repetition decision -->
+    <path d="M1086 756 H1156" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <g transform="translate(1162 690)">
+      <path d="M92 0 L184 73 L92 146 L0 73 Z" fill="#20221e" stroke="#4a4f44"/>
+      <text x="92" y="59" text-anchor="middle" class="eyebrow">REPEATED SECTION?</text>
+      <text x="92" y="82" text-anchor="middle" class="label">Linked pattern</text>
+      <text x="92" y="103" text-anchor="middle" class="small">Edit source or vary</text>
+    </g>
+    <path d="M1254 836 V884 H1086" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="1268" y="863" class="small">Make variation</text>
+
+    <!-- Exit -->
+    <g transform="translate(430 876)">
+      <rect width="656" height="92" rx="18" fill="#f4efe5"/>
+      <circle cx="28" cy="28" r="14" fill="#55a3a3"/><text x="28" y="32" text-anchor="middle" class="step-number" fill="#f4f1e9">4</text>
+      <text x="54" y="33" class="paper-title">Return to the arrangement with visible patterns</text>
+      <text x="22" y="62" class="paper-copy">Continue to another instrument or section, then export one separate MIDI track per instrument.</text>
+      <text x="22" y="80" class="paper-copy">Preview audio and exported MIDI share timing, pitch, duration, and velocity.</text>
+    </g>
+    <path d="M758 836 V868" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <g transform="translate(64 512)">
+      <text x="0" y="0" class="eyebrow">DESIGN RULE</text>
+      <rect y="18" width="304" height="138" rx="16" fill="#20221e" stroke="#34372f"/>
+      <text x="18" y="48" class="card-title">Do not hide the song.</text>
+      <text x="18" y="76" class="card-copy">The selected section, its neighbors, tempo,</text>
+      <text x="18" y="96" class="card-copy">meter, and persistent transport remain visible.</text>
+      <text x="18" y="124" class="card-copy">The sequencer edits a structural cell;</text>
+      <text x="18" y="144" class="card-copy">it never becomes a second arrangement.</text>
+    </g>
+  </g>
+</svg>

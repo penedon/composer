@@ -441,3 +441,17 @@ src/
 - Opening an example seeds it into local persistence once. Later artist edits are preserved instead of being overwritten by the original seed.
 - Example metadata describes its theme and completed phases, while the project carries the actual story, frame, emotional arc, structure, phrases, harmony, alternatives, tracks, and operation trail.
 - Complete examples must fill every declared section duration and pass schema, MIDI, component, application, E2E, and visual checks.
+
+## Decision 020 — Structure templates are versioned, non-destructive domain data
+
+**Status:** Accepted
+
+- The local template library covers story arc, direct pop, AABA, folk ballad, classic rock, 12-bar blues, build-and-drop, through-composed, and a blank canvas.
+- Templates are versioned domain data rather than hard-coded presentation buttons, so the same definitions can support previews, future migrations, and reference metadata.
+- Selecting a template is a non-mutating preview. The artist must explicitly apply it.
+- The Structure workspace shows only the selected template during normal editing. A dedicated change action temporarily reveals the complete card library and collapses it again after selection.
+- The most recent template-application operation identifies the form currently applied to the song. Its Apply action stays hidden, persists across reopen, reappears on undo, and hides again on redo.
+- Applying a template is one undoable project operation. Existing phrases are reassigned by relative song position rather than deleted, and phrase order is normalized within each destination section.
+- Existing emotional-arc intensity is projected by relative song position onto every new section.
+- Repeated sections retain explicit source-section links, while every generated section remains independently editable.
+- Changing composition phases resets the canvas and inspector scroll positions so a newly selected workspace opens at its beginning.

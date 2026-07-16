@@ -202,4 +202,5 @@ Exit criterion: the design covers the complete local project lifecycle and multi
 - [x] Initial foundation boards implemented.
 - [x] Representative Phase A screens implemented.
 - [x] Initial atlas assembled and visually verified.
+- [x] Composition Overview drafted and audited; see [`COMPOSITION_OVERVIEW_PLAN.md`](./COMPOSITION_OVERVIEW_PLAN.md).
 - [ ] Remaining screens implemented.

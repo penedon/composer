@@ -1,5 +1,7 @@
-.transport-bar { align-items: center; background: var(--surface); border-top: 1px solid var(--border); bottom: 0; color: var(--text-muted); display: flex; font-size: .75rem; height: var(--transport-bar-height); justify-content: space-between; left: 0; padding: 0 1.5rem; position: fixed; right: 0; z-index: 20; }
+.transport-shell { bottom: 0; display: grid; grid-template-rows: var(--song-tracker-height) var(--transport-bar-height); height: var(--transport-stack-height); left: 0; position: fixed; right: 0; z-index: 20; }
+.transport-bar { align-items: center; background: var(--surface); border-top: 1px solid var(--border); color: var(--text-muted); display: flex; font-size: .75rem; height: var(--transport-bar-height); justify-content: space-between; padding: 0 1.5rem; }
 .transport-bar__controls { align-items: center; display: flex; gap: 1.5rem; }
 .transport-bar__controls strong { color: var(--text-strong); }
 .transport-bar__controls .app-button { min-width: 7.5rem; }
 .transport-bar__error { color: #e6a09b; }
+@media(max-width: 700px) { .transport-bar { padding: 0 1rem; } .transport-bar > span:last-child { display: none; } .transport-bar__controls { gap: .8rem; } }

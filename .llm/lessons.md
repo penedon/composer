@@ -83,7 +83,10 @@ This document records decisions and lessons established while defining Composer.
 
 ## Structure, alternatives, and history
 
-- The application provides structure templates and allows completely manual structures.
+- The application provides nine versioned structure templates and allows completely manual structures.
+- A template card is a safe preview, not an implicit destructive command. Applying the selected form must be explicit and undoable.
+- Template application preserves every phrase and projects existing emotional intensity across the replacement form by relative song position.
+- Repeated template sections keep source links so the interface can explain variation without forcing the instances to remain identical.
 - Reference songs may later be associated with structures, but large public-data ingestion is not an MVP dependency.
 - Reference data must distinguish verified facts, computational inference, community annotation, and subjective emotional labels.
 - Sections may repeat while retaining links to their source section.
@@ -170,3 +173,7 @@ This document records decisions and lessons established while defining Composer.
 - A useful example must be a real canonical project rather than a decorative mock. Opening `The Long Road Within` exposes the exact same Story, Frame, Emotions, Structure, Compose, Arrange, and Export workspaces used for an artist’s own song.
 - Built-in examples are seeded only when absent. Treating the first open as a local copy lets the user experiment without a later visit silently discarding those edits.
 - Example cards summarize the theme, scale, and completed decision path before opening, so the starting page teaches the workflow rather than presenting an unexplained sample file.
+- Internal workspace scroll belongs to the current phase. Reset the canvas and inspector when the route changes; carrying an old scroll position into a new phase can hide its title and primary choices.
+- When a selector advertises templates, its options must be real domain data with an explicit apply path. Decorative buttons create false affordances and cannot be covered meaningfully by undo, persistence, or E2E tests.
+- Keep the selected structure template visible and hide the full library until the artist explicitly chooses “Change template.” Selecting an option closes the library, preserving section-editing space for the primary task.
+- Do not offer an Apply action for the template already applied to the song. Derive that state from persistent operation history so reload, undo, and redo produce the expected control state without duplicating UI-only flags.
