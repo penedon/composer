@@ -3,7 +3,7 @@ import { useProjectStore } from '@presentation/stores/project.store'
 import { updateFrame } from '@domain/project/project.operations'
 
 const store = useProjectStore()
-const genres = ['Alternative rock', 'Alternative pop', 'Indie folk rock', 'Soul', 'Funk', 'Folk', 'Pop', 'Jazz', 'Custom']
+const genres = ['Alternative rock', 'Alternative pop', 'Indie folk rock', 'Rock ballad', 'Soul', 'Funk', 'Folk', 'Pop', 'Jazz', 'Custom']
 const grooves = ['Slow pulse', 'Walking pulse', 'Straight eighths', 'Syncopated', 'Half-time', 'Driving', 'Free']
 </script>
 

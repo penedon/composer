@@ -17,9 +17,9 @@ describe('licensed reference examples', () => {
     const guitar = midi.addTrack()
     guitar.name = 'Guitar'
     guitar.instrument.name = 'electric guitar (clean)'
-    guitar.addNote({ midi: 60, ticks: 0, durationTicks: midi.header.ppq, velocity: .8 })
-    guitar.addNote({ midi: 64, ticks: midi.header.ppq * 4, durationTicks: midi.header.ppq, velocity: .7 })
-    guitar.addNote({ midi: 67, ticks: midi.header.ppq * 8, durationTicks: midi.header.ppq, velocity: .7 })
+    ;[[60, 64, 67], [65, 69, 72], [67, 71, 74]].forEach((pitches, sectionIndex) => {
+      pitches.forEach((pitch) => guitar.addNote({ midi: pitch, ticks: midi.header.ppq * sectionIndex * 4, durationTicks: midi.header.ppq * 4, velocity: .8 }))
+    })
 
     const drums = midi.addTrack()
     drums.name = 'Drums'
@@ -36,10 +36,11 @@ describe('licensed reference examples', () => {
     expect(example.availability).toBe('ready')
     expect(example.project.frame).toMatchObject({ key: 'From imported MIDI', tempo: 76, meter: '4/4' })
     expect(example.project.sections.map((section) => section.name)).toEqual(['Intro', 'Verse 1', 'Verse 2'])
-    expect(example.project.phrases.map((phrase) => phrase.lyrics)).toEqual(['An exact local line', 'Another exact local line'])
+    expect(example.project.phrases.map((phrase) => phrase.lyrics)).toEqual(['', 'An exact local line', 'Another exact local line'])
+    expect(example.project.phrases.flatMap((phrase) => phrase.chords.map((chord) => chord.symbol))).toEqual(['C', 'F', 'G'])
     expect(example.project.tracks.map((track) => track.role)).toEqual(['harmony', 'rhythm'])
     expect(example.project.tracks.map((track) => track.instrumentId)).toEqual(['guitar.electric-clean', 'kit.acoustic'])
-    expect(example.project.sequenceClips.flatMap((clip) => clip.notes)).toHaveLength(4)
+    expect(example.project.sequenceClips.flatMap((clip) => clip.notes)).toHaveLength(10)
   })
 
   it('keeps the configured reference visible when its local assets are absent', async () => {
@@ -52,5 +53,27 @@ describe('licensed reference examples', () => {
       project: { title: 'Wind of Change' },
     })
     expect(example?.missingAssets).toHaveLength(2)
+  })
+
+  it('infers harmonic context from a melody-only MIDI passage', () => {
+    const midi = new Midi()
+    midi.header.setTempo(80)
+    const melody = midi.addTrack()
+    melody.name = 'Melody voice'
+    melody.instrument.name = 'english horn'
+    ;[60, 64, 67].forEach((pitch, index) => melody.addNote({
+      midi: pitch,
+      ticks: midi.header.ppq * index,
+      durationTicks: midi.header.ppq,
+      velocity: .8,
+    }))
+
+    const example = createLicensedReferenceExample(
+      { id: 'melody-only', artist: 'Test Artist', title: 'Melody Only' },
+      '[Verse]\nA melodic phrase',
+      midi.toArray(),
+    )
+
+    expect(example.project.phrases[0]?.chords[0]?.symbol).toBe('C')
   })
 })

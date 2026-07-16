@@ -23,6 +23,7 @@ class FakePlayback implements PlaybackEngine {
   async playSong(): Promise<number> { return 10 }
   async auditionChord(symbol: string): Promise<void> { this.auditioned.push(symbol) }
   async auditionNote(): Promise<void> {}
+  setTrackVolume(): void {}
   async stop(): Promise<void> {}
 }
 
@@ -105,5 +106,30 @@ describe('ComposerApplication', () => {
 
     const reopened = await app.openExample(seed)
     expect(reopened.sequenceClips).toEqual([])
+  })
+
+  it('backfills inferred chords into an existing development reference', async () => {
+    const repository = new MemoryRepository()
+    const seed = {
+      ...createLongRoadWithinProject(),
+      id: 'dev-reference-chord-upgrade',
+      operations: [
+        ...createLongRoadWithinProject().operations,
+        { id: 'operation-chords', description: 'Inferred phrase chords from the local licensed MIDI arrangement', createdAt: '2026-07-16T12:00:00.000Z' },
+      ],
+    }
+    await repository.save({
+      ...structuredClone(seed),
+      frame: { ...seed.frame, tempo: 97 },
+      phrases: seed.phrases.map((phrase) => ({ ...structuredClone(phrase), chords: [] })),
+      operations: structuredClone(seed.operations),
+    })
+    const app = new ComposerApplication(repository, new FakePlayback(), new MidiFileExporter(), new BrowserPortableProjectGateway())
+
+    const upgraded = await app.openExample(seed)
+
+    expect(upgraded.frame.tempo).toBe(97)
+    expect(upgraded.phrases.every((phrase) => phrase.chords.length > 0)).toBe(true)
+    expect(upgraded.operations.filter((operation) => operation.description.startsWith('Inferred phrase chords '))).toHaveLength(1)
   })
 })

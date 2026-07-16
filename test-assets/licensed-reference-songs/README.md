@@ -19,6 +19,12 @@ Then run:
 npm run test:licensed-references
 ```
 
+To validate only the Wind of Change files:
+
+```sh
+npm run test:licensed-references -- scorpions-wind-of-change
+```
+
 The validator checks that each lyric file is non-empty and each MIDI file has a standard MIDI header. It never prints the supplied content. These asset files are ignored by Git.
 
 Authorized-source starting points for **Wind of Change**:

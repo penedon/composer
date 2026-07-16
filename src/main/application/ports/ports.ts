@@ -22,6 +22,7 @@ export interface PlaybackEngine {
   playSong(project: CompositionProject, startBeat?: number): Promise<number>
   auditionChord(symbol: string, instrumentId?: string): Promise<void>
   auditionNote(midiNote: number, role: TrackRole, instrumentId: string, volume?: number): Promise<void>
+  setTrackVolume(trackId: string, volume: number): void
   stop(): Promise<void>
 }
 

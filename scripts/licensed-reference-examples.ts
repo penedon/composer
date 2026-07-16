@@ -6,7 +6,7 @@ import type { Midi as MidiFile } from '@tonejs/midi'
 
 import type { SongExample } from '../src/main/domain/examples/example.types'
 import { instrumentIdForImportedMidi } from '../src/main/domain/arrangement/instrumentCatalog'
-import type { ArrangementTrack, CompositionProject, EmotionFamily, MidiNoteEvent, Phrase, SequenceClip, SongSection, TrackRole } from '../src/main/domain/project/project.types'
+import type { ArrangementTrack, ChordEvent, CompositionProject, EmotionFamily, MidiNoteEvent, Phrase, SequenceClip, SongSection, TrackRole } from '../src/main/domain/project/project.types'
 
 interface LicensedReferenceSpec {
   id: string
@@ -14,6 +14,8 @@ interface LicensedReferenceSpec {
   title: string
   lyricsPath: string
   midiPath: string
+  sectionStartBeats?: number[]
+  trackNames?: string[]
 }
 
 interface LyricGroup {
@@ -37,6 +39,10 @@ const licensedReferences: LicensedReferenceSpec[] = [{
   title: 'Wind of Change',
   lyricsPath: 'test-assets/licensed-reference-songs/scorpions-wind-of-change/lyrics.txt',
   midiPath: 'test-assets/licensed-reference-songs/scorpions-wind-of-change/song.mid',
+  // Aligned to the supplied 5:11 karaoke MIDI: intro, verses, choruses, bridge, solo, and outro.
+  sectionStartBeats: [0, 32, 92, 128, 164, 200, 224, 272, 312, 360],
+  // @tonejs/midi splits the format-1 file by channel and loses most source track-name events.
+  trackNames: ['Polysynth', 'Fretless Bass', 'Acoustic Guitar', 'Melody voice', 'Bright Acoustic Piano', 'Whistle', 'Electric Guitar', 'Overdriven Guitar', 'Distortion Guitar', 'Drums', 'Halo'],
 }]
 
 function slug(value: string): string {
@@ -70,7 +76,7 @@ function parseLyrics(text: string): LyricGroup[] {
   return groups
 }
 
-function sectionRanges(midi: MidiFile, lyricGroups: LyricGroup[]): SectionRange[] {
+function sectionRanges(midi: MidiFile, lyricGroups: LyricGroup[], sectionStartBeats?: number[]): SectionRange[] {
   const durationBeats = Math.max(beatsPerBar, midi.durationTicks / midi.header.ppq)
   const totalBars = Math.max(1, Math.ceil(durationBeats / beatsPerBar))
   const markers = midi.header.meta
@@ -81,11 +87,16 @@ function sectionRanges(midi: MidiFile, lyricGroups: LyricGroup[]): SectionRange[
     .filter((event, index, all) => index === 0 || event.bar !== all[index - 1]?.bar)
 
   const headings = lyricGroups.map((group) => group.heading).filter((heading): heading is string => Boolean(heading))
+  const suppliedBoundaries = sectionStartBeats?.length === headings.length
+    ? headings.map((name, index) => ({ name, bar: Math.round((sectionStartBeats[index] ?? 0) / beatsPerBar) }))
+    : null
   const boundaries = markers.length
     ? markers
-    : headings.length > 1
-      ? headings.map((name, index) => ({ name, bar: Math.round(index * totalBars / headings.length) }))
-      : [{ name: 'Complete song', bar: 0 }]
+    : suppliedBoundaries
+      ? suppliedBoundaries
+      : headings.length > 1
+        ? headings.map((name, index) => ({ name, bar: Math.round(index * totalBars / headings.length) }))
+        : [{ name: 'Complete song', bar: 0 }]
 
   if (boundaries[0]?.bar !== 0) boundaries.unshift({ name: 'Intro', bar: 0 })
   const occupied = new Set<string>()
@@ -121,13 +132,13 @@ function roleForTrack(name: string, family: string, percussion: boolean): TrackR
   return 'harmony'
 }
 
-function tracksAndClips(midi: MidiFile, ranges: SectionRange[]): { tracks: ArrangementTrack[]; clips: SequenceClip[] } {
+function tracksAndClips(midi: MidiFile, ranges: SectionRange[], trackNames?: string[]): { tracks: ArrangementTrack[]; clips: SequenceClip[] } {
   const tracks: ArrangementTrack[] = []
   const clips: SequenceClip[] = []
   const occupied = new Set<string>()
 
   midi.tracks.filter((track) => track.notes.length > 0).forEach((midiTrack, trackIndex) => {
-    const name = midiTrack.name.trim() || midiTrack.instrument.name || `MIDI track ${trackIndex + 1}`
+    const name = trackNames?.[trackIndex] ?? (midiTrack.name.trim() || midiTrack.instrument.name || `MIDI track ${trackIndex + 1}`)
     const trackId = `track-${uniqueId(slug(name), occupied)}`
     tracks.push({
       id: trackId,
@@ -167,6 +178,16 @@ function normalizedHeading(value: string | null): string {
   return slug(value ?? '').replace(/-\d+$/, '')
 }
 
+function distributeLyrics(lines: string[], bars: number): Array<{ lyrics: string; bars: number }> {
+  if (!lines.length) return [{ lyrics: '', bars }]
+  const phraseCount = Math.min(lines.length, bars)
+  const groupedLines = Array.from({ length: phraseCount }, () => [] as string[])
+  lines.forEach((line, index) => groupedLines[Math.floor(index * phraseCount / lines.length)]?.push(line))
+  const baseBars = Math.floor(bars / phraseCount)
+  const remainder = bars % phraseCount
+  return groupedLines.map((group, index) => ({ lyrics: group.join('\n'), bars: baseBars + (index < remainder ? 1 : 0) }))
+}
+
 function phrasesForLyrics(groups: LyricGroup[], ranges: SectionRange[]): Phrase[] {
   const unmatched = [...groups]
   const phrases: Phrase[] = []
@@ -182,18 +203,18 @@ function phrasesForLyrics(groups: LyricGroup[], ranges: SectionRange[]): Phrase[
 
     const lines = matching.flatMap((group) => group.lines)
     matching.forEach((group) => unmatched.splice(unmatched.indexOf(group), 1))
-    const phraseBars = Math.max(1, Math.floor(range.section.bars / Math.max(1, lines.length)))
-    lines.forEach((lyrics, order) => phrases.push({
+    const phraseDrafts = distributeLyrics(lines, range.section.bars)
+    phraseDrafts.forEach(({ lyrics, bars }, order) => phrases.push({
       id: `phrase-${range.section.id}-${order + 1}`,
       sectionId: range.section.id,
       order,
-      bars: phraseBars,
+      bars,
       lyrics,
       chords: [],
       emotionId: rangeIndex < ranges.length / 3 ? 'nostalgia' : rangeIndex < ranges.length * 2 / 3 ? 'yearning' : 'hope',
       rhythm: 'Imported lyric line',
       dynamics: 'From reference arrangement',
-      instrumental: false,
+      instrumental: /intro|solo|outro/i.test(range.section.name),
     }))
   })
 
@@ -216,6 +237,79 @@ function phrasesForLyrics(groups: LyricGroup[], ranges: SectionRange[]): Phrase[
   return phrases
 }
 
+interface ChordCandidate {
+  symbol: string
+  root: number
+  tones: number[]
+}
+
+const pitchClassNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] as const
+
+function chordCandidates(): ChordCandidate[] {
+  return pitchClassNames.flatMap((rootName, root) => [
+    { symbol: rootName, root, tones: [root, (root + 4) % 12, (root + 7) % 12] },
+    { symbol: `${rootName}m`, root, tones: [root, (root + 3) % 12, (root + 7) % 12] },
+    { symbol: `${rootName}dim`, root, tones: [root, (root + 3) % 12, (root + 6) % 12] },
+  ])
+}
+
+function inferChord(midi: MidiFile, startBeat: number, endBeat: number, trackNames?: string[]): string | null {
+  const weights = Array.from({ length: 12 }, () => 0)
+  const bassWeights = Array.from({ length: 12 }, () => 0)
+
+  midi.tracks.filter((track) => track.notes.length > 0).forEach((track, trackIndex) => {
+    const name = trackNames?.[trackIndex] ?? (track.name || track.instrument.name)
+    const role = roleForTrack(name, track.instrument.family, track.instrument.percussion)
+    if (role === 'rhythm') return
+    const roleWeight = role === 'melody' ? .38 : role === 'bass' ? .75 : 1
+
+    track.notes.forEach((note) => {
+      const noteStart = note.ticks / midi.header.ppq
+      const noteEnd = noteStart + note.durationTicks / midi.header.ppq
+      const overlap = Math.min(endBeat, noteEnd) - Math.max(startBeat, noteStart)
+      if (overlap <= 0) return
+      const pitchClass = note.midi % 12
+      const weight = overlap * (.5 + note.velocity)
+      weights[pitchClass] = (weights[pitchClass] ?? 0) + weight * roleWeight
+      if (role === 'bass') bassWeights[pitchClass] = (bassWeights[pitchClass] ?? 0) + weight
+    })
+  })
+
+  const totalWeight = weights.reduce((sum, weight) => sum + weight, 0)
+  if (totalWeight === 0) return null
+
+  return chordCandidates().map((candidate) => {
+    const chordWeight = candidate.tones.reduce((sum, tone, index) => sum + (weights[tone] ?? 0) * (index === 0 ? 1.2 : 1), 0)
+    const outsideWeight = weights.reduce((sum, weight, pitchClass) => sum + (candidate.tones.includes(pitchClass) ? 0 : weight), 0)
+    const bassSupport = (bassWeights[candidate.root] ?? 0) * .7 + (bassWeights[candidate.tones[2] ?? candidate.root] ?? 0) * .12
+    const diminishedPenalty = candidate.symbol.endsWith('dim') ? totalWeight * .06 : 0
+    return { symbol: candidate.symbol, score: chordWeight + bassSupport - outsideWeight * .18 - diminishedPenalty }
+  }).sort((left, right) => right.score - left.score)[0]?.symbol ?? null
+}
+
+function inferPhraseChords(midi: MidiFile, ranges: SectionRange[], phrases: Phrase[], trackNames?: string[]): Phrase[] {
+  return ranges.flatMap((range) => {
+    let sectionCursor = range.startBeat
+    return phrases
+      .filter((phrase) => phrase.sectionId === range.section.id)
+      .sort((left, right) => left.order - right.order)
+      .map((phrase) => {
+        const events: ChordEvent[] = []
+        const phraseBeats = phrase.bars * beatsPerBar
+        for (let localBeat = 0; localBeat < phraseBeats; localBeat += beatsPerBar) {
+          const duration = Math.min(beatsPerBar, phraseBeats - localBeat)
+          const symbol = inferChord(midi, sectionCursor + localBeat, sectionCursor + localBeat + duration, trackNames)
+          if (!symbol) continue
+          const previous = events.at(-1)
+          if (previous?.symbol === symbol && previous.beat + previous.duration === localBeat) previous.duration += duration
+          else events.push({ id: `${phrase.id}-chord-${events.length + 1}`, symbol, beat: localBeat, duration })
+        }
+        sectionCursor += phraseBeats
+        return { ...phrase, chords: events }
+      })
+  })
+}
+
 function emotionPoints(ranges: SectionRange[], emotionId: string, family: EmotionFamily): CompositionProject['emotionPlan']['points'] {
   return ranges.map((range, index) => {
     const progress = ranges.length === 1 ? .5 : index / (ranges.length - 1)
@@ -224,11 +318,12 @@ function emotionPoints(ranges: SectionRange[], emotionId: string, family: Emotio
   })
 }
 
-export function createLicensedReferenceExample(spec: Pick<LicensedReferenceSpec, 'id' | 'artist' | 'title'>, lyrics: string, midiBytes: Uint8Array): SongExample {
+export function createLicensedReferenceExample(spec: Pick<LicensedReferenceSpec, 'id' | 'artist' | 'title' | 'sectionStartBeats' | 'trackNames'>, lyrics: string, midiBytes: Uint8Array): SongExample {
   const midi = new Midi(midiBytes)
   const lyricGroups = parseLyrics(lyrics)
-  const ranges = sectionRanges(midi, lyricGroups)
-  const { tracks, clips } = tracksAndClips(midi, ranges)
+  const ranges = sectionRanges(midi, lyricGroups, spec.sectionStartBeats)
+  const { tracks, clips } = tracksAndClips(midi, ranges, spec.trackNames)
+  const phrases = inferPhraseChords(midi, ranges, phrasesForLyrics(lyricGroups, ranges), spec.trackNames)
   const tempo = Math.max(20, Math.min(300, Math.round(midi.header.tempos[0]?.bpm ?? 120)))
   const timeSignature = midi.header.timeSignatures[0]?.timeSignature ?? [4, 4]
   const keySignature = midi.header.keySignatures[0]
@@ -267,7 +362,7 @@ export function createLicensedReferenceExample(spec: Pick<LicensedReferenceSpec,
       ],
     },
     sections: ranges.map((range) => range.section),
-    phrases: phrasesForLyrics(lyricGroups, ranges),
+    phrases,
     tracks,
     sequenceClips: clips,
     alternatives: [],
@@ -275,6 +370,7 @@ export function createLicensedReferenceExample(spec: Pick<LicensedReferenceSpec,
       { id: 'operation-1', description: 'Loaded full lyrics from a local licensed reference', createdAt: timestamp },
       { id: 'operation-2', description: 'Mapped lyric headings and MIDI markers into song sections', createdAt: timestamp },
       { id: 'operation-3', description: `Sequenced ${tracks.length} complete MIDI tracks from the local licensed reference`, createdAt: timestamp },
+      { id: 'operation-4', description: 'Inferred phrase chords from the local licensed MIDI arrangement', createdAt: timestamp },
     ],
   }
 

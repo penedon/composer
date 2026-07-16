@@ -10,9 +10,15 @@ test('opens a complete example and exposes every composition step', async ({ pag
   const licensedReference = examples.getByRole('article').filter({ hasText: 'Wind of Change' })
   await expect(originalExample).toBeVisible()
   await expect(originalExample.getByRole('list', { name: 'Completed composition steps' }).getByRole('listitem')).toHaveCount(7)
-  await expect(licensedReference).toContainText('Local assets required')
-  await expect(licensedReference.getByRole('button', { name: 'Waiting for local assets' })).toBeDisabled()
-  await expect(examples).toHaveScreenshot('song-examples.png', { animations: 'disabled' })
+  await expect(licensedReference).toBeVisible()
+  const waitingForAssets = licensedReference.getByRole('button', { name: 'Waiting for local assets' })
+  if (await waitingForAssets.count()) {
+    await expect(licensedReference).toContainText('Local assets required')
+    await expect(waitingForAssets).toBeDisabled()
+  } else {
+    await expect(licensedReference.getByRole('button', { name: 'Open reference study' })).toBeEnabled()
+  }
+  await expect(originalExample).toHaveScreenshot('song-examples.png', { animations: 'disabled' })
   await examples.getByRole('button', { name: 'Explore every step' }).click()
 
   await expect(page.getByLabel('Song title')).toHaveValue('The Long Road Within')
@@ -44,6 +50,48 @@ test('opens a complete example and exposes every composition step', async ({ pag
   await phases.getByRole('link', { name: /Export/ }).click()
   await expect(page.getByText('15', { exact: true }).first()).toBeVisible()
   await expect(page.getByRole('button', { name: 'Export MIDI' })).toBeVisible()
+})
+
+test('opens the licensed Wind of Change reference when local assets are available', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem('licensed-reference-test')) return
+    localStorage.clear()
+    sessionStorage.setItem('licensed-reference-test', 'ready')
+  })
+  await page.goto('/projects')
+
+  const reference = page.getByRole('article').filter({ hasText: 'Wind of Change' })
+  const openButton = reference.getByRole('button', { name: 'Open reference study' })
+  test.skip(await openButton.count() === 0, 'Licensed reference assets are not available in this environment')
+
+  await openButton.click()
+  await expect(page.getByLabel('Song title')).toHaveValue('Wind of Change')
+  await expect(page.getByLabel('Premise text')).toHaveValue(/historic change/)
+
+  const phases = page.getByRole('navigation', { name: 'Composition phases' })
+  await phases.getByRole('link', { name: /Frame/ }).click()
+  await expect(page.getByLabel('Genre')).toHaveValue('Rock ballad')
+  await expect(page.getByText('Rock ballad · Slow pulse')).toBeVisible()
+
+  await phases.getByRole('link', { name: /Compose/ }).click()
+  await expect(page.getByRole('button', { name: /^Verse 1 15 bars$/ })).toBeVisible()
+  await page.getByRole('button', { name: /^Verse 1 15 bars$/ }).click()
+  await expect(page.getByLabel('Chord events').first().getByRole('button').first()).toBeVisible()
+
+  await page.evaluate(() => {
+    const key = 'composer:project:dev-reference-scorpions-wind-of-change'
+    const raw = localStorage.getItem(key)
+    if (!raw) throw new Error('Expected saved licensed reference')
+    const project = JSON.parse(raw) as { phrases: Array<{ chords: unknown[] }> }
+    project.phrases.forEach((phrase) => { phrase.chords = [] })
+    localStorage.setItem(key, JSON.stringify(project))
+  })
+  await page.reload()
+  await expect(page.getByLabel('Chord events').first().getByRole('button').first()).toBeVisible()
+
+  await phases.getByRole('link', { name: /Arrange/ }).click()
+  await expect(page.getByText('11 separate instrument tracks')).toBeVisible()
+  await expect(page.getByRole('button', { name: /^Edit Drums sequence for Chorus,/ }).first()).toBeVisible()
 })
 
 test('upgrades a previously saved example that predates instrument sequences', async ({ page }) => {

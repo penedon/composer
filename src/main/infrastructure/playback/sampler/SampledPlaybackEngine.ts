@@ -12,6 +12,7 @@ import { samplerPresetFor } from './samplerRegistry'
 export class SampledPlaybackEngine implements PlaybackEngine {
   private context: AudioContext | null = null
   private instruments = new Map<string, Promise<Smplr>>()
+  private trackGains = new Map<string, GainNode>()
   private activeVoices: StopFn[] = []
   private activeOscillators: OscillatorNode[] = []
   private generation = 0
@@ -28,27 +29,42 @@ export class SampledPlaybackEngine implements PlaybackEngine {
     return descriptor?.role === role ? id : defaultInstrumentId[role]
   }
 
-  private instrument(id: string, role: TrackRole): Promise<Smplr> {
+  private trackGain(trackId: string, volume: number): GainNode {
+    if (!this.context) throw new Error('Audio context is unavailable')
+    let gain = this.trackGains.get(trackId)
+    if (!gain) {
+      gain = this.context.createGain()
+      gain.connect(this.context.destination)
+      this.trackGains.set(trackId, gain)
+    }
+    gain.gain.cancelScheduledValues(this.context.currentTime)
+    gain.gain.setValueAtTime(Math.max(0, Math.min(1, volume)), this.context.currentTime)
+    return gain
+  }
+
+  private instrument(id: string, role: TrackRole, scope = 'audition', destination?: AudioNode): Promise<Smplr> {
     if (!this.context) return Promise.reject(new Error('Audio context is unavailable'))
     const resolvedId = this.resolvedInstrumentId(id, role)
-    const cached = this.instruments.get(resolvedId)
+    const cacheKey = `${scope}:${resolvedId}`
+    const cached = this.instruments.get(cacheKey)
     if (cached) return cached
 
     const preset = samplerPresetFor(resolvedId)
     if (!preset) return Promise.reject(new Error(`No sampler preset registered for ${resolvedId}`))
+    const output = destination ? { destination } : {}
     const instrument = preset.kind === 'drum-machine'
-      ? DrumMachine(this.context, { instrument: preset.preset, volume: 112 })
-      : Soundfont(this.context, { instrument: preset.preset, kit: 'FluidR3_GM', volume: 112, extraGain: 1, loadLoopData: true })
+      ? DrumMachine(this.context, { instrument: preset.preset, ...output, volume: 127 })
+      : Soundfont(this.context, { instrument: preset.preset, kit: 'FluidR3_GM', ...output, volume: 127, extraGain: 1, loadLoopData: true })
     const loading = instrument.ready.then(() => instrument as Smplr).catch((cause) => {
       instrument.dispose()
-      this.instruments.delete(resolvedId)
+      this.instruments.delete(cacheKey)
       throw cause
     })
-    this.instruments.set(resolvedId, loading)
+    this.instruments.set(cacheKey, loading)
     return loading
   }
 
-  private scheduleFallback(midiNote: number, start: number, duration: number, role: TrackRole, volume: number, velocity: number): void {
+  private scheduleFallback(midiNote: number, start: number, duration: number, role: TrackRole, volume: number, velocity: number, destination?: AudioNode): void {
     if (!this.context) return
     const oscillator = this.context.createOscillator()
     const gain = this.context.createGain()
@@ -60,7 +76,7 @@ export class SampledPlaybackEngine implements PlaybackEngine {
     gain.gain.setValueAtTime(.0001, start)
     gain.gain.exponentialRampToValueAtTime(peak, start + .012)
     gain.gain.exponentialRampToValueAtTime(.0001, end)
-    oscillator.connect(gain).connect(this.context.destination)
+    oscillator.connect(gain).connect(destination ?? this.context.destination)
     oscillator.start(start)
     oscillator.stop(end + .02)
     oscillator.addEventListener('ended', () => { this.activeOscillators = this.activeOscillators.filter((item) => item !== oscillator) }, { once: true })
@@ -72,12 +88,12 @@ export class SampledPlaybackEngine implements PlaybackEngine {
     return resolveDrumSampleName(instrument.getGroupNames() as string[], midiNote)
   }
 
-  private scheduleSample(instrument: Smplr, midiNote: number, start: number, duration: number, role: TrackRole, volume: number, velocity: number): void {
+  private scheduleSample(instrument: Smplr, midiNote: number, start: number, duration: number, role: TrackRole, velocity: number): void {
     const voice = instrument.start({
       note: role === 'rhythm' ? this.drumSampleName(instrument, midiNote) : midiNote,
       time: start,
       duration: role === 'rhythm' ? null : Math.max(.04, duration),
-      velocity: Math.max(1, Math.min(127, Math.round(velocity * volume))),
+      velocity: Math.max(1, Math.min(127, Math.round(velocity))),
     })
     this.activeVoices.push(voice)
   }
@@ -101,7 +117,7 @@ export class SampledPlaybackEngine implements PlaybackEngine {
       for (const midiNote of chordMidiNotes(event.symbol)) {
         const eventStart = start + Math.max(0, event.beat) * secondsPerBeat
         const duration = event.duration * secondsPerBeat * .92
-        if (instrument) this.scheduleSample(instrument, midiNote, eventStart, duration, 'harmony', .82, 84)
+        if (instrument) this.scheduleSample(instrument, midiNote, eventStart, duration, 'harmony', Math.round(84 * .82))
         else this.scheduleFallback(midiNote, eventStart, duration, 'harmony', .82, 84)
       }
     }
@@ -114,11 +130,12 @@ export class SampledPlaybackEngine implements PlaybackEngine {
     const generation = this.generation
     const preview = buildSongPreview(project)
     if (!preview.events.length || preview.totalBeats <= 0) return 0
-    const required = new Map<string, TrackRole>()
-    preview.events.forEach((event) => required.set(event.instrumentId, event.role))
+    const required = new Map<string, { instrumentId: string; role: TrackRole; volume: number }>()
+    preview.events.forEach((event) => required.set(event.trackId, { instrumentId: event.instrumentId, role: event.role, volume: event.volume }))
     const prepared = new Map<string, Smplr | null>()
-    await Promise.all([...required].map(async ([id, role]) => {
-      try { prepared.set(`${role}:${id}`, await this.instrument(id, role)) } catch { prepared.set(`${role}:${id}`, null) }
+    await Promise.all([...required].map(async ([trackId, track]) => {
+      const destination = this.trackGain(trackId, track.volume)
+      try { prepared.set(trackId, await this.instrument(track.instrumentId, track.role, trackId, destination)) } catch { prepared.set(trackId, null) }
     }))
     if (generation !== this.generation) return 0
 
@@ -133,10 +150,11 @@ export class SampledPlaybackEngine implements PlaybackEngine {
       const relativeStartBeat = Math.max(0, event.beat - safeStartBeat)
       const eventStart = start + relativeStartBeat * secondsPerBeat
       const duration = event.role === 'rhythm' ? Math.min(.2, secondsPerBeat * .35) : remainingBeats * secondsPerBeat * .92
-      const instrument = prepared.get(`${event.role}:${event.instrumentId}`) ?? null
+      const instrument = prepared.get(event.trackId) ?? null
+      const destination = this.trackGains.get(event.trackId)
       for (const midiNote of event.midiNotes) {
-        if (instrument) this.scheduleSample(instrument, midiNote, eventStart, duration, event.role, event.volume, event.velocity)
-        else this.scheduleFallback(midiNote, eventStart, duration, event.role, event.volume, event.velocity)
+        if (instrument) this.scheduleSample(instrument, midiNote, eventStart, duration, event.role, event.velocity)
+        else this.scheduleFallback(midiNote, eventStart, duration, event.role, 1, event.velocity, destination)
       }
     }
     return preview.totalBeats * secondsPerBeat
@@ -161,8 +179,16 @@ export class SampledPlaybackEngine implements PlaybackEngine {
     try { instrument = await this.instrument(instrumentId, role) } catch { /* use synthesized fallback */ }
     const start = context.currentTime + .01
     const duration = role === 'rhythm' ? .18 : .55
-    if (instrument) this.scheduleSample(instrument, midiNote, start, duration, role, volume, 104)
+    if (instrument) this.scheduleSample(instrument, midiNote, start, duration, role, Math.round(104 * volume))
     else this.scheduleFallback(midiNote, start, duration, role, volume, 104)
+  }
+
+  setTrackVolume(trackId: string, volume: number): void {
+    const gain = this.trackGains.get(trackId)
+    if (!gain || !this.context) return
+    const value = Math.max(0, Math.min(1, volume))
+    gain.gain.cancelScheduledValues(this.context.currentTime)
+    gain.gain.setTargetAtTime(value, this.context.currentTime, .012)
   }
 
   async stop(): Promise<void> {

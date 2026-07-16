@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1024" viewBox="0 0 1440 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Composer MIDI Draft Session user flow</title>
+  <desc id="desc">A flow board showing a musician connecting a MIDI keyboard, monitoring an instrument, recording a safe draft take, selecting a useful range, placing it into a song section, resolving conflicts, and preserving the original take.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#777c72"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity=".16"/></filter>
+    <style>
+      .ui { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .eyebrow { font-size: 10px; font-weight: 800; letter-spacing: .09em; fill: #8f9489; }
+      .title { font-size: 28px; font-weight: 650; fill: #f4f1e9; }
+      .subtitle { font-size: 14px; fill: #b8bbb1; }
+      .card-title { font-size: 16px; font-weight: 700; fill: #f4f1e9; }
+      .card-copy { font-size: 12px; fill: #aeb2a8; }
+      .paper-title { font-size: 16px; font-weight: 700; fill: #292b25; }
+      .paper-copy { font-size: 12px; fill: #62665d; }
+      .label { font-size: 11px; font-weight: 700; fill: #d6d7d0; }
+      .small { font-size: 10px; fill: #8f9489; }
+      .step { font-size: 11px; font-weight: 800; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="1024" fill="#171916"/>
+  <g class="ui">
+    <text x="64" y="58" class="eyebrow">COMPOSER · MIDI DRAFT SESSION FLOW</text>
+    <text x="64" y="99" class="title">Play freely. Commit deliberately.</text>
+    <text x="64" y="130" class="subtitle">Incoming MIDI becomes a safe draft take first; only an explicit placement changes the song timeline.</text>
+
+    <!-- 1. Entry and capability -->
+    <g transform="translate(64 176)" filter="url(#shadow)">
+      <rect width="308" height="222" rx="20" fill="#20221e" stroke="#3b3e36"/>
+      <circle cx="28" cy="28" r="14" fill="#dca65c"/><text x="28" y="32" text-anchor="middle" class="step" fill="#211a10">1</text>
+      <text x="54" y="33" class="card-title">Open Arrange · Drafts</text>
+      <text x="22" y="62" class="card-copy">Song stays canonical; Drafts is a scratchpad.</text>
+      <g transform="translate(22 83)">
+        <rect width="264" height="42" rx="11" fill="#2b2e28"/>
+        <rect x="5" y="5" width="125" height="32" rx="8" fill="#252722"/><text x="68" y="26" text-anchor="middle" class="small">Song</text>
+        <rect x="134" y="5" width="125" height="32" rx="8" fill="#4b4031" stroke="#dca65c"/><text x="196" y="26" text-anchor="middle" class="label">Drafts</text>
+      </g>
+      <rect x="22" y="145" width="264" height="42" rx="11" fill="#dca65c"/>
+      <text x="154" y="171" text-anchor="middle" class="label" fill="#211a10">Connect MIDI keyboard</text>
+      <text x="22" y="207" class="small">Request access only after this click</text>
+    </g>
+
+    <path d="M372 287 H430" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <g transform="translate(438 208)">
+      <path d="M82 0 L164 79 L82 158 L0 79 Z" fill="#292b26" stroke="#4a4f44"/>
+      <text x="82" y="61" text-anchor="middle" class="eyebrow">CAPABILITY</text>
+      <text x="82" y="84" text-anchor="middle" class="label">MIDI available?</text>
+      <text x="82" y="105" text-anchor="middle" class="small">native or Web MIDI</text>
+    </g>
+
+    <path d="M602 248 C638 248 648 213 686 213" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="636" y="231" class="small">Yes</text>
+    <path d="M520 366 V426" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="532" y="402" class="small">No / denied</text>
+
+    <!-- 2. Connect -->
+    <g transform="translate(694 176)" filter="url(#shadow)">
+      <rect width="324" height="222" rx="20" fill="#f4efe5"/>
+      <circle cx="28" cy="28" r="14" fill="#6687bd"/><text x="28" y="32" text-anchor="middle" class="step" fill="#f4f1e9">2</text>
+      <text x="54" y="33" class="paper-title">Choose input and track</text>
+      <text x="22" y="62" class="paper-copy">One armed destination keeps routing obvious.</text>
+      <g transform="translate(22 82)">
+        <text x="0" y="12" class="paper-copy">INPUT</text><rect y="21" width="280" height="36" rx="8" fill="#e8e0d4" stroke="#cfc7ba"/><circle cx="16" cy="39" r="4" fill="#79936a"/><text x="29" y="43" class="paper-copy">KeyLab Essential 49</text><text x="266" y="43" text-anchor="end" class="paper-copy">⌄</text>
+        <text x="0" y="80" class="paper-copy">PLAYS</text><rect y="89" width="280" height="36" rx="8" fill="#e8e0d4" stroke="#cfc7ba"/><text x="14" y="112" class="paper-copy">Melody · Voice</text><text x="266" y="112" text-anchor="end" class="paper-copy">⌄</text>
+      </g>
+      <text x="22" y="205" class="paper-copy">Receiving · C4 · velocity 91</text>
+      <circle cx="296" cy="201" r="7" fill="#79936a"/><circle cx="296" cy="201" r="12" fill="none" stroke="#79936a" opacity=".35"/>
+    </g>
+
+    <path d="M1018 287 H1076" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- 3. Record -->
+    <g transform="translate(1084 176)" filter="url(#shadow)">
+      <rect width="292" height="222" rx="20" fill="#20221e" stroke="#3b3e36"/>
+      <circle cx="28" cy="28" r="14" fill="#d46f80"/><text x="28" y="32" text-anchor="middle" class="step" fill="#f4f1e9">3</text>
+      <text x="54" y="33" class="card-title">Record a draft take</text>
+      <text x="22" y="62" class="card-copy">Count-in and fixed length prevent surprises.</text>
+      <g transform="translate(22 82)">
+        <rect width="248" height="38" rx="10" fill="#2b2e28"/><text x="14" y="24" class="small">COUNT-IN</text><text x="232" y="24" text-anchor="end" class="label">1 bar</text>
+        <rect y="46" width="248" height="38" rx="10" fill="#2b2e28"/><text x="14" y="70" class="small">LENGTH</text><text x="232" y="70" text-anchor="end" class="label">4 bars</text>
+      </g>
+      <rect x="22" y="176" width="248" height="30" rx="9" fill="#d46f80"/>
+      <circle cx="87" cy="191" r="5" fill="#f4f1e9"/><text x="145" y="195" text-anchor="middle" class="label" fill="#2c171b">Recording · bar 2 of 4</text>
+    </g>
+
+    <!-- unsupported branch -->
+    <g transform="translate(372 434)">
+      <rect width="296" height="112" rx="16" fill="#20221e" stroke="#4a4f44" stroke-dasharray="6 5"/>
+      <text x="18" y="29" class="eyebrow">GRACEFUL FALLBACK</text>
+      <text x="18" y="56" class="label">MIDI is unavailable here</text>
+      <text x="18" y="78" class="card-copy">Explain permission or platform support.</text>
+      <text x="18" y="98" class="card-copy">Manual piano/drum editing remains available.</text>
+    </g>
+
+    <path d="M1230 398 V466 H1024" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="1242" y="441" class="small">Stop commits once</text>
+
+    <!-- 4. Take -->
+    <g transform="translate(706 434)" filter="url(#shadow)">
+      <rect width="318" height="214" rx="20" fill="#f4efe5"/>
+      <circle cx="28" cy="28" r="14" fill="#55a3a3"/><text x="28" y="32" text-anchor="middle" class="step" fill="#f4f1e9">4</text>
+      <text x="54" y="33" class="paper-title">Review the safe take</text>
+      <text x="22" y="60" class="paper-copy">Raw timing remains intact and editable.</text>
+      <g transform="translate(22 79)">
+        <rect width="274" height="78" rx="10" fill="#fffaf0" stroke="#cfc7ba"/>
+        <text x="12" y="21" class="paper-copy">TAKE 03 · VOICE</text><text x="260" y="21" text-anchor="end" class="paper-copy">4 bars</text>
+        <g fill="#c68b50"><rect x="14" y="49" width="38" height="6" rx="3"/><rect x="58" y="38" width="24" height="6" rx="3"/><rect x="88" y="43" width="52" height="6" rx="3"/><rect x="147" y="29" width="42" height="6" rx="3"/><rect x="196" y="39" width="60" height="6" rx="3"/></g>
+        <rect x="10" y="27" width="126" height="38" rx="5" fill="#6687bd" opacity=".10" stroke="#6687bd"/>
+      </g>
+      <text x="22" y="174" class="paper-copy">Bars 1–2 selected</text>
+      <text x="296" y="174" text-anchor="end" class="paper-copy">Original timing kept</text>
+      <rect x="166" y="182" width="130" height="30" rx="9" fill="#dca65c"/><text x="231" y="202" text-anchor="middle" class="label" fill="#211a10">Place in song →</text>
+    </g>
+
+    <path d="M1024 548 H1082" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- 5. Placement -->
+    <g transform="translate(1090 434)" filter="url(#shadow)">
+      <rect width="286" height="214" rx="20" fill="#20221e" stroke="#3b3e36"/>
+      <circle cx="28" cy="28" r="14" fill="#8274ae"/><text x="28" y="32" text-anchor="middle" class="step" fill="#f4f1e9">5</text>
+      <text x="54" y="33" class="card-title">Choose destination</text>
+      <g transform="translate(18 58)">
+        <text x="0" y="13" class="small">TRACK</text><text x="250" y="13" text-anchor="end" class="label">Melody · Voice</text><line y1="24" x2="250" y2="24" stroke="#34372f"/>
+        <text x="0" y="48" class="small">SECTION</text><text x="250" y="48" text-anchor="end" class="label">Verse 1</text><line y1="59" x2="250" y2="59" stroke="#34372f"/>
+        <text x="0" y="83" class="small">START</text><text x="250" y="83" text-anchor="end" class="label">Bar 1 · beat 1</text><line y1="94" x2="250" y2="94" stroke="#34372f"/>
+        <text x="0" y="118" class="small">EXISTING</text><text x="250" y="118" text-anchor="end" class="label">Create variation</text>
+      </g>
+      <rect x="18" y="178" width="250" height="30" rx="9" fill="#8274ae"/><text x="143" y="198" text-anchor="middle" class="label">Preview placement</text>
+    </g>
+
+    <path d="M1233 648 V696" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- conflict decision -->
+    <g transform="translate(1136 704)">
+      <path d="M97 0 L194 68 L97 136 L0 68 Z" fill="#292b26" stroke="#4a4f44"/>
+      <text x="97" y="54" text-anchor="middle" class="eyebrow">TARGET HAS NOTES?</text>
+      <text x="97" y="77" text-anchor="middle" class="label">Choose explicitly</text>
+      <text x="97" y="98" text-anchor="middle" class="small">Add · replace · variation</text>
+    </g>
+
+    <path d="M1136 772 H1036" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="1080" y="758" text-anchor="middle" class="small">Confirm</text>
+
+    <!-- 6. Canonical song -->
+    <g transform="translate(510 704)" filter="url(#shadow)">
+      <rect width="526" height="182" rx="20" fill="#f4efe5"/>
+      <circle cx="28" cy="28" r="14" fill="#79936a"/><text x="28" y="32" text-anchor="middle" class="step" fill="#f4f1e9">6</text>
+      <text x="54" y="33" class="paper-title">Create a canonical section clip</text>
+      <text x="22" y="61" class="paper-copy">The selected range is copied, bounded, normalized, and undoable.</text>
+      <g transform="translate(22 82)">
+        <rect width="482" height="56" rx="10" fill="#e8e0d4" stroke="#cfc7ba"/>
+        <text x="13" y="22" class="paper-copy">Melody · Voice</text>
+        <rect x="112" y="9" width="74" height="38" rx="7" fill="#d9dde2"/><text x="149" y="32" text-anchor="middle" class="paper-copy">Intro</text>
+        <rect x="192" y="9" width="132" height="38" rx="7" fill="#e4d7c4" stroke="#c68b50"/>
+        <g fill="#c68b50"><rect x="202" y="29" width="26" height="5" rx="2.5"/><rect x="234" y="20" width="18" height="5" rx="2.5"/><rect x="258" y="25" width="36" height="5" rx="2.5"/></g><text x="258" y="44" text-anchor="middle" font-size="8" fill="#62665d">from Take 03</text>
+        <rect x="330" y="9" width="74" height="38" rx="7" fill="#ded8c8"/><text x="367" y="32" text-anchor="middle" class="paper-copy">Pre</text>
+        <rect x="410" y="9" width="60" height="38" rx="7" fill="#dfd1d3"/><text x="440" y="32" text-anchor="middle" class="paper-copy">Chorus</text>
+      </g>
+      <text x="22" y="162" class="paper-copy">Playback and MIDI export continue to read the existing SequenceClip model.</text>
+    </g>
+
+    <path d="M706 548 C650 548 650 676 690 704" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="624" y="639" class="small">draft stays unchanged</text>
+
+    <!-- rules -->
+    <g transform="translate(64 610)">
+      <text x="0" y="0" class="eyebrow">GUARDRAILS</text>
+      <rect y="18" width="376" height="276" rx="18" fill="#20221e" stroke="#34372f"/>
+      <text x="18" y="52" class="card-title">One playback truth</text>
+      <text x="18" y="76" class="card-copy">Drafts never override the arrangement.</text>
+      <line x1="18" y1="94" x2="358" y2="94" stroke="#34372f"/>
+      <text x="18" y="126" class="card-title">One recording mutation</text>
+      <text x="18" y="150" class="card-copy">Buffer input; commit a complete take on stop.</text>
+      <line x1="18" y1="168" x2="358" y2="168" stroke="#34372f"/>
+      <text x="18" y="200" class="card-title">Raw performance survives</text>
+      <text x="18" y="224" class="card-copy">Quantize and placement never rewrite the source.</text>
+      <line x1="18" y1="242" x2="358" y2="242" stroke="#34372f"/>
+      <text x="18" y="268" class="card-copy">Audio input, scenes, MPE, SysEx, and mapping are later.</text>
+    </g>
+
+    <path d="M773 886 V930" fill="none" stroke="#777c72" stroke-width="2" marker-end="url(#arrow)"/>
+    <g transform="translate(510 938)">
+      <rect width="526" height="54" rx="16" fill="#292b26" stroke="#4a4f44"/>
+      <text x="263" y="24" text-anchor="middle" class="label">Continue arranging, record another take, or export MIDI</text>
+      <text x="263" y="42" text-anchor="middle" class="small">The scratchpad remains available without becoming a second song timeline.</text>
+    </g>
+  </g>
+</svg>

@@ -94,6 +94,8 @@ export class WebAudioPlaybackEngine implements PlaybackEngine {
     this.scheduleNote(midiNote, context.currentTime + .01, role === 'rhythm' ? .12 : .42, role, volume, 104)
   }
 
+  setTrackVolume(): void {}
+
   async stop(): Promise<void> {
     for (const oscillator of this.active) {
       try { oscillator.stop() } catch { /* oscillator already ended */ }

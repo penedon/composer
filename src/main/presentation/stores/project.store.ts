@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 import { composerApplication } from '@main/application'
 import { buildSongPreview } from '@domain/playback/songPreview'
 import { resolveSequenceClip } from '@domain/project/project.sequence'
+import { updateTrack } from '@domain/project/project.operations'
 import type { CompositionProject, Phrase, ProjectSummary, TrackRole } from '@domain/project/project.types'
 import type { PhrasePlaybackRequest } from '@application/ports/ports'
 
@@ -299,6 +300,12 @@ export const useProjectStore = defineStore('project', () => {
     await composerApplication.playback.auditionNote(midiNote, role, instrumentId, volume)
   }
 
+  function updateTrackVolume(trackId: string, volume: number): void {
+    const bounded = Math.max(0, Math.min(1, volume))
+    composerApplication.playback.setTrackVolume(trackId, bounded)
+    mutate('Update track volume', (value) => updateTrack(value, trackId, { volume: bounded }))
+  }
+
   function openSequenceEditor(trackId: string, sectionId: string): void {
     selectedSequenceTrackId.value = trackId
     selectedSectionId.value = sectionId
@@ -323,6 +330,6 @@ export const useProjectStore = defineStore('project', () => {
   return {
     project, projects, loading, saving, lastSavedAt, error, playingPhraseId, phrasePlaybackPositionBeats, playingSong, playingSectionId, sectionPlaybackPositionBeats, songPlaybackPositionSeconds, songPlaybackDurationSeconds, playbackError, selectedPhraseId, selectedSectionId, selectedSequenceTrackId, selectedSequenceNoteId,
     canUndo, canRedo, refreshLibrary, load, create, importProject, openExample, selectNativeProject, mutate, undo, redo, save, playPhrase, stop,
-    playSong, playSection, seekSong, downloadProject, downloadMidi, auditionChord, auditionNote, openSequenceEditor, closeSequenceEditor,
+    playSong, playSection, seekSong, downloadProject, downloadMidi, auditionChord, auditionNote, updateTrackVolume, openSequenceEditor, closeSequenceEditor,
   }
 })

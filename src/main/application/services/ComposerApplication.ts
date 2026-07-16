@@ -67,19 +67,45 @@ export class ComposerApplication {
 
   private upgradeExample(existing: CompositionProject, seed: CompositionProject): CompositionProject {
     const arrangementMarker = seed.operations.find((operation) => operation.description.startsWith('Sequenced '))
-    if (!arrangementMarker || existing.operations.some((operation) => operation.description === arrangementMarker.description)) return existing
+    const chordMarker = seed.operations.find((operation) => operation.description.startsWith('Inferred phrase chords '))
+    let sequenceClips = existing.sequenceClips
+    let phrases = existing.phrases
+    let sections = existing.sections
+    const operations = [...existing.operations]
+    let changed = false
 
-    const occupied = new Set(existing.sequenceClips.map((clip) => `${clip.trackId}:${clip.sectionId}`))
-    const missingClips = seed.sequenceClips
-      .filter((clip) => !occupied.has(`${clip.trackId}:${clip.sectionId}`))
-      .map((clip) => structuredClone(clip))
-
-    return {
-      ...existing,
-      updatedAt: new Date().toISOString(),
-      sequenceClips: [...existing.sequenceClips, ...missingClips],
-      operations: [...existing.operations, structuredClone(arrangementMarker)],
+    if (arrangementMarker && !operations.some((operation) => operation.description === arrangementMarker.description)) {
+      const occupied = new Set(sequenceClips.map((clip) => `${clip.trackId}:${clip.sectionId}`))
+      const missingClips = seed.sequenceClips
+        .filter((clip) => !occupied.has(`${clip.trackId}:${clip.sectionId}`))
+        .map((clip) => structuredClone(clip))
+      sequenceClips = [...sequenceClips, ...missingClips]
+      operations.push(structuredClone(arrangementMarker))
+      changed = true
     }
+
+    const chordMarkerRecorded = chordMarker ? operations.some((operation) => operation.description === chordMarker.description) : false
+    const chordlessDevelopmentReference = existing.id.startsWith('dev-reference-')
+      && existing.phrases.every((phrase) => phrase.chords.length === 0)
+      && seed.phrases.some((phrase) => phrase.chords.length > 0)
+    if (chordMarker && (!chordMarkerRecorded || chordlessDevelopmentReference)) {
+      const seedPhrases = new Map(seed.phrases.map((phrase) => [phrase.id, phrase]))
+      const existingIds = new Set(phrases.map((phrase) => phrase.id))
+      phrases = [
+        ...phrases.map((phrase) => {
+          const replacement = seedPhrases.get(phrase.id)
+          return replacement ? { ...phrase, bars: replacement.bars, chords: structuredClone(replacement.chords) } : phrase
+        }),
+        ...seed.phrases.filter((phrase) => !existingIds.has(phrase.id)).map((phrase) => structuredClone(phrase)),
+      ]
+      if (existing.id.startsWith('dev-reference-')) sections = structuredClone(seed.sections)
+      if (!chordMarkerRecorded) operations.push(structuredClone(chordMarker))
+      changed = true
+    }
+
+    return changed
+      ? { ...existing, updatedAt: new Date().toISOString(), sections, phrases, sequenceClips, operations }
+      : existing
   }
 
   mutate(description: string, transform: (project: CompositionProject) => CompositionProject): CompositionProject {
