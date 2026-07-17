@@ -8,7 +8,6 @@ import EmotionSemanticWheel from '@presentation/components/emotion/EmotionSemant
 import {
   emotionFamilyPresentation,
   emotionFamilySummary,
-  emotionPresentation,
   emotionTaxonomy,
   primaryEmotionFamily,
 } from '@domain/emotion/emotionTaxonomy'
@@ -42,14 +41,7 @@ const focusedFamily = ref<EmotionFamily | null>(null)
 const pendingEmotionId = ref<string | null>(props.currentEmotion?.id ?? null)
 const pendingEmotion = computed(() => emotionTaxonomy.find((emotion) => emotion.id === pendingEmotionId.value) ?? null)
 const selectedFamily = computed(() => emotionFamilyPresentation.find((family) => family.id === pendingFamily.value) ?? emotionFamilyPresentation[0]!)
-const pendingDescription = computed(() => pendingEmotion.value ? emotionPresentation[pendingEmotion.value.id].description : '')
 const pendingFamilySummary = computed(() => pendingEmotion.value ? emotionFamilySummary(pendingEmotion.value) : selectedFamily.value.label)
-const pendingComponents = computed(() => pendingEmotion.value
-  ? emotionFamilyPresentation
-      .filter((family) => (pendingEmotion.value?.families[family.id] ?? 0) > 0)
-      .map((family) => ({ ...family, weight: pendingEmotion.value?.families[family.id] ?? 0 }))
-      .sort((left, right) => right.weight - left.weight)
-  : [])
 let returnFocus: { focus: () => void } | null = null
 
 function chooseFamily(family: EmotionFamily): void {
@@ -124,31 +116,6 @@ onBeforeUnmount(() => {
             @update:focused-family="focusFamily"
           />
         </section>
-
-        <aside class="emotion-picker__details" aria-live="polite">
-          <p class="emotion-picker__details-label">Selected emotion</p>
-          <template v-if="pendingEmotion">
-            <div class="emotion-picker__details-card" :style="{ '--emotion-color': pendingEmotion.color }">
-              <span />
-              <div><strong>{{ pendingEmotion.name }}</strong><small>{{ emotionPresentation[pendingEmotion.id].kind === 'blend' ? 'Blended emotion' : 'Emotion shade' }}</small></div>
-              <p>{{ pendingDescription }}</p>
-            </div>
-            <p class="emotion-picker__details-label">Emotional makeup</p>
-            <div class="emotion-picker__makeup">
-              <div v-for="component in pendingComponents" :key="component.id">
-                <span><strong>{{ component.label }}</strong><small>{{ Math.round(component.weight * 100) }}%</small></span>
-                <i><b :style="{ width: `${component.weight * 100}%`, background: component.color }" /></i>
-              </div>
-            </div>
-          </template>
-          <div v-else class="emotion-picker__details-empty">
-            <strong>Choose an emotion</strong>
-            <p>Round nodes are family shades. Diamond nodes bridge two or more families.</p>
-          </div>
-          <button type="button" class="emotion-picker__list-route" @click="featuredView = 'list'">
-            <span><strong>Prefer a linear route?</strong><small>Browse family groups and descriptions.</small></span><b aria-hidden="true">›</b>
-          </button>
-        </aside>
       </div>
 
       <div v-else class="emotion-picker__list-view">

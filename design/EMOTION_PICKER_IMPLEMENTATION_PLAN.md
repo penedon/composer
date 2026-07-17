@@ -16,6 +16,10 @@ Replace the featured-emotion family orbit with a semantic picker that makes majo
 - A featured emotion that is already used in another slot stays visible but unavailable; it must not silently disappear.
 - Selection remains pending until explicit confirmation. Cancel must never mutate the project.
 - Verify modal fit at desktop and compact sizes; the confirmation footer must remain visible.
+- Keep every selectable sub-emotion, blend zone, and relationship connector outside the family wheel. Reserve the center for a non-interactive summary and weighted makeup of the selected emotion.
+- Maintain a visible radial buffer between connector arcs and sub-emotion controls; connectors must stop before reaching the nodes.
+- Derive relationships from positive family weights for every emotion; visual `shade`/`blend` labels must never control connector behavior.
+- Keep new sibling nodes at the outer radius and compress their angular spacing inside the owning family sector as the taxonomy grows.
 
 ## Architecture
 
@@ -23,9 +27,10 @@ Replace the featured-emotion family orbit with a semantic picker that makes majo
 2. `emotionPresentation` is an exhaustive record keyed by `EmotionId` for stable UI classification and descriptions.
 3. `EmotionSemanticWheel` renders:
    - eight fixed family sectors;
-   - outer shade nodes;
-   - inner blend nodes;
-   - one connector per contributing family;
+   - outer shade and blend nodes, grouped by their primary family;
+   - a non-interactive center summary and weighted makeup of the selected emotion, with no blend zone or selectable controls;
+   - one exterior arc per positive contributing family for every emotion, never crossing the center;
+   - intensified parent sectors and labels for the selected emotion;
    - keyboard-operable radio buttons and reversible family filters.
 4. `EmotionPicker` owns pending selection, wheel/list mode, weighted details, confirmation, and cancellation.
 5. Existing `EmotionFamilyOrbit` and `EmotionNuanceList` provide the family-only flow and compact/list fallback.
@@ -45,7 +50,11 @@ Replace the featured-emotion family orbit with a semantic picker that makes majo
 ## Acceptance criteria
 
 - All canonical emotions are directly reachable in the wheel or list.
-- A blend visibly connects to every family with a positive stored weight.
+- Every selected emotion visibly connects to every family with a positive stored weight.
+- Every connected parent family is visibly intensified with its matching connector.
+- Adding taxonomy entries automatically creates connectors and fits nodes inside the primary family's outer sector.
+- Sub-emotions and blend connectors remain beyond the family ring; the center contains only the selected-emotion summary and makeup.
+- The wheel view has no separate selected-emotion sidebar.
 - Longing presents Love 70%, Sadness 60%, and Desire 50% without normalizing the values.
 - Family filters highlight relationships without removing unrelated emotions.
 - Arrow keys move between available emotion choices.

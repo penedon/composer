@@ -6,14 +6,13 @@ import {
   emotionFamilyPresentation,
   emotionPresentation,
   emotionTaxonomy,
-  primaryEmotionFamily,
-  type EmotionId,
   type TaxonomyEmotion,
 } from '@domain/emotion/emotionTaxonomy'
 import type { EmotionFamily } from '@domain/project/project.types'
+import { emotionFamilyAngle, layoutEmotionNodes } from './EmotionSemanticWheel.layout'
 
 interface Point { x: number; y: number }
-interface PositionedEmotion { emotion: TaxonomyEmotion; point: Point; kind: 'shade' | 'blend' }
+interface PositionedEmotion { emotion: TaxonomyEmotion; point: Point; angle: number; kind: 'shade' | 'blend' }
 
 const props = withDefaults(defineProps<{
   modelValue: string | null
@@ -28,32 +27,10 @@ const emit = defineEmits<{
 
 const center = 300
 const familyRadius = 178
-const shadeRadius = 260
-
-const blendLayout: Record<EmotionId, { angle: number; radius: number } | undefined> = {
-  serenity: undefined,
-  delight: undefined,
-  devotion: undefined,
-  tenderness: undefined,
-  longing: { angle: -55, radius: 104 },
-  melancholy: undefined,
-  grief: undefined,
-  despair: undefined,
-  apprehension: undefined,
-  terror: undefined,
-  irritation: undefined,
-  rage: undefined,
-  contempt: { angle: 112, radius: 130 },
-  alienation: { angle: 158, radius: 124 },
-  amazement: undefined,
-  confusion: undefined,
-  yearning: { angle: -151, radius: 132 },
-  anticipation: { angle: -119, radius: 126 },
-}
-
-function angleForFamily(family: EmotionFamily): number {
-  return emotionFamilies.indexOf(family) * 45 - 90
-}
+const emotionEdgeRadius = 286
+const connectorLeadRadius = 248
+const connectorArcRadius = 222
+const connectorAnchorRadius = 212
 
 function point(angle: number, radius: number): Point {
   const radians = angle * Math.PI / 180
@@ -65,37 +42,59 @@ function cssPosition(item: Point): Record<string, string> {
 }
 
 const familyPoints = computed(() => Object.fromEntries(
-  emotionFamilies.map((family) => [family, point(angleForFamily(family), familyRadius)]),
+  emotionFamilies.map((family) => [family, point(emotionFamilyAngle(family), familyRadius)]),
 ) as Record<EmotionFamily, Point>)
 
 const positionedEmotions = computed<PositionedEmotion[]>(() => {
-  const shadesByFamily = new Map<EmotionFamily, TaxonomyEmotion[]>()
-  for (const family of emotionFamilies) shadesByFamily.set(family, [])
-  for (const emotion of emotionTaxonomy) {
-    if (emotionPresentation[emotion.id].kind === 'shade') shadesByFamily.get(primaryEmotionFamily(emotion))?.push(emotion)
-  }
+  const layout = layoutEmotionNodes(emotionTaxonomy, emotionEdgeRadius)
 
   return emotionTaxonomy.map((emotion) => {
     const kind = emotionPresentation[emotion.id].kind
-    if (kind === 'blend') {
-      const layout = blendLayout[emotion.id]!
-      return { emotion, kind, point: point(layout.angle, layout.radius) }
-    }
-
-    const family = primaryEmotionFamily(emotion)
-    const siblings = shadesByFamily.get(family) ?? []
-    const index = siblings.findIndex((item) => item.id === emotion.id)
-    const spread = siblings.length === 2 ? 18 : 10
-    const offset = (index - (siblings.length - 1) / 2) * spread
-    return { emotion, kind, point: point(angleForFamily(family) + offset, shadeRadius) }
+    const position = layout.get(emotion.id)
+    if (!position) throw new Error(`Emotion wheel layout is missing ${emotion.id}`)
+    const angle = position.angle
+    return { emotion, kind, angle, point: point(angle, emotionEdgeRadius) }
   })
 })
 
-const emotionPoints = computed(() => Object.fromEntries(
-  positionedEmotions.value.map((item) => [item.emotion.id, item.point]),
-) as Record<EmotionId, Point>)
+const selectedEmotion = computed(() => emotionTaxonomy.find((emotion) => emotion.id === props.modelValue) ?? null)
+const selectedComponents = computed(() => selectedEmotion.value
+  ? emotionFamilyPresentation
+      .filter((family) => (selectedEmotion.value?.families[family.id] ?? 0) > 0)
+      .map((family) => ({ ...family, weight: selectedEmotion.value?.families[family.id] ?? 0 }))
+      .sort((left, right) => right.weight - left.weight)
+  : [])
 
-const blends = computed(() => emotionTaxonomy.filter((emotion) => emotionPresentation[emotion.id].kind === 'blend'))
+function connectorPath(emotion: TaxonomyEmotion, family: EmotionFamily): string {
+  const positioned = positionedEmotions.value.find((item) => item.emotion.id === emotion.id)!
+  const familyAngle = emotionFamilyAngle(family)
+  const delta = ((familyAngle - positioned.angle + 540) % 360) - 180
+  const sweep = delta >= 0 ? 1 : 0
+  const lead = point(positioned.angle, connectorLeadRadius)
+  const arcStart = point(positioned.angle, connectorArcRadius)
+  const arcEnd = point(familyAngle, connectorArcRadius)
+  const anchor = point(familyAngle, connectorAnchorRadius)
+
+  return [
+    `M ${lead.x} ${lead.y}`,
+    `L ${arcStart.x} ${arcStart.y}`,
+    `A ${connectorArcRadius} ${connectorArcRadius} 0 0 ${sweep} ${arcEnd.x} ${arcEnd.y}`,
+    `L ${anchor.x} ${anchor.y}`,
+  ].join(' ')
+}
+
+function isParentFamily(family: EmotionFamily): boolean {
+  return (selectedEmotion.value?.families[family] ?? 0) > 0
+}
+
+function familyOpacity(family: EmotionFamily): number {
+  if (props.focusedFamily !== null) {
+    if (props.focusedFamily === family) return 1
+    return isParentFamily(family) ? .72 : .34
+  }
+  if (selectedEmotion.value !== null) return isParentFamily(family) ? 1 : .52
+  return 1
+}
 
 function isUnavailable(emotionId: string): boolean {
   return props.unavailableEmotionIds.includes(emotionId)
@@ -136,25 +135,50 @@ function moveEmotion(event: KeyboardEvent, index: number): void {
 </script>
 
 <template>
-  <div class="emotion-semantic-wheel" role="group" aria-label="Semantic emotion map">
-    <svg viewBox="0 0 600 600" aria-hidden="true" focusable="false">
-      <circle cx="300" cy="300" r="266" class="emotion-semantic-wheel__guide emotion-semantic-wheel__guide--outer" />
-      <circle cx="300" cy="300" r="208" class="emotion-semantic-wheel__guide" />
-      <circle cx="300" cy="300" r="145" class="emotion-semantic-wheel__guide" />
+  <div
+    class="emotion-semantic-wheel"
+    role="group"
+    aria-label="Semantic emotion map"
+  >
+    <svg
+      viewBox="0 0 600 600"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle
+        cx="300"
+        cy="300"
+        r="266"
+        class="emotion-semantic-wheel__guide emotion-semantic-wheel__guide--outer"
+      />
+      <circle
+        cx="300"
+        cy="300"
+        r="208"
+        class="emotion-semantic-wheel__guide"
+      />
 
       <g class="emotion-semantic-wheel__connections">
-        <template v-for="blend in blends" :key="blend.id">
-          <line
-            v-for="family in emotionFamilies.filter((item) => (blend.families[item] ?? 0) > 0)"
-            :key="`${blend.id}-${family}`"
-            :x1="emotionPoints[blend.id].x"
-            :y1="emotionPoints[blend.id].y"
-            :x2="familyPoints[family].x"
-            :y2="familyPoints[family].y"
+        <template
+          v-for="emotion in emotionTaxonomy"
+          :key="emotion.id"
+        >
+          <path
+            v-for="family in emotionFamilies.filter((item) => (emotion.families[item] ?? 0) > 0)"
+            :key="`${emotion.id}-${family}`"
+            :d="connectorPath(emotion, family)"
             :stroke="emotionFamilyPresentation.find((item) => item.id === family)?.color"
+            fill="none"
+            class="emotion-semantic-wheel__connection"
+            data-layout-zone="edge"
+            :data-connection-emotion-id="emotion.id"
+            :data-connection-family="family"
+            :data-min-radius="connectorAnchorRadius"
+            :data-max-radius="connectorLeadRadius"
             :class="{
-              'emotion-semantic-wheel__connection--selected': blend.id === modelValue,
+              'emotion-semantic-wheel__connection--selected': emotion.id === modelValue,
               'emotion-semantic-wheel__connection--focused': focusedFamily === family,
+              'emotion-semantic-wheel__connection--muted': modelValue !== null && emotion.id !== modelValue,
             }"
           />
         </template>
@@ -168,24 +192,34 @@ function moveEmotion(event: KeyboardEvent, index: number): void {
         r="178"
         pathLength="100"
         fill="none"
+        class="emotion-semantic-wheel__family-sector"
+        :class="{ 'emotion-semantic-wheel__family-sector--parent': isParentFamily(family.id) }"
         :stroke="family.color"
         stroke-width="58"
         stroke-dasharray="11.2 88.8"
-        :opacity="focusedFamily === null || focusedFamily === family.id ? 1 : .42"
+        :opacity="familyOpacity(family.id)"
         :transform="`rotate(${index * 45 - 112.5} 300 300)`"
+        :data-family-id="family.id"
+        :data-parent-highlighted="isParentFamily(family.id) ? '' : undefined"
       />
-      <circle cx="300" cy="300" r="112" class="emotion-semantic-wheel__center" />
     </svg>
 
-    <div class="emotion-semantic-wheel__families" aria-label="Filter by emotion family">
+    <div
+      class="emotion-semantic-wheel__families"
+      aria-label="Filter by emotion family"
+    >
       <button
         v-for="family in emotionFamilyPresentation"
         :key="family.id"
         type="button"
         class="emotion-semantic-wheel__family"
-        :class="{ 'emotion-semantic-wheel__family--focused': family.id === focusedFamily }"
-        :style="cssPosition(familyPoints[family.id])"
+        :class="{
+          'emotion-semantic-wheel__family--focused': family.id === focusedFamily,
+          'emotion-semantic-wheel__family--parent': isParentFamily(family.id),
+        }"
+        :style="{ ...cssPosition(familyPoints[family.id]), '--family-color': family.color }"
         :aria-pressed="family.id === focusedFamily"
+        :data-parent-highlighted="isParentFamily(family.id) ? '' : undefined"
         :aria-label="`${family.label}: ${family.shortDescription}. ${family.id === focusedFamily ? 'Clear filter' : 'Show related emotions'}`"
         @click="chooseFamily(family.id)"
       >
@@ -193,7 +227,11 @@ function moveEmotion(event: KeyboardEvent, index: number): void {
       </button>
     </div>
 
-    <div class="emotion-semantic-wheel__emotions" role="radiogroup" aria-label="Emotions">
+    <div
+      class="emotion-semantic-wheel__emotions"
+      role="radiogroup"
+      aria-label="Emotions"
+    >
       <button
         v-for="(item, index) in positionedEmotions"
         :key="item.emotion.id"
@@ -210,6 +248,8 @@ function moveEmotion(event: KeyboardEvent, index: number): void {
         :aria-label="`${item.emotion.name}. ${emotionPresentation[item.emotion.id].description}. ${item.kind === 'blend' ? 'Blended emotion' : 'Emotion shade'}`"
         :disabled="isUnavailable(item.emotion.id)"
         :data-emotion-id="item.emotion.id"
+        :data-layout-radius="emotionEdgeRadius"
+        data-layout-zone="edge"
         :data-autofocus="item.emotion.id === modelValue ? '' : undefined"
         :tabindex="item.emotion.id === modelValue || (!modelValue && index === 0) ? 0 : -1"
         @click="chooseEmotion(item.emotion)"
@@ -221,9 +261,39 @@ function moveEmotion(event: KeyboardEvent, index: number): void {
       </button>
     </div>
 
-    <div class="emotion-semantic-wheel__explanation" aria-hidden="true">
-      <strong>{{ modelValue && emotionPresentation[modelValue as EmotionId]?.kind === 'blend' ? 'Blended emotion' : 'Emotion shade' }}</strong>
-      <small>{{ focusedFamily ? `Showing ${focusedFamily} connections` : 'Choose a family or emotion' }}</small>
+    <div
+      v-if="selectedEmotion"
+      class="emotion-semantic-wheel__center"
+      :data-selected-emotion-id="selectedEmotion.id"
+      role="status"
+      aria-live="polite"
+    >
+      <div class="emotion-semantic-wheel__center-title">
+        <span
+          class="emotion-semantic-wheel__center-dot"
+          :style="{ background: selectedEmotion.color }"
+        />
+        <strong>{{ selectedEmotion.name }}</strong>
+      </div>
+      <small class="emotion-semantic-wheel__center-description">
+        {{ emotionPresentation[selectedEmotion.id].description }}
+      </small>
+      <div class="emotion-semantic-wheel__center-makeup">
+        <p>Emotional makeup</p>
+        <div
+          v-for="component in selectedComponents"
+          :key="component.id"
+          class="emotion-semantic-wheel__center-component"
+        >
+          <span>
+            <strong>{{ component.label }}</strong>
+            <small>{{ Math.round(component.weight * 100) }}%</small>
+          </span>
+          <i>
+            <b :style="{ width: `${component.weight * 100}%`, background: component.color }" />
+          </i>
+        </div>
+      </div>
     </div>
   </div>
 </template>
